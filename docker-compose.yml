@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      args:
+        user: ${USER:-laravel}
+        uid: ${UID:-1000}
+        PHP_VERSION: ${PHP_VERSION}
+        DB_DRIVER: ${DB_DRIVER}
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: ${DOCKER_IMAGE_PREFIX:-laravel}-container
+    image: ${DOCKER_IMAGE_PREFIX:-laravel}/app:${DOCKER_IMAGE_TAG:-latest}
+    ports:
+      - "${APP_PORT:-8002}:8002"  # Port for php artisan serve
+      - "${VITE_PORT:-5174}:5174" # Port for vite, if used
+    volumes:
+      - ./:/var/www
+    networks:
+      - database-docker-network
+    tty: true
+
+networks:
+  database-docker-network:
+    external: true

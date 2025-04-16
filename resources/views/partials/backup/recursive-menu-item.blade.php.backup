@@ -1,0 +1,47 @@
+<li class="nav-item @if(count($menu->sub_menus) > 0) dropdown @endif">
+    @if(count($menu->sub_menus) > 0)
+        <a class="nav-link dropdown-toggle" href="#navbar-{{ Str::slug($menu->name) }}" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+            @if($menu->icon)
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    @svg($menu->icon)
+                </span>
+            @endif
+            <span class="nav-link-title">
+                {{ $menu->name }}
+            </span>
+        </a>
+        <div class="dropdown-menu">
+            <div class="dropdown-menu-columns">
+                <div class="dropdown-menu-column">
+                    @foreach($menu->sub_menus as $subMenu)
+                        @if(count($subMenu->sub_menus) > 0)
+                            <div class="dropend">
+                                <a class="dropdown-item dropdown-toggle" href="#sidebar-{{ Str::slug($subMenu->name) }}" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                                    {{ $subMenu->name }}
+                                </a>
+                                <div class="dropdown-menu">
+                                    @include('partials.recursive-submenu', ['subMenus' => $subMenu->sub_menus])
+                                </div>
+                            </div>
+                        @else
+                            <a class="dropdown-item" href="{{ route($subMenu->url) ?? '#' }}">
+                                {{ $subMenu->name }}
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @else
+        <a class="nav-link" href="{{ route($menu->url) }}">
+            @if($menu->icon)
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    @svg($menu->icon)
+                </span>
+            @endif
+            <span class="nav-link-title">
+                {{ $menu->name }}
+            </span>
+        </a>
+    @endif
+</li>

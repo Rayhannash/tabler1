@@ -1,0 +1,17 @@
+@foreach($subMenus as $subMenu)
+    @if(count($subMenu->sub_menus) > 0)
+        <div class="dropend">
+            <a class="dropdown-item dropdown-toggle" href="#sidebar-{{ Str::slug($subMenu->name) }}" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                {{ $subMenu->name }}
+            </a>
+            <div class="dropdown-menu">
+                @include('partials.recursive-submenu', ['subMenus' => $subMenu->sub_menus])
+            </div>
+        </div>
+    @else
+        <a class="dropdown-item" href="{{ $subMenu->url ?? '#' }}">
+            {{ $subMenu->name }}
+        </a>
+    @endif
+@endforeach
+

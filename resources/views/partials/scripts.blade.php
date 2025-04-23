@@ -40,5 +40,9 @@
     }
 </script>
 
+<!-- Litepicker -->
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+
+
 <!-- Extended Scripts -->
 @stack('scripts')

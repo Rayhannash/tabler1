@@ -15,18 +15,29 @@ class UserSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        //
-        $userArray = [
-            'role_id' => 1,
-            'fullname' => 'Skibidi Bidi',
-            'username' => 'skibidi',
-            'email' => 'skibidi@mail.com',
-            'password' => Hash::make('skibidi'),
-            'is_active' => true,
-            'email_verified_at' => Carbon::now(),
-        ];
+{
+    $userArray1 = [
+        'role_id' => 1,
+        'fullname' => 'Skibidi Bidi',
+        'username' => 'skibidi',
+        'email' => 'skibidi@mail.com',
+        'password' => Hash::make('skibidi'),
+        'is_active' => true,
+        'email_verified_at' => Carbon::now(),
+    ];
 
-        User::create($userArray);
-    }
+    $userArray2 = [
+        'role_id' => 2,
+        'fullname' => 'UPN Veteran Jawa Timur',
+        'username' => 'upnvjt',
+        'email' => 'test@mail.com',
+        'password' => Hash::make('test'),
+        'is_active' => true,
+        'email_verified_at' => Carbon::now(),
+    ];
+
+    User::create($userArray1);
+    User::create($userArray2);
+}
+
 }

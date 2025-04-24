@@ -9,13 +9,16 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', function () {
         return view('pages.auth.registrasi');
     })->name('register');
-    
+
 
     Route::prefix('auth')->name('auth.')->group(function () {
         Route::post('login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
         Route::post('register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+
     });
 });
+
+
 
 Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function () {
     Route::get('beranda', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

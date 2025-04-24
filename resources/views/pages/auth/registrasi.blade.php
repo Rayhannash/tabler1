@@ -10,14 +10,12 @@
                             </a>
                         </div>
 
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('auth.register') }}">
                             @csrf
-
                             <h2 class="h3 text-center mb-4">Buat Akun</h2>
-
                             <div class="mb-3">
                                 <label for="fullname" class="form-label">Nama Lengkap</label>
-                                <input type="text" name="fullname" class="form-control @error('fullname') is-invalid @enderror" value="{{ old('fullname') }}" required>
+                                <input type="text" name="fullname" class="form-control @error('fullname') is-invalid @enderror" value="{{ old('fullname')}}" required>
                                 @error('fullname')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -50,18 +48,6 @@
                             <div class="mb-3">
                                 <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                                 <input type="password" name="password_confirmation" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="role_id" class="form-label">Role</label>
-                                <select name="role_id" class="form-select @error('role_id') is-invalid @enderror" required>
-                                    <option value="">-- Pilih Role --</option>
-                                    <option value="1" {{ old('role_id') == 1 ? 'selected' : '' }}>Admin</option>
-                                    <option value="2" {{ old('role_id') == 2 ? 'selected' : '' }}>User</option>
-                                </select>
-                                @error('role_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <div class="mb-3">

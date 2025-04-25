@@ -43,7 +43,7 @@ class AuthController extends Controller
         ]);
     
         // Membuat pengguna baru
-        User::create([
+        $user = User::create([
             'fullname' => $request->fullname,
             'username' => $request->username,
             'email' => $request->email,
@@ -52,7 +52,10 @@ class AuthController extends Controller
             'is_active' => true,
         ]);
     
-        return redirect()->route('home')->with('success', 'Registrasi berhasil. Silakan login.');
+
+        Auth::login($user);
+
+        return redirect()->route('lengkapi_data')->with('success', 'Registrasi berhasil, silakan lengkapi data.');
     }
 
     public function logout()

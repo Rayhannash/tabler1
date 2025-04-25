@@ -9,13 +9,15 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', function () {
         return view('pages.auth.registrasi');
     })->name('register');
-    
+
 
     Route::prefix('auth')->name('auth.')->group(function () {
         Route::post('login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
         Route::post('register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+
     });
 });
+
 
 Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function () {
     Route::get('beranda', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -23,9 +25,6 @@ Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function 
     Route::resource('menu', App\Http\Controllers\MenuController::class);
     
     Route::get('test', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('test');
-    Route::get('user_extras', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('user_extras');
-    Route::post('user_extras', [App\Http\Controllers\UserExtrasController::class, 'store'])->name('user_extras.store');
-
     
 
     Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
@@ -46,8 +45,16 @@ Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function 
     
     //Permohonan
     Route::get('buat-permohonan', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('buat_permohonan');
+
     
 });
 
+Route::post('/master_sklh/{id}/verification', [App\Http\Controllers\MasterSklhController::class, 'verification'])
+    ->name('master_sklh.verification');
+
 Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
 
+Route::get('user_extras', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('user_extras');
+Route::post('user_extras', [App\Http\Controllers\UserExtrasController::class, 'store'])->name('user_extras.store');
+
+Route::get('user_extras/viewsklh', [App\Http\Controllers\UserExtrasController::class, 'show']) ->name('user_extras.viewsklh');

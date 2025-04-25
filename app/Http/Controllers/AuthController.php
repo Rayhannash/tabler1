@@ -40,7 +40,6 @@ class AuthController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'role_id' => 'required|in:1,2', // Role harus 1 atau 2
         ]);
     
         // Membuat pengguna baru
@@ -49,7 +48,7 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role_id' => $request->role_id, // Menyimpan role_id yang dipilih
+            'role_id' => 2,
             'is_active' => true,
         ]);
     

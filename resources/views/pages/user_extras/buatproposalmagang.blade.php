@@ -20,7 +20,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title">FORM PERMOHONAN MAGANG</h3>
                         <button type="submit" class="btn btn-primary text-white">
-                            <span class="mdi mdi-content-save"> Simpan</span>
+                            <span class="mdi mdi-send"> Kirim</span>
                         </button>
                     </div>
 

@@ -128,9 +128,10 @@
                                     @endphp
 
                                     @if ($status == 'belum')
-                                                                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#verify_{{ $dt->id }}">
+                                        <a href="#verify_{{ $dt->id }}" class="btn btn-sm btn-success btn-verify" data-toggle="modal" data-target="#verify_{{ $dt->id }}"
+                                            style="line-height: 1; min-height: auto; height: auto;">
                                             <span class="mdi mdi-check-bold"></span>
-                                        </button>
+                                        </a>
                                     @elseif ($status == 'sudah')
                                         <a href="#" class="btn btn-sm btn-danger btn-suspend" data-toggle="modal" data-target="#suspend_{{ $dt->id }}"
                                             style="line-height: 1; min-height: auto; height: auto;">
@@ -152,33 +153,6 @@
                                     </a>
                                 </td>
                             </tr>
-
-<!-- MODAL VERIFIKASI -->
-    <form action="{{ route('master_sklh.verification', ['id' => $dt->id]) }}" method="post">
-        @csrf
-        @method('POST')
-        <div class="modal fade" id="verify_{{ $dt->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="verifyLabel_{{ $dt->id }}" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content bg-success text-white">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="verifyLabel_{{ $dt->id }}">Verifikasi Lembaga</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Tutup">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Yakin ingin memverifikasi <strong>{{ $dt->nama }}</strong>?
-                        <input type="hidden" name="id" value="{{ $dt->id }}">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-dark">Verifikasi</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
                         @endforeach
                         @if($data->isEmpty())
                             <tr>

@@ -22,9 +22,9 @@
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title">Lengkapi data!</h3>
-                        <a class="btn btn-primary text-white" href="/">
-                            <span class="mdi mdi-content-save"> Simpan</span>
-                        </a>
+                        <button type="submit" class="btn btn-primary text-white">
+                            <span class="mdi mdi-content-save"></span> Simpan
+                        </button>
                     </div>
 
                     <div class="card-body">

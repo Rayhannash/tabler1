@@ -150,10 +150,12 @@
                     aria-label="Open user menu">
                     @php $avatarImg = asset('static/avatars/000m.jpg'); @endphp
                     <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}');"></span>
+                    @auth
                     <div class="d-none d-xl-block ps-2">
                         <div class="fw-bolder">{{ Auth::user()->fullname }}</div>
                         <div class="mt-1 small text-secondary">{{ Auth::user()->role->name }}</div>
                     </div>
+                    @endauth
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <!-- <a href="#" class="dropdown-item">Status</a>

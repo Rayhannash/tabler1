@@ -12,12 +12,10 @@
 
                         <form method="POST" action="{{ route('auth.register') }}">
                             @csrf
-
                             <h2 class="h3 text-center mb-4">Buat Akun</h2>
-
                             <div class="mb-3">
                                 <label for="fullname" class="form-label">Nama Lengkap</label>
-                                <input type="text" name="fullname" class="form-control @error('fullname') is-invalid @enderror" value="{{ old('fullname') }}" required>
+                                <input type="text" name="fullname" class="form-control @error('fullname') is-invalid @enderror" value="{{ old('fullname')}}" required>
                                 @error('fullname')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

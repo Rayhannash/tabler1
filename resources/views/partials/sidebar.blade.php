@@ -143,6 +143,7 @@
                     </div>
                 </div>
             </div>
+            @auth
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                     <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
@@ -161,13 +162,18 @@
                 </div>
             </div>
         </div>
+        @endauth
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
+            @if(session('sidebar_sess') && is_array(session('sidebar_sess')))
                 @foreach(session('sidebar_sess') as $menuItem)
                     @if($menuItem)
                         @include('partials.menu-item', ['menuItem' => $menuItem])
                     @endif
                 @endforeach
+            @else
+                <li>Tidak ada menu tersedia.</li> <!-- Menampilkan pesan jika session kosong -->
+            @endif
             </ul>
         </div>
     </div>

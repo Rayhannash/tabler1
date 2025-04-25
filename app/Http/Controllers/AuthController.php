@@ -52,7 +52,7 @@ class AuthController extends Controller
             'is_active' => true,
         ]);
     
-        return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
+        return redirect()->route('home')->with('success', 'Registrasi berhasil. Silakan login.');
     }
 
     public function logout()

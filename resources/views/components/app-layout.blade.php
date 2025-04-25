@@ -12,10 +12,9 @@
 @include('partials.head', ['pageTitle' => $pageTitle])
 
 
-<body class="{{ $pageTitle <> 'Login' ? 'layout-fluid' : 'd-flex flex-column' }}"data-bs-theme="light">
-    <div class="page">
+<body class="{{ in_array($pageTitle, ['Login', 'Daftar Akun Baru']) ? 'd-flex flex-column' : 'layout-fluid' }}" data-bs-theme="light">
         <!-- Sidebar -->
-        @if($pageTitle <> 'Login')
+        @if(!in_array($pageTitle, ['Login', 'Daftar Akun Baru']))
             @include('partials.sidebar')
             @include('partials.navbar')
             <div class="page-wrapper">
@@ -23,7 +22,7 @@
             <!-- Page body -->
             {{ $slot }}
             <!-- Footer -->
-        @if($pageTitle <> 'Login')
+        @if(!in_array($pageTitle, ['Login', 'Daftar Akun Baru']))
             @include('partials.footer')
             </div>
         @endif
@@ -34,3 +33,4 @@
 
 </html>
 <!--  -->
+

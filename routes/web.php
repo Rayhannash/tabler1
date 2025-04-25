@@ -19,10 +19,6 @@ Route::middleware('guest')->group(function () {
 });
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> bcf1ad2486e3a3b909d1c20c9f71212c4321aba6
 Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function () {
     Route::get('beranda', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('menu/get-data-all', [App\Http\Controllers\MenuController::class, 'getDataAll'])->name('menu.get-data-all');

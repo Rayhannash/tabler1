@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class BalasanMgng extends Model
+{
+    protected $table = 'balasan_mgng';
+
+    public function master()
+    {
+        return $this->belongsTo(MasterMgng::class, 'master_mgng_id');
+    }
+}

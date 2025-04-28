@@ -26,6 +26,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'akun_diverifikasi',
         'is_active',
     ];
 

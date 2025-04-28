@@ -30,14 +30,8 @@ Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function 
     Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
     Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
     Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');
-    Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');
-    
-    
     
     Route::get('Lembaga Pendidikan', [App\Http\Controllers\MasterSklhController::class, 'index'])->name('master_sklh');
-    Route::resource('master-sklh', App\Http\Controllers\MasterSklhController::class);
-
-    Route::get('master-sklh/edit/{id}', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
 
     Route::get('lengkapi-data', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('lengkapi_data');
     Route::get('detail-data', [App\Http\Controllers\UserExtrasController::class, 'show'])->name('detail_data');
@@ -49,8 +43,13 @@ Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function 
     
 });
 
+Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
 Route::post('/master_sklh/{id}/verification', [App\Http\Controllers\MasterSklhController::class, 'verification'])
     ->name('master_sklh.verification');
+Route::delete('/master_sklh/{id}/delete', [App\Http\Controllers\MasterSklhController::class, 'delete'])
+    ->name('master_sklh.delete');
+
+    Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
 
 Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
 
@@ -58,3 +57,14 @@ Route::get('user_extras', [App\Http\Controllers\UserExtrasController::class, 'in
 Route::post('user_extras', [App\Http\Controllers\UserExtrasController::class, 'store'])->name('user_extras.store');
 
 Route::get('user_extras/viewsklh', [App\Http\Controllers\UserExtrasController::class, 'show']) ->name('user_extras.viewsklh');
+
+Route::post('/editsklh', [App\Http\Controllers\UserExtrasController::class, 'updatesklh'])->name('master_sklh.update');
+    
+Route::post('/user-extras/simpan-proposal', [App\Http\Controllers\UserExtrasController::class, 'simpanProposalMagang'])->name('user_extras.simpan_proposal');
+
+Route::get('/proposal-masuk', [App\Http\Controllers\ProposalMasukController::class, 'index'])->name('proposal_masuk');
+
+Route::get('/user/permohonan', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanKeluar'])->name('user.daftar_permohonan');
+Route::get('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'lihatPermohonan'])->name('user_extras.lihat_permohonan');
+Route::get('/user/permohonan/{id}/addpesertamagang', [App\Http\Controllers\UserExtrasController::class, 'addPesertaMagang'])->name('user.addpesertamagang');
+Route::delete('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapusPermohonan'])->name('user.hapus_permohonan');

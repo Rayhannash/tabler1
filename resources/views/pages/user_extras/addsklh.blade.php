@@ -23,7 +23,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title">Lengkapi data!</h3>
                         <button type="submit" class="btn btn-primary text-white">
-                            <span class="mdi mdi-content-save"></span> Simpan
+                            <span class="mdi mdi-content-save"> Simpan</span>
                         </button>
                     </div>
 

@@ -56,11 +56,27 @@ public function verification($id, Request $req)
     }
 }
 
-public function edit($id)
-{
-    $sklh = MasterSklh::findOrFail($id);
-    return view('pages.master_sklh.edit', compact('data'));
-}
+public function delete(Request $req)
+  {
+    $result = MasterSklh::find($req->id);
+    if ($result->delete()) {
+      return redirect()->route('master_sklh')->with('result', 'delete');
+    } else {
+      return back()->with('result', 'fail-delete');
+    }
+  }
+
+  public function edit($id)
+  {
+      $data = MasterSklh::findOrFail($id); 
+      return view('pages.master_sklh.edit', compact('data'));
+  }
+  
+  public function update($id, Request $req)
+  {
+      $sklh = MasterSklh::find($id);
+      // Proses update data di sini
+  }
 
 
 

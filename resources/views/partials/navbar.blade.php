@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none">
+<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #ffff;">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
             aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,13 +148,18 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    @php $avatarImg = asset('static/avatars/000m.jpg'); @endphp
-                    <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}');"></span>
                     @auth
-                    <div class="d-none d-xl-block ps-2">
-                        <div class="fw-bolder">{{ Auth::user()->fullname }}</div>
-                        <div class="mt-1 small text-secondary">{{ Auth::user()->role->name }}</div>
-                    </div>
+                        @php
+                            $avatarImg = Auth::user()->role->name == 'Super Admin'
+                                ? asset('static/avatars/Jatim.png')
+                                : asset('static/avatars/TWH.jpg');
+                        @endphp
+
+                        <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}');"></span>
+                        <div class="d-none d-xl-block ps-2">
+                            <div class="fw-bolder">{{ Auth::user()->fullname }}</div>
+                            <div class="mt-1 small text-secondary">{{ Auth::user()->role->name }}</div>
+                        </div>
                     @endauth
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

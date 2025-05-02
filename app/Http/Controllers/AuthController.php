@@ -50,10 +50,12 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
             'role_id' => 2,
             'is_active' => true,
+            'is_data_completed' => false
         ]);
     
 
         Auth::login($user);
+        
 
         return redirect()->route('lengkapi_data')->with('success', 'Registrasi berhasil, silakan lengkapi data.');
     }

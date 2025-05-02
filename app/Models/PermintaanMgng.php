@@ -29,4 +29,8 @@ public function balasan()
     return $this->hasOne(BalasanMgng::class, 'master_mgng_id');
     }
 
+public function peserta()
+    {
+        return $this->hasMany(MasterPsrt::class, 'permintaan_mgng_id');
+    }
 }

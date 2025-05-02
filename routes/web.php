@@ -27,9 +27,7 @@ Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function 
     Route::get('test', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('test');
     
 
-    Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
-    Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
-    Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');
+
     
     Route::get('Lembaga Pendidikan', [App\Http\Controllers\MasterSklhController::class, 'index'])->name('master_sklh');
 
@@ -65,6 +63,25 @@ Route::post('/user-extras/simpan-proposal', [App\Http\Controllers\UserExtrasCont
 Route::get('/proposal-masuk', [App\Http\Controllers\ProposalMasukController::class, 'index'])->name('proposal_masuk');
 
 Route::get('/user/permohonan', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanKeluar'])->name('user.daftar_permohonan');
-Route::get('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'lihatPermohonan'])->name('user_extras.lihat_permohonan');
-Route::get('/user/permohonan/{id}/addpesertamagang', [App\Http\Controllers\UserExtrasController::class, 'addPesertaMagang'])->name('user.addpesertamagang');
+// Route::get('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'lihatPermohonan'])->name('user_extras.lihat_permohonan');
+
+
+//Data Peserta Magang
+Route::get('addpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'addPesertaMagang'])->name('user.addpesertamagang');
+Route::post('simpanpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'simpanpesertamagang'])->name('user.simpanpeserta');
+
+Route::post('/user/permohonan/{id}/update-status', [App\Http\Controllers\UserExtrasController::class, 'updatestatuspermohonan'])->name('user.updatestatuspermohonan');
+
+Route::delete('/user/hapus-peserta-magang/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapuspesertamagang'])->name('user.hapuspesertamagang');
+
+
+
+Route::get('/permohonan/{id}/detail', [App\Http\Controllers\UserExtrasController::class, 'viewpermohonankeluar'])->name('user.viewpermohonankeluar');
+
+
+
 Route::delete('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapusPermohonan'])->name('user.hapus_permohonan');
+
+Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
+Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
+Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');

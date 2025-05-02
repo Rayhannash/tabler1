@@ -14,6 +14,7 @@ class MasterPsrt extends Model
 
     // Tentukan kolom-kolom yang dapat diisi (fillable)
     protected $fillable = [
+        'permintaan_mgng_id',
         'nama_peserta',
         'jenis_kelamin',
         'nik_peserta',
@@ -39,25 +40,21 @@ class MasterPsrt extends Model
         'id_bdng_member',
     ];
 
-    // Tentukan kolom-kolom yang tidak dapat diisi (guarded)
-    // protected $guarded = ['id'];
-
     // Jika tabel memiliki timestamp 'created_at' dan 'updated_at'
     public $timestamps = true;
 
-    /**
-     * Relasi dengan tabel master_bdng_member
-     */
     public function bdngMember()
     {
         return $this->belongsTo(MasterBdngMember::class, 'id_bdng_member');
     }
 
-    /**
-     * Relasi dengan tabel master_mgng
-     */
-    public function masterMgng()
+    public function masterPsrt()
     {
-        return $this->belongsTo(MasterMgng::class, 'master_mgng_id');
+        return $this->hasMany(MasterPsrt::class, 'permintaan_mgng_id');
     }
+
+    public function permintaan()
+{
+    return $this->belongsTo(PermintaanMgng::class, 'permintaan_mgng_id');
+}
 }

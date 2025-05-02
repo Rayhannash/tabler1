@@ -37,47 +37,48 @@
                         </thead>
                         <tbody>
                         @foreach($data as $dt)
-                            <tr>
-                                <td>
-                                    {{-- Data Lembaga Pendidikan --}}
-                                    <b>Lembaga Pendidikan</b><br>
-                                    <small>
-                                    <i class="fa fa-university"></i> {{ $dt->masterMgng->masterSklh->user->fullname ?? 'Tidak Diketahui' }}<br>
-<i class="fa fa-map"></i> {{ $dt->masterMgng->masterSklh->kabko_sklh ?? 'Provinsi Lainnya' }}
-
-                                    </small>
-                                    <hr>
-                                    {{-- Data Narahubung --}}
-                                    <b>Narahubung</b><br>
-                                    <small>
-                                    <i class="fa fa-user"></i> {{ $dt->masterMgng->masterSklh->nama_narahubung ?? 'Tidak Diketahui' }}<br>
-<i class="fa fa-venus-mars"></i> {{ ucfirst($dt->masterMgng->masterSklh->jenis_kelamin_narahubung ?? 'Tidak Diketahui') }}<br>
-<i class="fa fa-briefcase"></i> {{ $dt->masterMgng->masterSklh->jabatan_narahubung ?? 'Tidak Diketahui' }}<br>
-<i class="fa fa-phone"></i> {{ $dt->masterMgng->masterSklh->handphone_narahubung ?? 'Tidak Diketahui' }}
-
-                                    </small>
-                                </td>
-                                <td>
-                                    {{-- Data Surat Permohonan bisa ditambahkan disini --}}
-                                    <table>
-                                        <tr>
-                                            <td><i class="fa fa-file-text"></i></td>
-                                            <td width="5pt"></td>
-                                            <td>{{ $dt->surat_permohonan ?? 'Belum Ada' }}</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>{{ $dt->nis_nim }}</td>
-                                <td>{{ $dt->nama_peserta }}</td>
-                                <td>{{ $dt->program_studi }}</td>
-                                <td>{{ $dt->opsi_peserta }}</td>
-                                <td>
-                                    {{-- OPSI Actions (misalnya verifikasi atau suspend) --}}
-                                    <button type="button" class="btn btn-sm btn-success">
-                                        <span class="mdi mdi-check-bold"></span> Verifikasi
-                                    </button>
-                                </td>
-                            </tr>
+                            {{-- Filter: Menampilkan hanya yang status_surat_permintaan = "terkirim" dan status_surat_balasan = "belum" --}}
+                            @if($dt->status_surat_permintaan == 'terkirim')
+                                <tr>
+                                    <td>
+                                        {{-- Data Lembaga Pendidikan --}}
+                                        <b>Lembaga Pendidikan</b><br>
+                                        <small>
+                                        <i class="fa fa-university"></i> {{ $dt->masterMgng->masterSklh->user->fullname ?? 'Tidak Diketahui' }}<br>
+                                        <i class="fa fa-map"></i> {{ $dt->masterMgng->masterSklh->kabko_sklh ?? 'Provinsi Lainnya' }}
+                                        </small>
+                                        <hr>
+                                        {{-- Data Narahubung --}}
+                                        <b>Narahubung</b><br>
+                                        <small>
+                                        <i class="fa fa-user"></i> {{ $dt->masterMgng->masterSklh->nama_narahubung ?? 'Tidak Diketahui' }}<br>
+                                        <i class="fa fa-venus-mars"></i> {{ ucfirst($dt->masterMgng->masterSklh->jenis_kelamin_narahubung ?? 'Tidak Diketahui') }}<br>
+                                        <i class="fa fa-briefcase"></i> {{ $dt->masterMgng->masterSklh->jabatan_narahubung ?? 'Tidak Diketahui' }}<br>
+                                        <i class="fa fa-phone"></i> {{ $dt->masterMgng->masterSklh->handphone_narahubung ?? 'Tidak Diketahui' }}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        {{-- Data Surat Permohonan --}}
+                                        <table>
+                                            <tr>
+                                                <td><i class="fa fa-file-text"></i></td>
+                                                <td width="5pt"></td>
+                                                <td>{{ $dt->surat_permohonan ?? 'Belum Ada' }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>{{ $dt->nis_nim }}</td>
+                                    <td>{{ $dt->nama_peserta }}</td>
+                                    <td>{{ $dt->program_studi }}</td>
+                                    <td>{{ $dt->opsi_peserta }}</td>
+                                    <td>
+                                        {{-- OPSI Actions (misalnya verifikasi atau suspend) --}}
+                                        <button type="button" class="btn btn-sm btn-success">
+                                            <span class="mdi mdi-check-bold"></span> Verifikasi
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                         @if($data->isEmpty())
                             <tr>

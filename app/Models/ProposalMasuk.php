@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProposalMasuk extends Model
 {
-    protected $table = 'proposal_masuk'; // kalau nggak pakai naming default
+    protected $table = 'proposal_masuk'; 
     protected $fillable = [
         'id_sklh',
         'nomor_surat_permintaan',

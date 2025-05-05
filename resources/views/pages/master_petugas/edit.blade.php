@@ -2,7 +2,7 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Edit Data Penilai" />
+                
             </div>
         </div>
     </x-page-header>
@@ -25,7 +25,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('master_petugas.update', $petugas->id) }}" method="POST">
+                    <form action="#" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -78,7 +78,7 @@
 
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                            <a href="{{ route('master_petugas') }}" class="btn btn-secondary">Kembali</a>
+                            <a href="{{ route('daftar_petugas') }}" class="btn btn-secondary">Kembali</a>
                         </div>
                     </form>
                 </div>

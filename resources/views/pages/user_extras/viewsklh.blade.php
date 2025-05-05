@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="card-body">
                                         <dl>
-                                            <dt>Nama User</dt>
+                                            <dt>Nama</dt>
                                             <dd>{{ $dt->user->fullname }}</dd>
                                             <dt>Alamat</dt>
                                             <dd>{{ $dt->alamat_sklh }}</dd>

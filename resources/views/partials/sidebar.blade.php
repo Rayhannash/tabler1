@@ -12,7 +12,7 @@
 
             <!-- Ikon Toggle -->
             <span class="mdi mdi-reorder-horizontal text-white fs-4 cursor-pointer" id="toggle-btn"></span>
-        </div>
+        </div>
 
         <div class="navbar-nav flex-row d-lg-none">
             <div class="nav-item d-none d-lg-flex me-3">

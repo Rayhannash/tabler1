@@ -28,7 +28,7 @@ class User extends Authenticatable
         'password',
         'akun_diverifikasi',
         'is_active',
-        'is_data_complete',
+        'is_data_completed',
     ];
 
     /**

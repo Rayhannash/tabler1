@@ -12,6 +12,7 @@
 @include('partials.head', ['pageTitle' => $pageTitle])
 
 
+
 <body class="{{ in_array($pageTitle, ['Login', 'Daftar Akun Baru']) ? 'd-flex flex-column' : 'layout-fluid' }}" data-bs-theme="light">
         <!-- Sidebar -->
         @if(!in_array($pageTitle, ['Login', 'Daftar Akun Baru']))

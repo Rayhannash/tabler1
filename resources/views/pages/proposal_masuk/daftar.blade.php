@@ -9,7 +9,6 @@
 
     <div class="page-body">
         <div class="container-xl">
-            @if(Auth::user()->privilege != 'operator')
             <div class="card">
                 <div class="card-header">
                     <form method="GET" action="{{ route('proposal_masuk') }}" class="d-flex">
@@ -37,47 +36,69 @@
                         </thead>
                         <tbody>
                         @foreach($data as $dt)
-                            <tr>
-                                <td>
-                                    {{-- Data Lembaga Pendidikan --}}
-                                    <b>Lembaga Pendidikan</b><br>
-                                    <small>
-                                    <i class="fa fa-university"></i> {{ $dt->masterMgng->masterSklh->user->fullname ?? 'Tidak Diketahui' }}<br>
-<i class="fa fa-map"></i> {{ $dt->masterMgng->masterSklh->kabko_sklh ?? 'Provinsi Lainnya' }}
+                            {{-- Filter: Menampilkan hanya yang status_surat_permintaan = "terkirim" dan status_surat_balasan = "belum" --}}
+                            @if($dt->status_surat_permintaan == 'terkirim')
+                                <tr>
+                                    <td>
+                                        {{-- Data Lembaga Pendidikan --}}
+                                        <b>Lembaga Pendidikan</b><br><br>
+                                        <span class="mdi mdi-bank"></span> {{ $dt->masterMgng->masterSklh->user->fullname ?? 'Tidak Diketahui' }}<br>
+                                        <span class="mdi mdi-map-marker"></span> {{ $dt->masterMgng->masterSklh->kabko_sklh ?? 'Provinsi Lainnya' }}
+                                        <br><br>
+                                        {{-- Data Narahubung --}}
+                                        <b>Narahubung</b><br><br>
+                                        <span class="mdi mdi-account"></span> {{ $dt->masterMgng->masterSklh->nama_narahubung ?? 'Tidak Diketahui' }}<br>
+                                        <span class="mdi mdi-gender-male-female"></span> {{ ucfirst($dt->masterMgng->masterSklh->jenis_kelamin_narahubung ?? 'Tidak Diketahui') }}<br>
+                                        <span class="mdi mdi-briefcase-variant"></span> {{ $dt->masterMgng->masterSklh->jabatan_narahubung ?? 'Tidak Diketahui' }}<br>
+                                        <span class="mdi mdi-phone"></span> {{ $dt->masterMgng->masterSklh->handphone_narahubung ?? 'Tidak Diketahui' }}
+                                    </td>
+                                    <td>
+                                        {{-- Data Surat Permohonan --}}
+                                        <table>
+                                            <span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}<br>
+                                            <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}<br>
+                                            <span class="mdi mdi-email"></span> <a href="{{ asset('storage/scan_surat_permintaan/'.$dt->scan_surat_permintaan) }}" target="_blank"> Surat Permohonan</a><br>
+                                            <span class="mdi mdi-file"></span> <a href="{{ asset('storage/scan_proposal_magang/'.$dt->scan_proposal_magang) }}" target="_blank"> Proposal Magang</a><br>
+                                        </table>
+                                    </td>
+                                    <td class="text-center">
+    @foreach($data2 as $de)
+        @if($de->permintaan_mgng_id == $dt->id)
+            {{ $de->nis_peserta }}<br>
+        @endif
+    @endforeach
+</td>
 
-                                    </small>
-                                    <hr>
-                                    {{-- Data Narahubung --}}
-                                    <b>Narahubung</b><br>
-                                    <small>
-                                    <i class="fa fa-user"></i> {{ $dt->masterMgng->masterSklh->nama_narahubung ?? 'Tidak Diketahui' }}<br>
-<i class="fa fa-venus-mars"></i> {{ ucfirst($dt->masterMgng->masterSklh->jenis_kelamin_narahubung ?? 'Tidak Diketahui') }}<br>
-<i class="fa fa-briefcase"></i> {{ $dt->masterMgng->masterSklh->jabatan_narahubung ?? 'Tidak Diketahui' }}<br>
-<i class="fa fa-phone"></i> {{ $dt->masterMgng->masterSklh->handphone_narahubung ?? 'Tidak Diketahui' }}
+<td class="text-center">
+    @foreach($data2 as $de)
+        @if($de->permintaan_mgng_id == $dt->id)
+            {{ $de->nama_peserta }}<br>
+        @endif
+    @endforeach
+</td>
 
-                                    </small>
-                                </td>
-                                <td>
-                                    {{-- Data Surat Permohonan bisa ditambahkan disini --}}
-                                    <table>
-                                        <tr>
-                                            <td><i class="fa fa-file-text"></i></td>
-                                            <td width="5pt"></td>
-                                            <td>{{ $dt->surat_permohonan ?? 'Belum Ada' }}</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td>{{ $dt->nis_nim }}</td>
-                                <td>{{ $dt->nama_peserta }}</td>
-                                <td>{{ $dt->program_studi }}</td>
-                                <td>{{ $dt->opsi_peserta }}</td>
-                                <td>
-                                    {{-- OPSI Actions (misalnya verifikasi atau suspend) --}}
-                                    <button type="button" class="btn btn-sm btn-success">
-                                        <span class="mdi mdi-check-bold"></span> Verifikasi
-                                    </button>
-                                </td>
-                            </tr>
+<td class="text-center">
+    @foreach($data2 as $de)
+        @if($de->permintaan_mgng_id == $dt->id)
+            {{ $de->program_studi }}<br>
+        @endif
+    @endforeach
+</td>
+
+<td class="text-center">
+                                            @foreach($data2 as $de)
+                                                @if($de->permintaan_mgng_id == $dt->id)
+                                                    <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat data peserta</a><br>
+                                                @endif
+                                            @endforeach
+                                        </td>
+
+                                        <td style="text-align: center">
+                                            <a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-reply"></span></a>
+                                            <button type="button" class="btn btn-sm btn-danger btn-trash" data-id="{{$dt->id}}"><span class="mdi mdi-delete"></span></i></button>
+                                        </td>
+                                </tr>
+                            @endif
                         @endforeach
                         @if($data->isEmpty())
                             <tr>
@@ -88,7 +109,6 @@
                     </table>
                 </div>
             </div>
-            @endif
         </div>
     </div>
 </x-app-layout>

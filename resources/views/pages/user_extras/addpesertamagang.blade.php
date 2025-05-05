@@ -2,7 +2,17 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Tambah Peserta" />
+                <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                    <li class="breadcrumb-item">
+                        <a href="#">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Daftar Permohonan</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Tambah Peserta</a>
+                    </li>
+                </ol>
             </div>
         </div>
     </x-page-header>
@@ -17,9 +27,9 @@
                 </div>
             @endif
 
-            @if(Auth::user()->privilege=='operator' && Auth::user()->akun_diverifikasi=='sudah')
-                @if($rc->status_surat_permintaan == 'belum')
-                    <form role="form" method="POST" enctype="multipart/form-data" action="{{ route('user.addpesertamagang', ['id' => $rc->id]) }}">
+            @if(Auth::user()->akun_diverifikasi=='sudah')
+                @if($permohonan->status_surat_permintaan == 'belum')
+                    <form action="{{ route('user.simpan-peserta-magang', ['id' => $permohonan->id]) }}" role="form" enctype="multipart/form-data"  method="POST">
                         @csrf
                         <div class="card mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
@@ -154,5 +164,4 @@
             @endif
         </div>
     </div>
-
 </x-app-layout>

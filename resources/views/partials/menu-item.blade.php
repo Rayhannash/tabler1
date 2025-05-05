@@ -2,6 +2,10 @@
     $hasChildren = !empty($menuItem->children) && count($menuItem->children) > 0;
     $menuSlug = Str::slug($menuItem->name);
     $maxDepth = 3;
+    //$loggedUser = Auth::user();
+    
+    //$checkMasterSekolah = DB::table('master_sklh')->where('id_user', $loggedUser->id)->get();
+    //dd($checkMasterSekolah);
 
     // Fungsi untuk mengecek active state
     $isMenuActive = function($item) use (&$isMenuActive) {

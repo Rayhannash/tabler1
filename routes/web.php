@@ -65,6 +65,9 @@ Route::post('/user-extras/simpan-proposal', [App\Http\Controllers\UserExtrasCont
 Route::get('/proposal-masuk', [App\Http\Controllers\ProposalMasukController::class, 'index'])->name('proposal_masuk');
 
 Route::get('/user/permohonan', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanKeluar'])->name('user.daftar_permohonan');
-Route::get('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'lihatPermohonan'])->name('user_extras.lihat_permohonan');
 Route::get('/user/permohonan/{id}/addpesertamagang', [App\Http\Controllers\UserExtrasController::class, 'addPesertaMagang'])->name('user.addpesertamagang');
+Route::post('/user/permohonan/{id}/simpanpesertamagang', [App\Http\Controllers\UserExtrasController::class, 'simpanPesertaMagang'])->name('user.simpan-peserta-magang');
+
 Route::delete('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapusPermohonan'])->name('user.hapus_permohonan');
+
+// Route::get('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'lihatPermohonan'])->name('user_extras.lihat_permohonan');

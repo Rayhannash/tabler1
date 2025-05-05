@@ -10,6 +10,9 @@
     <li class="breadcrumb-item">
       <a href="{{ route('user.daftar_permohonan') }}">Daftar Permohonan</a>
     </li>
+    <li class="breadcrumb-item">
+                            <a href="{{ route('user.viewpermohonankeluar', ['id' => $permohonan->id]) }}">Detail Permohonan</a>
+                        </li>
     <li class="breadcrumb-item muted" aria-current="page">
       Tambah Peserta
     </li>

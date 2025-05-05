@@ -175,6 +175,8 @@ protected function uploadFile($file, $folder)
     return $filename;
 }
 
+    
+
 public function daftarPermohonanKeluar()
 {
     // Ambil data master_sklh berdasarkan user yang login
@@ -192,15 +194,14 @@ public function daftarPermohonanKeluar()
     }
 
     // Ambil semua permintaan magang dengan relasi balasan
-    $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)
-        ->where('status_surat_permintaan', 'belum')
-        ->get();
+    $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)->get();
 
     // Ambil data peserta magang jika perlu
     $data2 = MasterPsrt::all();
 
     return view('pages.user_extras.daftarpermohonankeluar', compact('permintaan', 'data2'));
 }
+
 
 public function viewpermohonankeluar($id)
 {
@@ -214,34 +215,75 @@ public function viewpermohonankeluar($id)
     return view('pages.user_extras.viewpermohonankeluar', compact('permohonan', 'peserta'));
 }
 
-public function updatestatuspermohonan($id, Request $request)
+
+public function updatestatuspermohonan(Request $request, $id)
 {
     // Ambil permohonan berdasarkan ID
     $permohonan = PermintaanMgng::findOrFail($id);
-    
-    // Pastikan status permohonan saat ini adalah 'belum'
-    if ($permohonan->status_surat_permintaan === 'belum') {
-        // Hapus peserta yang dipilih
-        if ($request->has('hapus_peserta_id')) {
-            foreach ($request->hapus_peserta_id as $pesertaId) {
-                $peserta = MasterPsrt::find($pesertaId);
-                if ($peserta) {
-                    $peserta->delete(); // Hapus peserta
-                }
-            }
-        }
 
-        // Update status menjadi 'terkirim'
-        $permohonan->status_surat_permintaan = 'terkirim';
-        $permohonan->save();  // Simpan perubahan ke database
+    // Pastikan status saat ini adalah 'belum'
+    if ($permohonan->status_surat_permintaan == 'belum') {
+        // Ubah status menjadi 'terkirim' (atau Menunggu Persetujuan)
+        $permohonan->status_surat_permintaan = 'terkirim'; // Atur status menjadi "terkirim"
+        $permohonan->save(); // Simpan perubahan
 
-        // Redirect ke daftar permohonan setelah pembaruan
-        return redirect()->route('user.daftar_permohonan')->with('result', 'update');
-    } else {
-        // Jika status bukan 'belum', tampilkan pesan gagal
-        return redirect()->route('user.daftar_permohonan')->with('result', 'fail-update');
+        // Redirect ke halaman yang sama (viewpermohonankeluar) setelah mengubah status
+        return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
+                         ->with('result', 'success'); // Notifikasi berhasil
     }
+
+    // Jika status tidak sesuai
+    return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
+                     ->with('result', 'fail-update'); // Notifikasi gagal
 }
+
+public function editpermohonan($id)
+{
+    // Ambil permohonan berdasarkan ID yang diberikan
+    $permohonan = PermintaanMgng::findOrFail($id);
+
+    // Mengirimkan data permohonan ke view
+    return view('pages.user_extras.editpermohonankeluar', compact('permohonan'));
+}
+
+public function updatepermohonan(Request $request, $id)
+{
+    // Validasi input
+    $validated = $request->validate([
+        'nomor_surat_permintaan' => 'required',
+        'tanggal_surat_permintaan' => 'required|date',
+        'perihal_surat_permintaan' => 'required',
+        'ditandatangani_oleh' => 'required',
+        'scan_surat_permintaan' => 'nullable|file|mimes:pdf,jpg,png|max:10240',
+        'scan_proposal_magang' => 'nullable|file|mimes:pdf,jpg,png|max:10240',
+    ]);
+
+    // Ambil permohonan berdasarkan ID
+    $permohonan = PermintaanMgng::findOrFail($id);
+
+    // Update data permohonan dengan input yang telah divalidasi
+    $permohonan->update($validated);
+
+    // Handle file upload jika ada
+    if ($request->hasFile('scan_surat_permintaan')) {
+        $scan_surat_permintaan = $this->uploadFile($request->file('scan_surat_permintaan'), 'scan_surat_permintaan');
+        $permohonan->scan_surat_permintaan = $scan_surat_permintaan;
+    }
+
+    if ($request->hasFile('scan_proposal_magang')) {
+        $scan_proposal_magang = $this->uploadFile($request->file('scan_proposal_magang'), 'scan_proposal_magang');
+        $permohonan->scan_proposal_magang = $scan_proposal_magang;
+    }
+
+    // Simpan perubahan permohonan
+    $permohonan->save();
+
+    // Redirect ke halaman detail permohonan setelah berhasil diupdate
+    return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
+                     ->with('result', 'success');
+}
+
+
 
 
 public function addPesertaMagang($id)
@@ -280,20 +322,55 @@ public function simpanpesertamagang($id, Request $request)
         ->with('result', 'success');
 }
 
-public function hapuspesertamagang($id)
+public function hapusPesertaMagang(Request $request, $id)
 {
-    // Cari peserta berdasarkan ID
-    $result = MasterPsrt::findOrFail($id);
+    // Pastikan peserta ada
+    $peserta = MasterPsrt::findOrFail($id);
 
     // Hapus peserta
-    if ($result->delete()) {
-        // Redirect kembali dengan pesan sukses
-        return back()->with('result', 'delete');
-    } else {
-        // Jika gagal menghapus peserta
-        return back()->with('result', 'fail-delete');
-    }
+    $peserta->delete();
+
+    // Redirect kembali ke halaman detail permohonan tanpa mengubah status
+    return redirect()->route('user.viewpermohonankeluar', ['id' => $peserta->permintaan_mgng_id])->with('result', 'success');
 }
+
+public function editPesertaMagang($id)
+{
+    // Ambil peserta berdasarkan ID yang diberikan
+    $peserta = MasterPsrt::findOrFail($id);
+
+    // Ambil permohonan yang terkait dengan peserta
+    $permohonan = PermintaanMgng::findOrFail($peserta->permintaan_mgng_id);
+
+    // Mengirimkan data peserta dan permohonan ke view
+    return view('pages.user_extras.editpesertamagang', compact('peserta', 'permohonan'));
+}
+
+public function updatePesertaMagang(Request $request, $id)
+{
+    // Ambil data peserta berdasarkan ID
+    $peserta = MasterPsrt::findOrFail($id);
+
+    // Validasi input
+    $validated = $request->validate([
+        'nama_peserta' => 'required',
+        'nik_peserta' => 'required|unique:master_psrt,nik_peserta,' . $peserta->id,
+        'nis_peserta' => 'required|unique:master_psrt,nis_peserta,' . $peserta->id,
+        'program_studi' => 'required',
+        'no_handphone_peserta' => 'required|unique:master_psrt,no_handphone_peserta,' . $peserta->id,
+        'email_peserta' => 'required|email|unique:master_psrt,email_peserta,' . $peserta->id,
+        'jenis_kelamin' => 'required',
+    ]);
+
+    // Update data peserta dengan input yang telah divalidasi
+    $peserta->update($validated);
+
+    // Redirect ke halaman detail permohonan setelah berhasil diupdate
+    return redirect()->route('user.viewpermohonankeluar', ['id' => $peserta->permintaan_mgng_id])
+                     ->with('result', 'success');
+}
+
+
 
     public function hapusPermohonan($id)
 {

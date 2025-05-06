@@ -10,8 +10,8 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Balas Permohonan
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_masuk.tanggapiproposal', ['id' => $rc->id]) }}">Balas Permohonan</a>
                         </li>
                     </ol>
                 </nav>
@@ -111,6 +111,14 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="iLampiranSuratBalasan">Lampiran Surat Balasan</label>
+                                    <select class="form-control {{ $errors->has('lampiran_surat_balasan') ? 'is-invalid' : '' }}" id="iLampiranSuratBalasan" name="lampiran_surat_balasan">
+                                        <option value="tidakada" {{ old('lampiran_surat_balasan', $rc->lampiran_surat_balasan) == 'tidakada' ? 'selected' : '' }}>-</option>
+                                        <option value="selembar" {{ old('lampiran_surat_balasan', $rc->lampiran_surat_balasan) == 'selembar' ? 'selected' : '' }}>1 (satu) berkas</option>
+                                    </select>
+                                </div>
+                                
                                 <div class="form-group">
                                     <label for="iTanggalAwalMagang">Tanggal Awal Magang</label>
                                     <input type="date" name="tanggal_awal_magang" id="iTanggalAwalMagang" class="form-control" value="{{ old('tanggal_awal_magang', $rc->tanggal_awal_magang) }}" required>

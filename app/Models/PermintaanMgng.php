@@ -26,11 +26,13 @@ public function masterMgng()
 
 public function balasan()
 {
-    return $this->hasOne(BalasanMgng::class, 'master_mgng_id');
-    }
+    return $this->hasOne(BalasanMgng::class, 'permintaan_mgng_id');
+}
 
 public function peserta()
     {
         return $this->hasMany(MasterPsrt::class, 'permintaan_mgng_id');
     }
+
+
 }

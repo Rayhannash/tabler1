@@ -85,6 +85,7 @@ Route::get('/proposal/{id}/balas', [App\Http\Controllers\ProposalMasukController
 Route::post('/proposal/{id}/tanggapiproposal', [App\Http\Controllers\ProposalMasukController::class, 'tanggapiPermohonan'])->name('proposal_masuk.tanggapiproposal');
 Route::get('/proposal-masuk/cetak-pdf/{id}', [App\Http\Controllers\ProposalMasukController::class, 'cetakpdfpermohonanmasuk'])->name('proposal_masuk.cetakpdfpermohonanmasuk');
 
+
 Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
 Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
 Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MasterPsrt;
 use App\Models\PermintaanMgng;
 use App\Models\BalasanMgng;
+use App\Models\MasterBdngMember;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -34,21 +35,31 @@ class ProposalMasukController extends Controller
         return view('pages.proposal_masuk.daftar', compact('data', 'data2'));
     }
 
-      // Fungsi untuk mencetak PDF permohonan
-      public function cetakpdfpermohonanmasuk($id)
+      
+    public function cetakpdfpermohonanmasuk($id)
 {
     // Ambil permohonan berdasarkan ID
     $rc = PermintaanMgng::findOrFail($id);
 
-    // Ambil daftar peserta yang terkait dengan permohonan
+    // Ambil balasan berdasarkan master_mgng_id
+    $balasan = BalasanMgng::where('master_mgng_id', $rc->master_mgng_id)->first();
+
+    // Ambil daftar peserta berdasarkan permohonan
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
-    // Generate PDF dengan view yang sesuai
-    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd'));
+    $petugas = MasterBdngMember::with('masterBdng') // Eager load relasi masterBdng
+                            ->findOrFail($id);
 
-    // Return PDF file untuk didownload
-    return $pdf->download('PermohonanMagang_'.$rc->nomor_surat_permintaan.'.pdf');
+    // Generate PDF
+    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'petugas'));
+
+    
+    // Return PDF download
+    return $pdf->download('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
 }
+
+
+
 
 
     public function balasPermohonan($id)
@@ -64,9 +75,8 @@ class ProposalMasukController extends Controller
     }
 
 
-    // Function untuk menangani form tanggapan
     public function tanggapiPermohonan(Request $request, $id)
-    {
+{
     // Validasi input
     $request->validate([
         'nomor_surat_balasan' => 'required',
@@ -84,7 +94,7 @@ class ProposalMasukController extends Controller
 
     // Create a new BalasanMgng entry
     $balasan = new BalasanMgng();
-    $balasan->master_mgng_id = $permohonan->master_mgng_id;  // Pastikan ini merujuk ke master_mgng_id
+    $balasan->master_mgng_id = $permohonan->master_mgng_id; 
     $balasan->nomor_surat_balasan = $request->nomor_surat_balasan;
     $balasan->tanggal_surat_balasan = $request->tanggal_surat_balasan;
     $balasan->sifat_surat_balasan = $request->sifat_surat_balasan;
@@ -103,8 +113,11 @@ class ProposalMasukController extends Controller
     // Save balasan entry
     $balasan->save();
 
-    // Redirect ke halaman daftar permohonan dengan parameter ID
-    return redirect()->route('proposal_masuk')->with('result', 'success');
-    }
+    // Redirect ke halaman cetak PDF setelah data disimpan
+    return redirect()->route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $id]);
+}
+
+    
+
 }
 

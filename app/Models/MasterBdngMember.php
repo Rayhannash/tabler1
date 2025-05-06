@@ -14,4 +14,9 @@ class MasterBdngMember extends Model
     {
         return $this->belongsTo(MasterBdng::class, 'id_bdng');
     }
+
+    public function masterBdng()
+    {
+        return $this->belongsTo(MasterBdng::class, 'id_bdng');
+    }
 }

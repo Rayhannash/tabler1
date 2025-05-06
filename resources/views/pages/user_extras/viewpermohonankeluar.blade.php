@@ -194,8 +194,4 @@
             @endif
         </div>
     </div>
-<<<<<<< HEAD
 </x-app-layout>
-=======
-</x-app-layout>
->>>>>>> 100d8325cbdb487b4967e5d108d5372134b30167

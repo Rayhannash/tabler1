@@ -68,7 +68,7 @@
                                 <th>Program Studi</th>
                             </tr>
                             @foreach($rd as $dt)
-                            @if($dt->id_mgng == $rc->id)
+                            @if($dt->master_magang_id == $rc->id)
                             <tr>
                                 <td align="center"></td>
                                 <td>&nbsp{{$dt->nama_peserta}}</td>

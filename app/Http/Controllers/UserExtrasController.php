@@ -21,58 +21,35 @@ use Illuminate\Support\Facades\DB;
 class UserExtrasController extends Controller
 {
     public function index()
-    {
-
-        if (request()->routeIs('buat_permohonan')) {
-            return view('pages.user_extras.buatproposalmagang');
-        }
-
-        return view('pages.user_extras.addsklh');
+{
+    
+    if (request()->routeIs('buat_permohonan')) {
+        return view('pages.user_extras.buatproposalmagang');
     }
+
+    return view('pages.user_extras.addsklh');
+}
     public function store(Request $request)
-    {
-        // Validasi input
-        $validated = $request->validate([
-            'jenis' => 'required',
-            'alamat' => 'required',
-            'kabko_sklh' => 'required',
-            'akreditasi' => 'required',
-            'telepon_lembaga' => 'required',
-            'no_akreditasi' => 'required',
-            'nama_narahubung' => 'required',
-            'jenis_kelamin' => 'required',
-            'jabatan_narahubung' => 'required',
-            'telepon_narahubung' => 'required',
-            'file_akreditasi' => 'required|file|mimes:pdf,jpeg,png|max:10240',  // Maksimal ukuran 10MB
-        ]);
+{
+    // Validasi input
+    $validated = $request->validate([
+        'jenis' => 'required',
+        'alamat' => 'required',
+        'kabko_sklh' => 'required',
+        'akreditasi' => 'required',
+        'telepon_lembaga' => 'required',
+        'no_akreditasi' => 'required',
+        'nama_narahubung' => 'required',
+        'jenis_kelamin' => 'required',
+        'jabatan_narahubung' => 'required',
+        'telepon_narahubung' => 'required',
+        'file_akreditasi' => 'required|file|mimes:pdf,jpeg,png|max:10240',  // Maksimal ukuran 10MB
+    ]);
 
-        // Proses penyimpanan file
-        if ($request->hasFile('file_akreditasi')) {
-            // Menyimpan file di storage public
-            $filePath = $request->file('file_akreditasi')->store('uploads', 'public');
-        }
-
-        // Simpan data menggunakan Eloquent Model MasterSklh
-        $data = MasterSklh::create([
-            'id_user' => Auth::id(),
-            'jenis_sklh' => $request->jenis,
-            'alamat_sklh' => $request->alamat,
-            'kabko_sklh' => $request->kabko_sklh,
-            'telp_sklh' => $request->telepon_lembaga,
-            'akreditasi_sklh' => $request->akreditasi,
-            'no_akreditasi_sklh' => $request->no_akreditasi,
-            'scan_surat_akreditasi_sklh' => $filePath ?? null,
-            'nama_narahubung' => $request->nama_narahubung,
-            'jenis_kelamin_narahubung' => $request->jenis_kelamin,
-            'jabatan_narahubung' => $request->jabatan_narahubung,
-            'handphone_narahubung' => $request->telepon_narahubung,
-        ]);
-
-
-
-        // Redirect ke halaman detail data setelah berhasil disimpan
-        return redirect()->route('user_extras.viewsklh', $data->id)
-            ->with('result', 'success');
+    // Proses penyimpanan file
+    if ($request->hasFile('file_akreditasi')) {
+        // Menyimpan file di storage public
+        $filePath = $request->file('file_akreditasi')->store('uploads', 'public');
     }
 
     // Simpan data menggunakan Eloquent Model MasterSklh
@@ -110,115 +87,68 @@ public function show()
         return view('pages.user_extras.viewsklh', compact('dt'));
     }
 
-    public function edit()
-    {
-        $data = MasterSklh::where('id_user', Auth::id())->first();
-        return view('pages.user_extras.editsklh', ['dt' => $data]);
-    }
+public function edit()
+{
+    $data=MasterSklh::where('id_user',Auth::id())->first();
+    return view('pages.user_extras.editsklh',['dt'=>$data]);
+}
 
-    public function updatesklh(Request $req)
-    {
-        $data = MasterSklh::where('id_user', Auth::id())->first();
+public function updatesklh(Request $req)
+{
+    $data = MasterSklh::where('id_user', Auth::id())->first();
 
-        $validated = $req->validate([
-            'jenis_sklh' => 'required',
-            'alamat_sklh' => 'required',
-            'kabko_sklh' => 'required',
-            'telp_sklh' => 'required|unique:master_sklh,telp_sklh,' . $data->id,
-            'akreditasi_sklh' => 'required',
-            'no_akreditasi_sklh' => 'required|unique:master_sklh,no_akreditasi_sklh,' . $data->id,
-            'scan_surat_akreditasi_sklh' => 'nullable|mimes:pdf,doc,docx|max:10000',
-            'nama_narahubung' => 'required',
-            'jenis_kelamin_narahubung' => 'required',
-            'jabatan_narahubung' => 'required',
-            'handphone_narahubung' => 'required|unique:master_sklh,handphone_narahubung,' . $data->id,
-        ]);
+    $validated = $req->validate([
+        'jenis_sklh' => 'required',
+        'alamat_sklh' => 'required',
+        'kabko_sklh' => 'required',
+        'telp_sklh' => 'required|unique:master_sklh,telp_sklh,' . $data->id,
+        'akreditasi_sklh' => 'required',
+        'no_akreditasi_sklh' => 'required|unique:master_sklh,no_akreditasi_sklh,' . $data->id,
+        'scan_surat_akreditasi_sklh' => 'nullable|mimes:pdf,doc,docx|max:10000',
+        'nama_narahubung' => 'required',
+        'jenis_kelamin_narahubung' => 'required',
+        'jabatan_narahubung' => 'required',
+        'handphone_narahubung' => 'required|unique:master_sklh,handphone_narahubung,' . $data->id,
+    ]);
 
-        // Handle file upload if any
-        if ($req->hasFile('scan_surat_akreditasi_sklh')) {
-            $file = $req->file('scan_surat_akreditasi_sklh');
-            $filename = time() . '_' . str_replace(' ', '', $file->getClientOriginalName());
-            $file->storeAs('public/scan_surat_akreditasi_sklh', $filename);
-            $validated['scan_surat_akreditasi_sklh'] = $filename;
-        }
-
-        $result = MasterSklh::where('id_user', Auth::id())->update($validated);
-
-        return $result
-            ? redirect()->route('user_extras.viewsklh')->with('result', 'success')
-            : back()->with('result', 'fail');
-    }
-
-    public function simpanproposalmagang(Request $req)
-    {
-        // Ambil data sekolah yang login
-        $datasklh = MasterSklh::where('id_user', Auth::id())->firstOrFail();
-
-        // Cek atau buat master_mgng untuk sekolah ini
-        $masterMgng = MasterMgng::firstOrCreate([
-            'master_sklh_id' => $datasklh->id
-        ]);
-
-        // Validasi
-        $validated = $req->validate([
-            'nomor_surat_permintaan' => 'required|unique:permintaan_mgng,nomor_surat_permintaan',
-            'tanggal_surat_permintaan' => 'required|date',
-            'perihal_surat_permintaan' => 'required',
-            'ditandatangani_oleh' => 'required',
-            'scan_surat_permintaan' => 'required|file|max:10000|mimes:pdf,doc,docx',
-            'scan_proposal_magang' => 'required|file|max:10000|mimes:pdf,doc,docx',
-        ]);
-
-        // Upload file
-        $filescansurat = $this->uploadFile($req->file('scan_surat_permintaan'), 'scan_surat_permintaan');
-        $filescanproposal = $this->uploadFile($req->file('scan_proposal_magang'), 'scan_proposal_magang');
-
-        // Simpan ke permintaan_mgng
-        $saved = PermintaanMgng::create([
-            'master_mgng_id' => $masterMgng->id,
-            'nomor_surat_permintaan' => $validated['nomor_surat_permintaan'],
-            'tanggal_surat_permintaan' => $validated['tanggal_surat_permintaan'],
-            'perihal_surat_permintaan' => $validated['perihal_surat_permintaan'],
-            'ditandatangani_oleh' => $validated['ditandatangani_oleh'],
-            'scan_surat_permintaan' => $filescansurat,
-            'scan_proposal_magang' => $filescanproposal,
-            'status_surat_permintaan' => 'belum',
-            'status_baca_surat_permintaan' => 'belum',
-        ]);
-
-        return redirect()->route('user.daftar_permohonan')->with('result', 'success');
-    }
-
-    protected function uploadFile($file, $folder)
-    {
+    // Handle file upload if any
+    if ($req->hasFile('scan_surat_akreditasi_sklh')) {
+        $file = $req->file('scan_surat_akreditasi_sklh');
         $filename = time() . '_' . str_replace(' ', '', $file->getClientOriginalName());
-        $file->storeAs('public/' . $folder, $filename);
-        return $filename;
+        $file->storeAs('public/scan_surat_akreditasi_sklh', $filename);
+        $validated['scan_surat_akreditasi_sklh'] = $filename;
     }
 
-    public function daftarPermohonanKeluar()
-    {
-        // Ambil data master_sklh berdasarkan user yang login
-        $masterSklh = MasterSklh::where('id_user', Auth::id())->first();
+    $result = MasterSklh::where('id_user', Auth::id())->update($validated);
 
-        if (!$masterSklh) {
-            abort(404, 'Sekolah tidak ditemukan.');
-        }
+    return $result
+        ? redirect()->route('user_extras.viewsklh')->with('result', 'success')
+        : back()->with('result', 'fail');
+}
 
-        // Ambil data master_mgng berdasarkan master_sklh_id
-        $masterMgng = MasterMgng::where('master_sklh_id', $masterSklh->id)->first();
+public function simpanproposalmagang(Request $req)
+{
+    // Ambil data sekolah yang login
+    $datasklh = MasterSklh::where('id_user', Auth::id())->firstOrFail();
 
-        if (!$masterMgng) {
-            abort(404, 'Data master magang belum tersedia.');
-        }
+    // Cek atau buat master_mgng untuk sekolah ini
+    $masterMgng = MasterMgng::firstOrCreate([
+        'master_sklh_id' => $datasklh->id
+    ]);
 
-        // Ambil semua permintaan magang dengan relasi balasan
-        $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)
-            ->where('status_surat_permintaan', 'belum')
-            ->get();
+    // Validasi
+    $validated = $req->validate([
+        'nomor_surat_permintaan' => 'required|unique:permintaan_mgng,nomor_surat_permintaan',
+        'tanggal_surat_permintaan' => 'required|date',
+        'perihal_surat_permintaan' => 'required',
+        'ditandatangani_oleh' => 'required',
+        'scan_surat_permintaan' => 'required|file|max:10000|mimes:pdf,doc,docx',
+        'scan_proposal_magang' => 'required|file|max:10000|mimes:pdf,doc,docx',
+    ]);
 
-        // Ambil data peserta magang jika perlu
-        $data2 = MasterPsrt::all();
+    // Upload file
+    $filescansurat = $this->uploadFile($req->file('scan_surat_permintaan'), 'scan_surat_permintaan');
+    $filescanproposal = $this->uploadFile($req->file('scan_proposal_magang'), 'scan_proposal_magang');
 
     // Simpan ke permintaan_mgng
     $saved = PermintaanMgng::create([
@@ -451,16 +381,8 @@ public function updatePesertaMagang(Request $request, $id)
         return redirect()->route('user.daftar_permohonan')->with('error', 'Permohonan tidak ditemukan.');
     }
 
-    public function hapusPermohonan($id)
-    {
-        $permohonan = PermintaanMgng::find($id);
+    $permohonan->delete();
 
-        if (!$permohonan) {
-            return redirect()->route('user.daftar_permohonan')->with('error', 'Permohonan tidak ditemukan.');
-        }
-
-        $permohonan->delete();
-
-        return redirect()->route('user.daftar_permohonan')->with('success', 'Permohonan berhasil dihapus.');
-    }
+    return redirect()->route('user.daftar_permohonan')->with('success', 'Permohonan berhasil dihapus.');
+}
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MasterPsrt;
 use App\Models\PermintaanMgng;
 use App\Models\BalasanMgng;
+use App\Models\MasterBdngMember;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -46,13 +47,17 @@ class ProposalMasukController extends Controller
     // Ambil daftar peserta berdasarkan permohonan
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
+    $petugas = MasterBdngMember::with('masterBdng') // Eager load relasi masterBdng
+                            ->findOrFail($id);
+
     // Generate PDF
-    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan'));
+    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'petugas'));
 
     
     // Return PDF download
     return $pdf->download('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
 }
+
 
 
 

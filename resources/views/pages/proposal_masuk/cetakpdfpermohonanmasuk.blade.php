@@ -6,7 +6,7 @@
     <title>Permohonan Magang - {{ $rc->nomor_surat_permintaan }}</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -42,11 +42,11 @@
             text-align: center;
         }
         .css-serial {
-            counter-reset: serial-number;  
+            counter-reset: serial-number;
         }
         .css-serial td:first-child:before {
-            counter-increment: serial-number;  
-            content: counter(serial-number);  
+            counter-increment: serial-number;
+            content: counter(serial-number);
             font-family: Arial;
         }
         .page-header {
@@ -54,121 +54,98 @@
             font-size: 16px;
             font-weight: bold;
         }
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                zoom: 0.75; /* Skala agar muat 1 halaman */
+                font-size: 12px;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 1.5cm;
+            }
+
+            table, p {
+                page-break-inside: avoid;
+            }
+
+            html, body {
+                height: auto;
+                overflow: hidden;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
+<div style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.2; overflow: auto;">
+    <div style="float: left; margin-right: 10px;">
+        <img src="dist/img/jatim.png" width="80px" style="vertical-align: middle;">
+    </div>
     <div style="text-align: center;">
-    <table>
-    <tr>
-        <td rowspan="6" width="100px" style="text-align: center; vertical-align: middle;">
-            <img src="{{ asset('dist/img/jatim.png') }}" width="80px">
-        </td>
-        <td align="center" style="text-align: center; vertical-align: middle;">
-            <font face="Arial">PEMERINTAH PROVINSI JAWA TIMUR</font>
-        </td>
-    </tr>
-    <tr>
-        <td align="center" style="text-align: center; vertical-align: middle;">
-            <font face="Arial"><b style="font-size:20px">DINAS KOMUNIKASI DAN INFORMATIKA</b></font>
-        </td>
-    </tr>
-    <tr>
-        <td align="center" style="text-align: center; vertical-align: middle;">
-            <font face="Arial">Alamat : Jl. A. Yani  No. 242-244 Surabaya Telp. (031) 8294608</font>
-        </td>
-    </tr>
-    <tr>
-        <td align="center" style="text-align: center; vertical-align: middle;">
-            <font face="Arial">Fax. (031) 8294517 Website : kominfo.jatimprov.go.id</font>
-        </td>
-    </tr>
-    <tr>
-        <td align="center" style="text-align: center; vertical-align: middle;">
-            <font face="Arial">Email : kominfo@jatimprov.go.id</font>
-        </td>
-    </tr>
-    <tr>
-        <td align="center" style="text-align: center; vertical-align: middle;">
-            <font face="Arial"><b><u>SURABAYA 60235</u></b></font>
-        </td>
-    </tr>
-</table>
-
+        <p style="margin: 0;">PEMERINTAH PROVINSI JAWA TIMUR</p>
+        <p style="margin: 0; font-weight: bold;">DINAS KOMUNIKASI DAN INFORMATIKA</p>
+        <p style="margin: 0;">Alamat : Jl. A. Yani No. 242-244 Surabaya Telp. (031) 8294608</p>
+        <p style="margin: 0;">Fax. (031) 8294517 Website : kominfo.jatimprov.go.id</p>
+        <p style="margin: 0;">Email : kominfo@jatimprov.go.id</p>
+        <p style="margin: 0; text-decoration: underline;"><strong>SURABAYA 60235</strong></p>
+    </div>
 </div>
 
 
     <!-- Data Balasan -->
-    <table class="info-table">
-        <tr>
-            <td><strong>Surabaya, {{ \Carbon\Carbon::parse($balasan->tanggal_surat_balasan)->format('d F Y') ?? 'Tidak Tersedia' }}</strong></td>
-        </tr>
-        <tr>
-            <td><strong>Kepada Yth. Sdr. {{ $rc->ditandatangani_oleh }} {{ $rc->masterMgng->masterSklh->user->fullname }}</strong><br>di<br><b><u>TEMPAT</u></b></td>
-        </tr>
-        <tr>
-            <td style="width: 25%;"><strong>Nomor :</strong></td>
-            <td style="width: 75%;">400.14.5.4/{{ $balasan->nomor_surat_balasan ?? 'Tidak Tersedia' }}/114.1/{{ \Carbon\Carbon::parse($rc->tanggal_surat_balasan)->format('Y') }}</td>
-        </tr>
-        <tr>
-            <td style="width: 25%;"><strong>Sifat :</strong></td>
-            <td style="width: 75%;">{{ $balasan->sifat_surat_balasan ?? 'Tidak Tersedia' }}</td>
-        </tr>
-        <tr>
-            <td style="width: 25%;"><strong>Lampiran :</strong></td>
-            <td style="width: 75%;">{{ $balasan->lampiran_surat_balasan ?? 'Tidak Tersedia' }}</td>
-        </tr>
-        <tr>
-            <td style="width: 25%;"><strong>Perihal :</strong></td>
-            <td style="width: 75%;">Permohonan Magang</td>
-        </tr>
-    </table>
+<table class="info-table" style="width: 100%; margin-top: 30px;">
+    <tr>
+        <td style="text-align: left; width: 50%;">
+            <strong>Nomor :</strong> 400.14.5.4/1234567833/114.1/2025<br>
+            <strong>Sifat :</strong> segera<br>
+            <strong>Lampiran :</strong> selembar<br>
+            <strong>Perihal :</strong> Permohonan Magang
+        </td>
+        <td style="text-align: right; width: 50%; padding-left: 20px;">
+                Surabaya, 06 May 2025<br>
+                Kepada Yth. Sdr. <br>
+                Koordinator Sistem <br>
+                Informasi UNAIR <br>
+                di <br>
+                <strong style="text-decoration: underline;">TEMPAT</strong>
+
+        </td>
+    </tr>
+</table>
+
 
     <!-- Teks Pengantar -->
-    <p style="text-indent: 2em">
+    <p style="text-indent: 2em; margin-top: 20px; font-size: 14px;">
         Sehubungan dengan surat Saudara tanggal {{ Carbon\Carbon::parse($rc->tanggal_surat_permintaan)->format('d F Y') }} nomor {{$rc->nomor_surat_permintaan}}, perihal {{$rc->perihal_surat_permintaan}}, bersama ini disampaikan bahwa Dinas Komunikasi dan Informatika Provinsi Jawa Timur menerima Permohonan Magang @if($rc->jenis_sklh!='ptg') Siswa/Siswi @else Mahasiswa/Mahasiswi @endif {{$rc->name}}@if($rc->metode_magang=='online') secara Daring/<i>Online</i> @endif atas nama:
     </p>
 
     <table class="content-table">
-    <thead>
-        <tr>
-            <th>NO</th>
-            <th>Nama Peserta</th>
-            <th>NIS/NIM</th>
-            <th>Program Studi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($rd as $index => $peserta)
+        <thead>
             <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $peserta->nama_peserta }}</td>
-                <td>{{ $peserta->nis_peserta }}</td>
-                <td>{{ $peserta->program_studi }}</td>
+                <th>NO</th>
+                <th>Nama Peserta</th>
+                <th>NIS/NIM</th>
+                <th>Program Studi</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
-
-<style>
-    .content-table {
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: collapse; /* Menghilangkan jarak antar border */
-    }
-    .content-table th, .content-table td {
-        text-align: left;
-        padding: 10px;
-        border: 1px solid #ddd;
-    }
-    .content-table th {
-        background-color: #f2f2f2;
-    }
-</style>
+        </thead>
+        <tbody>
+            @foreach($rd as $index => $peserta)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $peserta->nama_peserta }}</td>
+                    <td>{{ $peserta->nis_peserta }}</td>
+                    <td>{{ $peserta->program_studi }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
     <!-- Ketentuan Magang -->
-    <p>Pelaksanaan magang diatur dalam ketentuan sebagai berikut :</p>
-    <table>
+    <p style="margin-top: 20px; font-size: 14px;">Pelaksanaan magang diatur dalam ketentuan sebagai berikut :</p>
+    <table style="margin-top: 10px; font-size: 14px;">
         <tr>
             <td>1.</td>
             <td>Jadwal Magang dimulai tanggal {{ \Carbon\Carbon::parse($balasan->tanggal_awal_magang)->format('d F Y') }} s.d. {{ \Carbon\Carbon::parse($balasan->tanggal_akhir_magang)->format('d F Y') }};</td>
@@ -183,22 +160,25 @@
         </tr>
     </table>
 
-    <p style="text-indent: 2em">Demikian atas perhatian dan kerjasamanya disampaikan terima kasih.</p>
+    <p style="text-indent: 2em; margin-top: 20px; font-size: 14px;">Demikian atas perhatian dan kerjasamanya disampaikan terima kasih.</p>
 
     <!-- Footer -->
-    <table class="footer-table">
-        <tr>
-            <td></td><td align="center">a.n. KEPALA DINAS KOMUNIKASI DAN INFORMATIKA<br>PROVINSI JAWA TIMUR<br></td></td>
-        </tr>
-        <tr>
-            <td></td><td align="center">Sekretaris</td>
-        </tr>
-        <tr>
-            <td></td><td align="center"><b><u>{{ $petugas->nama_pejabat }}</u></b><br>{{ $petugas->pangkat_pejabat }}</td>
-        </tr>
-        <tr>
-            <td></td><td align="center">NIP. {{ $petugas->nip_pejabat }}</td>
-        </tr>
-    </table>
+    <table class="footer-table" style="margin-top: 30px; width: 100%; border-collapse: collapse;">
+    <tr>
+        <td style="width: 50%;"></td>
+        <td align="right">a.n. KEPALA DINAS KOMUNIKASI DAN INFORMATIKA<br>PROVINSI JAWA TIMUR<br>Sekretaris</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="padding-top: 50px;"></td>
+    </tr>
+    <tr>
+        <td style="width: 50%;"></td>
+        <td align="right" style="padding-right: 10px;">
+                <b><u>{{ $petugas->nama_pejabat }}</u></b><br>
+                {{ $petugas->pangkat_pejabat }}<br>
+                NIP. {{ $petugas->nip_pejabat }}
+        </td>
+    </tr>
+</table>
 </body>
 </html>

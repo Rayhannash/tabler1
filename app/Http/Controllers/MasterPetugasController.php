@@ -44,15 +44,23 @@ class MasterPetugasController extends Controller
     }
 
     public function edit($id)
-{
-    $data1 = MasterBdngMember::where('master_bdng_member.id', $id)
-        ->join('master_bdng', 'master_bdng.id', '=', 'master_bdng_member.id_bdng')
-        ->select('master_bdng_member.*', 'nama_bidang')
-        ->first();
+    {
+        // Ambil data petugas
+        $data1 = MasterBdngMember::where('master_bdng_member.id', $id)
+            ->join('master_bdng', 'master_bdng.id', '=', 'master_bdng_member.id_bdng')
+            ->select('master_bdng_member.*', 'nama_bidang')
+            ->first();
+        
+        // Ambil data bidang
+        $bidang = MasterBdng::all();
     
-    return view('pages.master_petugas.edit', ['rc' => $data1]);
-}
-
+        // Kirim kedua data ke view
+        return view('pages.master_petugas.edit', [
+            'petugas' => $data1,
+            'bidang' => $bidang
+        ]);
+    }
+    
 public function update(Request $request, $id)
 {
     $request->validate([

@@ -21,12 +21,20 @@ class PermintaanMgng extends Model
 ];
 public function masterMgng()
 {
-    return $this->belongsTo(MasterMgng::class, 'master_mgng_id');
+    return $this->belongsTo(MasterMgng::class, 'master_mgng_id',);
 }
 
 public function balasan()
 {
-    return $this->hasOne(BalasanMgng::class, 'master_mgng_id');
+    return $this->hasOne(BalasanMgng::class, 'master_mgng_id', 'master_mgng_id');
+}
+
+public function peserta()
+    {
+        return $this->hasMany(MasterPsrt::class, 'permintaan_mgng_id');
     }
+
+    
+
 
 }

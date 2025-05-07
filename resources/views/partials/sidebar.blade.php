@@ -3,16 +3,16 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-brand navbar-brand-autodark d-flex align-items-center" style="background-color: #4B0082;">
+        <div class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8; display: flex; align-items: center; justify-content: center;">
             <!-- Teks Logo -->
-            <span class="navbar-brand-text text-white me-2" id="brand-text">
-                <span style="font-weight: bold;">SI</span> 
-                <span style="font-weight: normal;" id="magang-text">MAGANG</span> 
+            <span class="navbar-brand-text text-white me-2" id="brand-text" style="margin-right: 8px;">
+                <span style="font-weight: bold; font-size: 1.5em;">SI</span> 
+                <span style="font-weight: normal; font-size: 1.5em;" id="magang-text">MAGANG</span> 
             </span>
 
             <!-- Ikon Toggle -->
             <span class="mdi mdi-reorder-horizontal text-white fs-4 cursor-pointer" id="toggle-btn"></span>
-        </div>
+        </div>
 
         <div class="navbar-nav flex-row d-lg-none">
             <div class="nav-item d-none d-lg-flex me-3">

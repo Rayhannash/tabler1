@@ -2,7 +2,7 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Permohonan Magang" />
+                <x-breadcrumb pageTitle="Balasan Magang" />
             </div>
         </div>
     </x-page-header>
@@ -23,7 +23,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th rowspan="2">LEMBAGA PENDIDIKAN</th>
-                                <th rowspan="2">DATA SURAT PERMOHONAN</th>
+                                <th rowspan="2">PERMOHONAN DAN BALASAN</th>
                                 <th colspan="4" class="text-center">PESERTA</th>
                                 <th rowspan="2" class="text-center">OPSI</th>
                             </tr>
@@ -53,13 +53,28 @@
                                         <span class="mdi mdi-phone"></span> {{ $dt->masterMgng->masterSklh->handphone_narahubung ?? 'Tidak Diketahui' }}
                                     </td>
                                     <td>
-                                        {{-- Data Surat Permohonan --}}
+                                        {{-- PERMOHONAN DAN BALASAN --}}
                                         <table>
+                                            <b>Permohonan</b><br>
                                             <span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}<br>
                                             <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}<br>
                                             <span class="mdi mdi-email"></span> <a href="{{ asset('storage/scan_surat_permintaan/'.$dt->scan_surat_permintaan) }}" target="_blank"> Surat Permohonan</a><br>
-                                            <span class="mdi mdi-file"></span> <a href="{{ asset('storage/scan_proposal_magang/'.$dt->scan_proposal_magang) }}" target="_blank"> Proposal Magang</a><br>
-                                        </table>
+                                            <span class="mdi mdi-file"></span> <a href="{{ asset('storage/scan_proposal_magang/'.$dt->scan_proposal_magang) }}" target="_blank"> Proposal Magang</a><br><br>
+                                            <b>Balasan</b><br>
+    <span class="mdi mdi-sort-numeric-ascending"></span> 
+    {{ '400.14.5.4/' . optional($dt->balasan)->nomor_surat_balasan ?? 'Tidak Tersedia' }}/114.1/{{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan)->format('Y') ?? 'Tidak Tersedia' }}<br>
+
+    <span class="mdi mdi-calendar-month"></span> 
+    {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan ?? now())->translatedFormat('d F Y') ?? 'Tidak Tersedia' }}<br>
+
+    <span class="mdi mdi-email"></span> 
+    <a href="{{ asset('storage/scan_surat_balasan/'.optional($dt->balasan)->scan_surat_balasan) }}" target="_blank"> Surat Balasan</a><br><br>
+
+    <b>Waktu Pelaksanaan</b><br>
+    <span class="mdi mdi-calendar-check"></span> 
+    {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_awal_magang ?? now())->translatedFormat('d F Y') }} s.d. 
+    {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_akhir_magang ?? now())->translatedFormat('d F Y') }}<br>
+</table>
                                     </td>
                                     <td class="text-center">
     @foreach($data2 as $de)
@@ -94,8 +109,7 @@
                                         </td>
 
                                         <td style="text-align: center">
-                                            <a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-reply"></span></a>
-                                            <button type="button" class="btn btn-sm btn-danger btn-trash" data-id="{{$dt->id}}"><span class="mdi mdi-delete"></span></i></button>
+                                            <a href="{{ route('proposal_keluar.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-pencil"></span></a>
                                         </td>
                                 </tr>
                             @endif

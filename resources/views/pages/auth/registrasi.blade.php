@@ -1,5 +1,4 @@
 <x-app-layout pageTitle="Daftar Akun Baru">
-
     <div class="d-flex justify-content-center align-items-center vh-100">
         <div class="container container-normal">
             <div class="row align-items-center g-4">
@@ -15,18 +14,6 @@
                                 </svg>
                             </a>
                         </div>
-                        <div class="card card-md">
-                            <div class="card-body">
-                                <h2 class="h3 text-center mb-4">Buat Akun</h2>
-                                <form method="POST" action="{{ route('auth.register') }}">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label for="fullname" class="form-label">Nama Lengkap</label>
-                                        <input type="text" name="fullname" class="form-control @error('fullname') is-invalid @enderror" value="{{ old('fullname')}}" required>
-                                        @error('fullname')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
 
                         <div class="card card-md">
                             <div class="card-body">

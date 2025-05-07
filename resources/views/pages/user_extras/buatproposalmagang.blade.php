@@ -2,7 +2,7 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Lengkapi Data!" />
+                <x-breadcrumb pageTitle="Buat Permohonan" />
             </div>
         </div>
     </x-page-header>
@@ -14,7 +14,7 @@
                 <div class="alert alert-success">Data berhasil disimpan!</div>
             @endif
 
-            <form action="{{ route('user_extras.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('user_extras.simpan_proposal') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">

@@ -2,7 +2,19 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Edit Data Lembaga Pendidikan"></x-breadcrumb>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('master_sklh') }}">Daftar Lembaga Pendidikan</a>
+                        </li>
+                        <li class="breadcrumb-item muted" aria-current="page">
+                            Detail Lembaga
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>

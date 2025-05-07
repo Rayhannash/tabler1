@@ -141,7 +141,16 @@
         @if($rc->metode_magang == 'online') secara Daring/<i>Online</i> @endif atas nama:
     </p>
     <table class="content-table">
-        <thead>
+    <thead>
+        <tr>
+            <th>NO</th>
+            <th>Nama Peserta</th>
+            <th>NIS/NIM</th>
+            <th>Program Studi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($rd as $index => $peserta)
             <tr>
                 <td class="center">{{ $index + 1 }}</td>
                 <td>{{ $peserta->nama_peserta }}</td>

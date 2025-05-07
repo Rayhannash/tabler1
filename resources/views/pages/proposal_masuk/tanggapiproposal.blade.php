@@ -85,52 +85,52 @@
                             <div class="card-body">
                                 <!-- Form untuk Balas Permohonan -->
                                 <div class="form-group">
-                                    <label for="iNomorSuratBalasan">Nomor Surat Balasan</label>
+                                    <label for="iNomorSuratBalasan"><strong>Nomor Surat Balasan</strong></label>
                                     <input type="text" name="nomor_surat_balasan" id="iNomorSuratBalasan" class="form-control" value="{{ old('nomor_surat_balasan', $rc->nomor_surat_balasan) }}">
-                                </div>
+                                </div><br>
 
                                 <div class="form-group">
-                                    <label for="iTanggalSuratBalasan">Tanggal Surat</label>
+                                    <label for="iTanggalSuratBalasan"><strong>Tanggal Surat</strong></label>
                                     <input type="date" name="tanggal_surat_balasan" id="iTanggalSuratBalasan" class="form-control" value="{{ old('tanggal_surat_balasan', $rc->tanggal_surat_balasan) }}" required>
-                                </div>
+                                </div><br>
 
                                 <div class="form-group">
-                                    <label for="iSifatSuratBalasan">Sifat</label>
+                                    <label for="iSifatSuratBalasan"><strong>Sifat</strong></label>
                                     <select name="sifat_surat_balasan" id="iSifatSuratBalasan" class="form-control">
                                         <option value="biasa" {{ old('sifat_surat_balasan', $rc->sifat_surat_balasan) == 'biasa' ? 'selected' : '' }}>Biasa</option>
                                         <option value="penting" {{ old('sifat_surat_balasan', $rc->sifat_surat_balasan) == 'penting' ? 'selected' : '' }}>Penting</option>
                                         <option value="segera" {{ old('sifat_surat_balasan', $rc->sifat_surat_balasan) == 'segera' ? 'selected' : '' }}>Segera</option>
                                     </select>
-                                </div>
+                                </div><br>
 
                                 <div class="form-group">
-                                    <label for="iMetodeMagang">Metode Magang</label>
+                                    <label for="iMetodeMagang"><strong>Metode Magang</strong></label>
                                     <select name="metode_magang" id="iMetodeMagang" class="form-control">
                                         <option value="offline" {{ old('metode_magang', $rc->metode_magang) == 'offline' ? 'selected' : '' }}>Offline</option>
                                         <option value="online" {{ old('metode_magang', $rc->metode_magang) == 'online' ? 'selected' : '' }}>Online</option>
                                     </select>
-                                </div>
+                                </div><br>
 
                                 <div class="form-group">
-                                    <label for="iLampiranSuratBalasan">Lampiran Surat Balasan</label>
+                                    <label for="iLampiranSuratBalasan"><strong>Lampiran Surat Balasan</strong></label>
                                     <select class="form-control {{ $errors->has('lampiran_surat_balasan') ? 'is-invalid' : '' }}" id="iLampiranSuratBalasan" name="lampiran_surat_balasan">
                                         <option value="tidakada" {{ old('lampiran_surat_balasan', $rc->lampiran_surat_balasan) == 'tidakada' ? 'selected' : '' }}>-</option>
                                         <option value="selembar" {{ old('lampiran_surat_balasan', $rc->lampiran_surat_balasan) == 'selembar' ? 'selected' : '' }}>1 (satu) berkas</option>
                                     </select>
-                                </div>
+                                </div><br>
                                 
                                 <div class="form-group">
-                                    <label for="iTanggalAwalMagang">Tanggal Awal Magang</label>
+                                    <label for="iTanggalAwalMagang"><strong>Tanggal Awal Magang</strong></label>
                                     <input type="date" name="tanggal_awal_magang" id="iTanggalAwalMagang" class="form-control" value="{{ old('tanggal_awal_magang', $rc->tanggal_awal_magang) }}" required>
-                                </div>
+                                </div><br>
 
                                 <div class="form-group">
-                                    <label for="iTanggalAkhirMagang">Tanggal Akhir Magang</label>
+                                    <label for="iTanggalAkhirMagang"><strong>Tanggal Akhir Magang</strong></label>
                                     <input type="date" name="tanggal_akhir_magang" id="iTanggalAkhirMagang" class="form-control" value="{{ old('tanggal_akhir_magang', $rc->tanggal_akhir_magang) }}" required>
-                                </div>
+                                </div><br>
 
                                 <!-- Tombol Simpan -->
-                                <button type="submit" class="btn btn-primary" id="submitButton">Kirim Balasan</button>
+                                <button type="submit" class="btn btn-primary" id="submitButton">Simpan</button>
 
                                 <!-- Tombol Cetak PDF (Tersembunyi sampai tombol Simpan ditekan) -->
                                 <a href="{{ route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $rc->id]) }}" class="btn btn-success" id="cetakPdfButton" style="display:none;" target="_blank">Cetak PDF</a>

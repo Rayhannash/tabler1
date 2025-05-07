@@ -77,7 +77,6 @@ class ProposalMasukController extends Controller
 
     public function tanggapiPermohonan(Request $request, $id)
 {
-    // Validasi input
     $request->validate([
         'nomor_surat_balasan' => 'required',
         'tanggal_surat_balasan' => 'required|date',
@@ -89,12 +88,17 @@ class ProposalMasukController extends Controller
         'tanggal_akhir_magang' => 'required|date',
     ]);
 
-    // Ambil permohonan magang berdasarkan ID
     $permohonan = PermintaanMgng::findOrFail($id);
 
-    // Create a new BalasanMgng entry
-    $balasan = new BalasanMgng();
-    $balasan->master_mgng_id = $permohonan->master_mgng_id; 
+    // Cek apakah balasan sudah ada berdasarkan master_mgng_id
+    $balasan = BalasanMgng::where('master_mgng_id', $permohonan->master_mgng_id)->first();
+
+    if (!$balasan) {
+        $balasan = new BalasanMgng();
+        $balasan->master_mgng_id = $permohonan->master_mgng_id;
+    }
+
+    // Update atau isi ulang data
     $balasan->nomor_surat_balasan = $request->nomor_surat_balasan;
     $balasan->tanggal_surat_balasan = $request->tanggal_surat_balasan;
     $balasan->sifat_surat_balasan = $request->sifat_surat_balasan;
@@ -103,19 +107,25 @@ class ProposalMasukController extends Controller
     $balasan->tanggal_awal_magang = $request->tanggal_awal_magang;
     $balasan->tanggal_akhir_magang = $request->tanggal_akhir_magang;
 
-    // Handle file upload jika ada
     if ($request->hasFile('scan_surat_balasan')) {
         $filename = time().'_'.$request->file('scan_surat_balasan')->getClientOriginalName();
         $request->file('scan_surat_balasan')->storeAs('public/scan_surat_balasan', $filename);
         $balasan->scan_surat_balasan = $filename;
     }
 
-    // Save balasan entry
     $balasan->save();
 
-    // Redirect ke halaman cetak PDF setelah data disimpan
+    // Redirect sesuai kondisi apakah file sudah diupload atau belum
+if ($request->hasFile('scan_surat_balasan')) {
+    // Kalau ada file dikirim, redirect ke halaman daftar permohonan
+    return redirect()->route('proposal_keluar')->with('success', 'Balasan berhasil diperbarui dengan file.');
+} else {
+    // Kalau belum ada file, lanjut ke cetak PDF
     return redirect()->route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $id]);
 }
+}
+
+    
 
     
 

@@ -103,7 +103,7 @@
                                     <label for="iScanSuratBalasan"><strong>Scan Surat Balasan</strong></label>
                                     @if($balasan->scan_surat_balasan)
                                         <p>File saat ini: 
-                                            <a href="{{ asset('storage/scan_surat_balasan/'.$balasan->scan_surat_balasan) }}" target="_blank" class="text-primary">
+                                            <a href="{{ asset('storage/uploads/scan_surat_balasan/'.$balasan->scan_surat_balasan) }}" target="_blank" class="text-primary">
                                                 {{ $balasan->scan_surat_balasan }}
                                             </a>
                                         </p>

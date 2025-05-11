@@ -37,7 +37,7 @@
                         <tbody>
                         @foreach($data as $dt)
                             {{-- Filter: Menampilkan hanya yang status_surat_permintaan = "terkirim" dan status_surat_balasan = "belum" --}}
-                            @if($dt->status_surat_permintaan == 'terkirim')
+                            @if($dt->status_surat_permintaan == 'terkirim' && optional($dt->balasan)->scan_surat_balasan != null)
                                 <tr>
                                     <td>
                                         {{-- Data Lembaga Pendidikan --}}

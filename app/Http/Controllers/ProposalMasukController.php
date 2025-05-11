@@ -36,7 +36,7 @@ class ProposalMasukController extends Controller
     }
 
       
-    public function cetakpdfpermohonanmasuk($id)
+   public function cetakpdfpermohonanmasuk($id)
 {
     // Ambil permohonan berdasarkan ID
     $rc = PermintaanMgng::findOrFail($id);
@@ -47,15 +47,14 @@ class ProposalMasukController extends Controller
     // Ambil daftar peserta berdasarkan permohonan
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
-    $petugas = MasterBdngMember::with('masterBdng') // Eager load relasi masterBdng
-                            ->findOrFail($id);
+    // Ambil petugas
+    $petugas = MasterBdngMember::with('masterBdng')->findOrFail($id);
 
     // Generate PDF
     $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'petugas'));
 
-    
-    // Return PDF download
-    return $pdf->download('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
+    // Return preview (stream) instead of download
+    return $pdf->stream('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
 }
 
 
@@ -90,15 +89,12 @@ class ProposalMasukController extends Controller
 
     $permohonan = PermintaanMgng::findOrFail($id);
 
-    // Cek apakah balasan sudah ada berdasarkan master_mgng_id
-    $balasan = BalasanMgng::where('master_mgng_id', $permohonan->master_mgng_id)->first();
+    // Ambil atau buat balasan berdasarkan master_mgng_id
+    $balasan = BalasanMgng::firstOrNew([
+        'master_mgng_id' => $permohonan->master_mgng_id,
+    ]);
 
-    if (!$balasan) {
-        $balasan = new BalasanMgng();
-        $balasan->master_mgng_id = $permohonan->master_mgng_id;
-    }
-
-    // Update atau isi ulang data
+    // Isi atau update field
     $balasan->nomor_surat_balasan = $request->nomor_surat_balasan;
     $balasan->tanggal_surat_balasan = $request->tanggal_surat_balasan;
     $balasan->sifat_surat_balasan = $request->sifat_surat_balasan;
@@ -106,23 +102,27 @@ class ProposalMasukController extends Controller
     $balasan->lampiran_surat_balasan = $request->lampiran_surat_balasan;
     $balasan->tanggal_awal_magang = $request->tanggal_awal_magang;
     $balasan->tanggal_akhir_magang = $request->tanggal_akhir_magang;
+    $balasan->status_surat_balasan = 'terkirim';
 
-    if ($request->hasFile('scan_surat_balasan')) {
-        $filename = time().'_'.$request->file('scan_surat_balasan')->getClientOriginalName();
-        $request->file('scan_surat_balasan')->storeAs('public/scan_surat_balasan', $filename);
-        $balasan->scan_surat_balasan = $filename;
-    }
-
+    // Simpan awal (tanpa file)
     $balasan->save();
 
-    // Redirect sesuai kondisi apakah file sudah diupload atau belum
-if ($request->hasFile('scan_surat_balasan')) {
-    // Kalau ada file dikirim, redirect ke halaman daftar permohonan
-    return redirect()->route('proposal_keluar')->with('success', 'Balasan berhasil diperbarui dengan file.');
-} else {
-    // Kalau belum ada file, lanjut ke cetak PDF
-    return redirect()->route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $id]);
-}
+    // Jika ada file diupload, simpan file dan update
+    if ($request->hasFile('scan_surat_balasan')) {
+        $path = $request->file('scan_surat_balasan')->store('scan_surat_balasan', 'public');
+        $filename = basename($path);
+        $balasan->scan_surat_balasan = $filename;
+        $balasan->save();
+
+        return redirect()->route('proposal_keluar')->with('success', 'Balasan berhasil diperbarui dengan file.');
+    }
+
+    // Kembali ke halaman tanggapi proposal
+    $rc = $permohonan;
+    $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
+
+    return view('pages.proposal_masuk.tanggapiproposal', compact('rc', 'rd', 'balasan'))
+        ->with('success', 'Data balasan disimpan. Silakan cetak PDF dan upload file jika sudah tersedia.');
 }
 
     

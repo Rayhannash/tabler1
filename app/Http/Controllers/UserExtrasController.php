@@ -432,7 +432,29 @@ public function detailPermohonanMasuk($id)
     return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
 }
 
+public function daftarLaporanMagang(Request $req)
+{
+   $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
+    ->whereHas('notaDinas', function($query) {
+        $query->where('status_nota_dinas', 'terkirim');
+    })
+    ->when($req->keyword, function ($query, $keyword) {
+        $query->whereHas('masterMgng.masterSklh.user', function ($q) use ($keyword) {
+            $q->where('fullname', 'like', "%{$keyword}%")
+              ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+              ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+              ->orWhere('email', 'like', "%{$keyword}%")
+              ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+              ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+        });
+    })
+    ->orderBy('created_at', 'desc')
+    ->get();
 
+    $data2 = MasterPsrt::all();
+
+    return view('pages.user_extras.daftarlaporan', compact('data', 'data2'));
+}
 
 
 }

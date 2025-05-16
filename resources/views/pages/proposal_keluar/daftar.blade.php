@@ -13,8 +13,8 @@
                 <div class="card-header">
                     <form method="GET" action="{{ route('proposal_masuk') }}" class="d-flex">
                         <input type="text" name="keyword" value="{{ request('keyword') }}" class="form-control me-2" placeholder="Pencarian">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-search"></i> Cari
+                        <button type="submit" class="btn btn-secondary">
+                            <span class="mdi mdi-magnify"></span>
                         </button>
                     </form>
                 </div>

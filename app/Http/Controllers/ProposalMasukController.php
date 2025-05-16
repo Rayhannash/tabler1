@@ -48,10 +48,12 @@ class ProposalMasukController extends Controller
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
     // Ambil petugas
-    $petugas = MasterBdngMember::with('masterBdng')->findOrFail($id);
-
+    $pejabat = null;
+    if ($balasan->id_bdng_member) {
+        $pejabat = MasterBdngMember::find($balasan->id_bdng_member);
+    }
     // Generate PDF
-    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'petugas'));
+    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'pejabat'));
 
     // Return preview (stream) instead of download
     return $pdf->stream('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
@@ -103,6 +105,13 @@ class ProposalMasukController extends Controller
     $balasan->tanggal_awal_magang = $request->tanggal_awal_magang;
     $balasan->tanggal_akhir_magang = $request->tanggal_akhir_magang;
     $balasan->status_surat_balasan = 'terkirim';
+
+    $datamember = MasterBdngMember::where('jabatan_pejabat', 'Sekretaris')->first();
+    
+    // Cek jika data pejabat ditemukan dan set id_bdng_member
+    if ($datamember) {
+        $balasan->id_bdng_member = $datamember->id;
+    }
 
     // Simpan awal (tanpa file)
     $balasan->save();

@@ -120,9 +120,10 @@ public function cetakpdfpermohonankeluar($id)
     // Ambil daftar peserta berdasarkan permohonan
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
-    // Ambil data petugas terkait
-    $petugas = MasterBdngMember::with('masterBdng') // Eager load relasi masterBdng
-                                ->findOrFail($rc->id); // Gunakan ID permohonan untuk mengambil petugas
+    $pejabat = null;
+    if ($balasan->id_bdng_member) {
+        $pejabat = MasterBdngMember::find($balasan->id_bdng_member);
+    }
 
     // Generate PDF dengan menggunakan view yang sesuai
     $pdf = Pdf::loadView('pages.proposal_keluar.cetakpdfpermohonankeluar', compact('rc', 'rd', 'balasan', 'petugas'));

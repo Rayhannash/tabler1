@@ -34,7 +34,15 @@ public function peserta()
         return $this->hasMany(MasterPsrt::class, 'permintaan_mgng_id');
     }
 
-    
+// public function notaDinas()
+// {
+//     return $this->hasOne(NotaDinas::class, 'master_mgng_id', 'master_mgng_id');
+// }
+
+public function notaDinas()
+{
+    return $this->hasOne(NotaDinas::class, 'permintaan_mgng_id', 'id');
+}
 
 
 }

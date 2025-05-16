@@ -2,20 +2,14 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a></li>
-                        <li class="breadcrumb-item active">Balas Permohonan</li>
-                    </ol>
-                </nav>
+
             </div>
         </div>
     </x-page-header>
 
     <div class="page-body">
         <div class="container-xl">
-            <form action="{{ route('proposal_masuk.tanggapiproposal', ['id' => $rc->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('nota_dinas.save', ['id' => $rc->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -86,66 +80,51 @@
 
             <!-- Form untuk Balas Permohonan -->
             <div class="form-group">
-                <label for="iNomorSuratBalasan"><strong>Nomor Surat Balasan</strong></label>
-                <input type="text" name="nomor_surat_balasan" id="iNomorSuratBalasan" class="form-control"
-                       value="{{ $balasan->nomor_surat_balasan ?? '' }}">
+                <label for="iNomorNotaDinas"><strong>Nomor Nota Dinas</strong></label>
+                <input type="text" name="nomor_nota_dinas" id="iNomorNotaDinas" class="form-control"
+                       value="{{ $notaDinas->nomor_nota_dinas ?? '' }}">
             </div><br>
 
             <div class="form-group">
-                <label for="iTanggalSuratBalasan"><strong>Tanggal Surat</strong></label>
-                <input type="date" name="tanggal_surat_balasan" id="iTanggalSuratBalasan" class="form-control"
-                       value="{{ $balasan->tanggal_surat_balasan ?? '' }}">
+                <label for="iTanggalNotaDinas"><strong>Tanggal Nota Dinas</strong></label>
+                <input type="date" name="tanggal_nota_dinas" id="iTanggalNotaDinas" class="form-control"
+                       value="{{ $notaDinas->tanggal_surat_balasan ?? '' }}">
             </div><br>
 
             <div class="form-group">
-                <label for="iSifatSuratBalasan"><strong>Sifat</strong></label>
-                <select name="sifat_surat_balasan" id="iSifatSuratBalasan" class="form-control">
-                    <option value="biasa"  {{ ($balasan->sifat_surat_balasan ?? '') == 'biasa' ? 'selected' : '' }}>Biasa</option>
-                    <option value="penting" {{ ($balasan->sifat_surat_balasan ?? '') == 'penting' ? 'selected' : '' }}>Penting</option>
-                    <option value="segera" {{ ($balasan->sifat_surat_balasan ?? '') == 'segera' ? 'selected' : '' }}>Segera</option>
+                <label for="iSifatNotaDinas"><strong>Sifat Nota Dinas</strong></label>
+                <select name="sifat_nota_dinas" id="iSifatNotaDinas" class="form-control">
+                    <option value="biasa"  {{ ($notaDinas->sifat_nota_dinas ?? '') == 'biasa' ? 'selected' : '' }}>Biasa</option>
+                    <option value="penting" {{ ($notaDinas->sifat_nota_dinas?? '') == 'penting' ? 'selected' : '' }}>Penting</option>
+                    <option value="segera" {{ ($notaDinas->sifat_nota_dinas ?? '') == 'segera' ? 'selected' : '' }}>Segera</option>
                 </select>
             </div><br>
 
             <div class="form-group">
-                <label for="iMetodeMagang"><strong>Metode Magang</strong></label>
-                <select name="metode_magang" id="iMetodeMagang" class="form-control">
-                    <option value="offline" {{ ($balasan->metode_magang ?? '') == 'offline' ? 'selected' : '' }}>Offline</option>
-                    <option value="online"  {{ ($balasan->metode_magang ?? '') == 'online'  ? 'selected' : '' }}>Online</option>
+                <label for="iLampiranNotaDinas"><strong>Lampiran Surat Balasan</strong></label>
+                <select name="lampiran_nota_dinas" id="iLampiranNotaDinas" class="form-control">
+                    <option value="tidakada" {{ ($notaDinas->lampiran_nota_dinas ?? '') == 'tidakada' ? 'selected' : '' }}>-</option>
+                    <option value="selembar" {{ ($notaDinas->lampiran_nota_dinas ?? '') == 'selembar' ? 'selected' : '' }}>1 (satu) berkas</option>
                 </select>
             </div><br>
 
-            <div class="form-group">
-                <label for="iLampiranSuratBalasan"><strong>Lampiran Surat Balasan</strong></label>
-                <select name="lampiran_surat_balasan" id="iLampiranSuratBalasan" class="form-control">
-                    <option value="tidakada" {{ ($balasan->lampiran_surat_balasan ?? '') == 'tidakada' ? 'selected' : '' }}>-</option>
-                    <option value="selembar" {{ ($balasan->lampiran_surat_balasan ?? '') == 'selembar' ? 'selected' : '' }}>1 (satu) berkas</option>
-                </select>
-            </div><br>
-
-            <div class="form-group">
-                <label for="iTanggalAwalMagang"><strong>Tanggal Awal Magang</strong></label>
-                <input type="date" name="tanggal_awal_magang" id="iTanggalAwalMagang" class="form-control"
-                       value="{{ $balasan->tanggal_awal_magang ?? '' }}">
-            </div><br>
-
-            <div class="form-group">
-                <label for="iTanggalAkhirMagang"><strong>Tanggal Akhir Magang</strong></label>
-                <input type="date" name="tanggal_akhir_magang" id="iTanggalAkhirMagang" class="form-control"
-                       value="{{ $balasan->tanggal_akhir_magang ?? '' }}">
-            </div><br>
+           <div class="form-group">
+    <label for="iMasterBdngId"><strong>Posisi</strong></label>
+    <select name="master_bdng_id" id="iMasterBdngId" class="form-control">
+        <option value="">-- Pilih Posisi --</option>
+        @foreach($bidangOptions as $bdng)
+            <option value="{{ $bdng->id }}" {{ old('master_bdng_id', $notaDinas->master_bdng_id ?? '') == $bdng->id ? 'selected' : '' }}>
+                {{ $bdng->nama_bidang }}
+            </option>
+        @endforeach
+    </select>
+    @error('master_bdng_id')
+        <span class="help-block">{{ $message }}</span>
+    @enderror
+</div><br>
 
             <!-- Tombol Simpan -->
             <button type="submit" class="btn btn-primary">Simpan</button><br><br>
-
-            <!-- Kondisi jika file belum ada -->
-            @if(isset($balasan) && is_null($balasan->scan_surat_balasan))
-                <a href="{{ route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $rc->id]) }}" class="btn btn-success mb-3" target="_blank">Cetak PDF</a>
-
-                <div class="form-group">
-                    <label for="iScanSuratBalasan">Lampiran Surat Balasan</label>
-                    <input type="file" name="scan_surat_balasan" id="iScanSuratBalasan" class="form-control" accept=".pdf,.jpg,.png">
-                </div>
-            @endif
 
         </div>
     </div>

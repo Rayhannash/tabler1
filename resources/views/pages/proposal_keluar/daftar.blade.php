@@ -13,8 +13,8 @@
                 <div class="card-header">
                     <form method="GET" action="{{ route('proposal_masuk') }}" class="d-flex">
                         <input type="text" name="keyword" value="{{ request('keyword') }}" class="form-control me-2" placeholder="Pencarian">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-search"></i> Cari
+                        <button type="submit" class="btn btn-secondary">
+                            <span class="mdi mdi-magnify"></span>
                         </button>
                     </form>
                 </div>
@@ -37,7 +37,7 @@
                         <tbody>
                         @foreach($data as $dt)
                             {{-- Filter: Menampilkan hanya yang status_surat_permintaan = "terkirim" dan status_surat_balasan = "belum" --}}
-                            @if($dt->status_surat_permintaan == 'terkirim')
+                            @if($dt->status_surat_permintaan == 'terkirim' && optional($dt->balasan)->scan_surat_balasan != null)
                                 <tr>
                                     <td>
                                         {{-- Data Lembaga Pendidikan --}}

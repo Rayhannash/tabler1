@@ -193,14 +193,19 @@ public function daftarPermohonanKeluar()
         abort(404, 'Data master magang belum tersedia.');
     }
 
-    // Ambil semua permintaan magang dengan relasi balasan
-    $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)->get();
+    // Ambil semua permintaan magang dengan relasi balasan yang status_surat_balasan-nya tidak "terkirim"
+    $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)
+        ->whereDoesntHave('balasan', function($query) {
+            $query->where('status_surat_balasan', 'terkirim');
+        })
+        ->get();
 
     // Ambil data peserta magang jika perlu
     $data2 = MasterPsrt::all();
 
     return view('pages.user_extras.daftarpermohonankeluar', compact('permintaan', 'data2'));
 }
+
 
 
 public function viewpermohonankeluar($id)
@@ -385,4 +390,76 @@ public function updatePesertaMagang(Request $request, $id)
 
     return redirect()->route('user.daftar_permohonan')->with('success', 'Permohonan berhasil dihapus.');
 }
+<<<<<<< HEAD
 }
+=======
+
+public function daftarPermohonanMasuk(Request $req)
+{
+    // Ambil data master_sklh berdasarkan user yang login
+    $masterSklh = MasterSklh::where('id_user', Auth::id())->first();
+
+    if (!$masterSklh) {
+        abort(404, 'Sekolah tidak ditemukan.');
+    }
+
+    // Ambil data master_mgng berdasarkan master_sklh_id
+    $masterMgng = MasterMgng::where('master_sklh_id', $masterSklh->id)->first();
+
+    if (!$masterMgng) {
+        abort(404, 'Data master magang belum tersedia.');
+    }
+
+    // Ambil semua permintaan magang dengan relasi balasan yang status_surat_balasan-nya "terkirim"
+    $permintaan = PermintaanMgng::with('balasan') // Memuat relasi balasan
+        ->where('master_mgng_id', $masterMgng->id)
+        ->whereHas('balasan', function($query) {
+            $query->where('status_surat_balasan', 'terkirim');
+        })
+        ->get();
+
+    // Ambil data peserta magang jika perlu
+    $data2 = MasterPsrt::all(); 
+
+    return view('pages.user_extras.daftarpermohonanmasuk', compact('permintaan', 'data2'));
+}
+
+public function detailPermohonanMasuk($id)
+{
+    // Ambil data permohonan berdasarkan ID
+    $rc = PermintaanMgng::with('balasan')->findOrFail($id);  // Including balasan data
+
+    // Ambil data peserta yang terkait dengan permohonan ini
+    $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
+
+    return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
+}
+
+public function daftarLaporanMagang(Request $req)
+{
+   $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
+    ->whereHas('notaDinas', function($query) {
+        $query->where('status_nota_dinas', 'terkirim');
+    })
+    ->when($req->keyword, function ($query, $keyword) {
+        $query->whereHas('masterMgng.masterSklh.user', function ($q) use ($keyword) {
+            $q->where('fullname', 'like', "%{$keyword}%")
+              ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+              ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+              ->orWhere('email', 'like', "%{$keyword}%")
+              ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+              ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+        });
+    })
+    ->orderBy('created_at', 'desc')
+    ->get();
+
+    $data2 = MasterPsrt::all();
+
+    return view('pages.user_extras.daftarlaporan', compact('data', 'data2'));
+}
+
+
+}
+
+>>>>>>> abc58123d2ed29b972b6daebcd6b7b60855e759c

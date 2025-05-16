@@ -21,7 +21,7 @@
 
     <div class="page-body">
         <div class="container-xl">
-            @if(Auth::user()->role_id == 1)
+            @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                 <!-- Privilege Check -->
                 <div class="row">
                     <div class="col-md-6">

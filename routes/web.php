@@ -90,6 +90,27 @@ Route::get('/proposal_keluar/{id}/balas', [App\Http\Controllers\ProposalKeluarCo
 Route::post('/proposal_keluar/{id}/tanggapiproposal', [App\Http\Controllers\ProposalKeluarController::class, 'tanggapiPermohonanKeluar'])->name('proposal_keluar.tanggapiproposal');
 Route::get('/proposal_keluar/{id}/cetakpdf', [App\Http\Controllers\ProposalKeluarController::class, 'cetakpdfpermohonankeluar'])->name('proposal_keluar.cetakpdfpermohonankeluar');
 
+//Daftar Diterima
+Route::get('/permohonan-masuk', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanMasuk'])->name('user.daftar_permohonanmasuk');
+Route::get('/permohonan-masuk/{id}', [App\Http\Controllers\UserExtrasController::class, 'detailPermohonanMasuk'])->name('user.detail_permohonanmasuk');
+
 Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
 Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
 Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');
+<<<<<<< HEAD
+=======
+
+//Nota Dinas
+Route::get('/nota-dinas', [App\Http\Controllers\NotaDinasController::class, 'daftar'])->name('nota_dinas.daftar');
+Route::get('/nota-dinas/proposal-selector', [App\Http\Controllers\NotaDinasController::class, 'proposalselector'])->name('nota_dinas.proposalselector');
+Route::get('/nota-dinas/add/{id}', [App\Http\Controllers\NotaDinasController::class, 'add'])->name('nota_dinas.add');
+Route::post('/nota-dinas/save/{id}', [App\Http\Controllers\NotaDinasController::class, 'save'])->name('nota_dinas.save');
+Route::get('/nota_dinas/edit/{id}', [App\Http\Controllers\NotaDinasController::class, 'edit'])->name('nota_dinas.edit');
+Route::put('/nota_dinas/{id}', [App\Http\Controllers\NotaDinasController::class, 'update'])->name('nota_dinas.update');
+Route::get('/nota_dinas/additem/{id}', [App\Http\Controllers\NotaDinasController::class, 'addItem'])->name('nota_dinas.additem');
+Route::post('/nota_dinas/storeitem/{id}', [App\Http\Controllers\NotaDinasController::class, 'storeItem'])->name('nota_dinas.storeitem');
+Route::get('/nota_dinas/cetakpdf/{id}', [App\Http\Controllers\NotaDinasController::class, 'cetakPdf'])->name('nota_dinas.cetak_pdf');
+
+//Daftar Laporan
+Route::get('/laporan-magang', [App\Http\Controllers\UserExtrasController::class, 'daftarLaporanMagang'])->name('user.daftar_laporanmagang');
+>>>>>>> abc58123d2ed29b972b6daebcd6b7b60855e759c

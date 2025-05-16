@@ -57,4 +57,5 @@ class MasterPsrt extends Model
 {
     return $this->belongsTo(PermintaanMgng::class, 'permintaan_mgng_id');
 }
+
 }

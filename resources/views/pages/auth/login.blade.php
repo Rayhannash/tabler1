@@ -40,24 +40,30 @@
                                             </span>
                                         </label>
                                         <div class="input-group input-group-flat">
-                                            <input type="password" name="password" class="form-control @error('password') is-invalid is-invalid-lite @enderror"
-                                                placeholder="Kata sandi anda" autocomplete="off">
+                                            <input type="password" name="password"
+                                                class="form-control @error('password') is-invalid is-invalid-lite @enderror"
+                                                placeholder="Kata sandi anda" autocomplete="off" id="login-password">
                                             <span class="input-group-text">
-                                                <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-1">
-                                                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                                        <path
-                                                            d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                                                    </svg>
+                                                <a href="#" class="input-group-link" id="toggle-login-password">
+                                                    <span id="icon-login-password">
+                                                        <!-- Mata Terbuka (default) -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 64 64">
+                                                            <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
+                                                                d="M1,32c0,0,11,15,31,15s31-15,31-15S52,17,32,17 S1,32,1,32z" />
+                                                            <circle fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
+                                                                cx="32" cy="32" r="7" />
+                                                        </svg>
+                                                    </span>
                                                 </a>
                                             </span>
                                             @error('password')
-                                            <div class="invalid-feedback mb-3">{{ $message }}</div>
+                                                <div class="invalid-feedback mb-3">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
+
+
 
                                     <div class="mb-2">
                                         <label class="form-check">
@@ -92,6 +98,41 @@
             showLoading();
             setTimeout(() => event.target.submit(), 2000);
         }
+
+        document.getElementById('toggle-login-password').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const passwordField = document.getElementById('login-password');
+            const iconContainer = document.getElementById('icon-login-password');
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                // Mata tertutup (slash)
+                iconContainer.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 64 64">
+                        <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
+                            d="M1,32c0,0,11,15,31,15s31-15,31-15S52,17,32,17 S1,32,1,32z"/>
+                        <circle fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
+                            cx="32" cy="32" r="7"/>
+                        <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
+                            x1="9" y1="55" x2="55" y2="9"/>
+                    </svg>
+                `;
+            } else {
+                passwordField.type = 'password';
+                // Mata terbuka
+                iconContainer.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 64 64">
+                        <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
+                            d="M1,32c0,0,11,15,31,15s31-15,31-15S52,17,32,17 S1,32,1,32z"/>
+                        <circle fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
+                            cx="32" cy="32" r="7"/>
+                    </svg>
+                `;
+            }
+        });
     </script>
     @endpush
 </x-app-layout>

@@ -22,12 +22,17 @@ class MasterMgng extends Model
 
     public function permintaan()
     {
-        return $this->hasMany(PermintaanMgng::class, 'master_mgng_id');
+        return $this->hasOne(PermintaanMgng::class, 'master_mgng_id');
     }
 
     public function balasan()
     {
         return $this->hasOne(BalasanMgng::class, 'master_mgng_id');
     }
+
+    public function peserta()
+{
+    return $this->hasMany(MasterPsrt::class, 'master_mgng_id');
+}
 
 }

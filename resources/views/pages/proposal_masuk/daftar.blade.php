@@ -57,8 +57,8 @@
                                         <table>
                                             <span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}<br>
                                             <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}<br>
-                                            <span class="mdi mdi-email"></span> <a href="{{ asset('storage/scan_surat_permintaan/'.$dt->scan_surat_permintaan) }}" target="_blank"> Surat Permohonan</a><br>
-                                            <span class="mdi mdi-file"></span> <a href="{{ asset('storage/scan_proposal_magang/'.$dt->scan_proposal_magang) }}" target="_blank"> Proposal Magang</a><br>
+                                            <span class="mdi mdi-email"></span> <a href="{{ asset('storage/' . $dt->scan_surat_permintaan) }}" target="_blank">Surat Permohonan</a><br>
+                                            <span class="mdi mdi-file"></span> <a href="{{ asset('storage/' . $dt->scan_proposal_magang) }}" target="_blank">Proposal Magang</a><br>
                                         </table>
                                     </td>
                                     <td class="text-center">
@@ -94,8 +94,8 @@
                                         </td>
 
                                         <td style="text-align: center">
-                                            <a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-reply"></span></a>
-                                            <button type="button" class="btn btn-sm btn-danger btn-trash" data-id="{{$dt->id}}"><span class="mdi mdi-delete"></span></i></button>
+                                            <a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success"><span class="mdi mdi-reply"></span></a>
+                                            <button type="button" class="btn btn-danger btn-trash" data-id="{{$dt->id}}"><span class="mdi mdi-delete"></span></i></button>
                                         </td>
                                 </tr>
                             @endif

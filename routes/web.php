@@ -111,3 +111,20 @@ Route::get('/nota_dinas/cetakpdf/{id}', [App\Http\Controllers\NotaDinasControlle
 
 //Daftar Laporan
 Route::get('/laporan-magang', [App\Http\Controllers\UserExtrasController::class, 'daftarLaporanMagang'])->name('user.daftar_laporanmagang');
+Route::get('/user/showuploadlaporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'showUploadLaporan'])->name('user.showuploadlaporan');
+Route::post('/user/uploadlaporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'uploadLaporan'])->name('user.uploadlaporan');
+Route::get('/user/preview-laporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'previewLaporan'])->name('user.previewlaporan');
+
+
+//Laporan & Sertifikat
+Route::get('/proposal-final', [App\Http\Controllers\ProposalFinalController::class, 'daftar'])->name('proposal_final.daftar');
+Route::get('/proposal-final/tanggapi/{id}', [App\Http\Controllers\ProposalFinalController::class, 'tanggapiProposal'])->name('proposal_final.tanggapi');
+Route::get('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'penilaian'])->name('proposal_final.penilaian');
+Route::post('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanPenilaian'])->name('proposal_final.penilaian.simpan');
+Route::get('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadPenilaianForm'])->name('proposal_final.uploadpenilaian');
+Route::post('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadPenilaian'])->name('proposal_final.uploadpenilaian.simpan');
+Route::get('/proposal-final/cetak-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'cetakPenilaian'])->name('proposal_final.cetakpenilaian');
+Route::get('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadSertifikatForm'])->name('proposal_final.uploadsertifikat');
+Route::post('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadSertifikat'])->name('proposal_final.uploadsertifikat.simpan');
+
+

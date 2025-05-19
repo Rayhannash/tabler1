@@ -113,7 +113,7 @@
                                             @endforeach
                                         </td>
                                         <td style="text-align: center">
-                                            <a href="{{ route('nota_dinas.edit', ['id' => $dt->notaDinas->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-pencil"></span></a>
+                                            <a href="{{ route('nota_dinas.edit', ['id' => $dt->notaDinas->id]) }}" class="btn btn-success"><span class="mdi mdi-pencil"></span></a>
                                         </td>
                                     </tr>
                                 @endif

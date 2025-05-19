@@ -91,30 +91,45 @@
 
                                         <td class="text-center">
                                             @foreach($pesertas as $de)
-                                                {{ $de->nilai ?? 'N/A' }}<br>
+                                                {{ $de->nilai_akhir ?? 'N/A' }}<br>
                                             @endforeach
                                         </td>
                                         <td class="text-center">
                                             @foreach($pesertas as $de)
-                                                {{ $de->penilai ?? 'N/A' }}<br>
+                                                {{ $de->bdngMember->nama_pejabat ?? 'N/A' }}<br>
                                             @endforeach
                                         </td>
-
-                                        <!-- Kolom opsi peserta: hanya tulisan -->
                                         <td class="text-center">
-                                             <a href="#" class="btn btn-info btn-sm" title="View">
-                                                <span class="mdi mdi-eye"></span>
-                                            </a>
+                                            @foreach($pesertas as $de)
+                                                {{-- Link Lihat Nilai --}}
+                                                @if($de->status_penilaian == 'sudah' && $de->scan_penilaian)
+                                                    <a href="{{ asset('storage/' . $de->scan_penilaian) }}" target="_blank">
+                                                        Lihat Nilai -
+                                                    </a><br>
+                                                @else
+                                                    <span class="text-muted">N/A</span><br>
+                                                @endif
+
+                                                {{-- Link Lihat Sertifikat --}}
+                                                @if($de->status_sertifikat == 'terkirim' && $de->scan_sertifikat)
+                                                    <a href="{{ asset('storage/' . $de->scan_sertifikat) }}" target="_blank">
+                                                        Lihat Sertifikat
+                                                    </a><br>
+                                                @else
+                                                    <span class="text-muted">N/A</span><br>
+                                                @endif
+                                            @endforeach
                                         </td>
+                                        
 
                                         <!-- Kolom opsi: tombol eye dan pencil -->
                                         <td style="text-align: center; white-space: nowrap;">
-                                            <a href="#" class="btn btn-info btn-sm" title="View">
-                                                <span class="mdi mdi-eye"></span>
-                                            </a>
-                                            <a href="#" class="btn btn-primary btn-sm" title="Edit">
-                                                <span class="mdi mdi-pencil"></span>
-                                            </a>
+                                            <a href="{{ route('user.previewlaporan', ['id' => $dt->id]) }}" class="btn btn-info" title="View">
+    <span class="mdi mdi-eye"></span>
+</a>
+                                          <a href="{{ route('user.showuploadlaporan', ['id' => $dt->id]) }}" class="btn btn-primary" title="Upload Laporan">
+    <span class="mdi mdi-pencil"></span>
+</a>
                                         </td>
                                     </tr>
                                 @endif

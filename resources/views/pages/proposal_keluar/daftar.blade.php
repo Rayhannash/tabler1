@@ -109,7 +109,7 @@
                                         </td>
 
                                         <td style="text-align: center">
-                                            <a href="{{ route('proposal_keluar.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-pencil"></span></a>
+                                            <a href="{{ route('proposal_keluar.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success"><span class="mdi mdi-pencil"></span></a>
                                         </td>
                                 </tr>
                             @endif

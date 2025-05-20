@@ -1,9 +1,9 @@
-<aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="light">
+<aside class="navbar navbar-vertical navbar-expand-lg black" data-bs-theme="light">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8; display: flex; align-items: center; justify-content: center;">
+        <div class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8;color:black; display: flex; align-items: center; justify-content: center;">
             <!-- Teks Logo -->
             <span class="navbar-brand-text text-white me-2" id="brand-text" style="margin-right: 8px;">
                 <span style="font-weight: bold; font-size: 1.5em;">SI</span> 

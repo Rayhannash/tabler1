@@ -79,7 +79,7 @@
         <a class="nav-link {{ $isActive ? 'fw-bold active' : '' }}"
            href="{{ $menuItem->url ? route($menuItem->url) : '#' }}">
             @if($menuItem->icon)
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <span class="nav-link-icon d-md-none d-lg-inline-block color-black">
                     @svg($menuItem->icon)
                 </span>
             @endif

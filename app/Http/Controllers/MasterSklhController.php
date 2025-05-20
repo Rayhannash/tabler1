@@ -17,21 +17,22 @@ class MasterSklhController extends Controller
 {
     $keyword = $request->keyword;
 
+    // Query untuk mengambil data lembaga pendidikan dengan pagination
     $query = MasterSklh::join('users','users.id','=','master_sklh.id_user')
         ->select('master_sklh.*','users.fullname','users.akun_diverifikasi')
-        ->orderBy('users.fullname','asc');
+        ->orderBy('users.fullname', 'asc');
 
     if ($keyword) {
         $query->where(function($q) use($keyword) {
-            $q->where('users.fullname','like',"%{$keyword}%")
-              ->orWhere('master_sklh.kabko_sklh','like',"%{$keyword}%");
+            $q->where('users.fullname', 'like', "%{$keyword}%")
+              ->orWhere('master_sklh.kabko_sklh', 'like', "%{$keyword}%");
         });
     }
 
-    $data = $query->get();
-
+    $data = $query->paginate(5); 
     return view('pages.master_sklh.daftar', compact('data'));
 }
+
 
 public function verify($id)
 {

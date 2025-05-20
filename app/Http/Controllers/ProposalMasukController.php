@@ -12,28 +12,33 @@ use Illuminate\Http\Request;
 class ProposalMasukController extends Controller
 {
     public function index(Request $req)
-    {
-        // Ambil data permohonan magang beserta relasi
-        $data = PermintaanMgng::with(['masterMgng.masterSklh.user'])
-            ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
-                if ($req->has('keyword')) {
-                    $keyword = $req->keyword;
-                    $query->where('fullname', 'like', "%{$keyword}%")
-                        ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
-                        ->orWhere('telp_sklh', 'like', "%{$keyword}%")
-                        ->orWhere('email', 'like', "%{$keyword}%")
-                        ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
-                        ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
-                }
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
+{
+    // Ambil data permohonan magang beserta relasi, hanya permohonan yang belum dibalas (status_surat_balasan != 'terkirim')
+    $data = PermintaanMgng::with(['masterMgng.masterSklh.user'])
+        ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
+            if ($req->has('keyword')) {
+                $keyword = $req->keyword;
+                $query->where('fullname', 'like', "%{$keyword}%")
+                    ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+                    ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+                    ->orWhere('email', 'like', "%{$keyword}%")
+                    ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+                    ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+            }
+        })
+        // Pastikan hanya permohonan yang tidak memiliki balasan dengan status 'terkirim'
+        ->whereDoesntHave('balasan', function ($query) {
+            $query->where('status_surat_balasan', 'terkirim');
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        // Ambil data peserta magang
-        $data2 = MasterPsrt::all(); 
+    // Ambil data peserta magang
+    $data2 = MasterPsrt::all();
 
-        return view('pages.proposal_masuk.daftar', compact('data', 'data2'));
-    }
+    return view('pages.proposal_masuk.daftar', compact('data', 'data2'));
+}
+
 
       
    public function cetakpdfpermohonanmasuk($id)
@@ -96,7 +101,10 @@ class ProposalMasukController extends Controller
         'master_mgng_id' => $permohonan->master_mgng_id,
     ]);
 
-    // Isi atau update field
+    // Menetapkan permintaan_mgng_id pada balasan
+    $balasan->permintaan_mgng_id = $permohonan->id;
+
+    // Isi atau update field lainnya
     $balasan->nomor_surat_balasan = $request->nomor_surat_balasan;
     $balasan->tanggal_surat_balasan = $request->tanggal_surat_balasan;
     $balasan->sifat_surat_balasan = $request->sifat_surat_balasan;
@@ -133,10 +141,5 @@ class ProposalMasukController extends Controller
     return view('pages.proposal_masuk.tanggapiproposal', compact('rc', 'rd', 'balasan'))
         ->with('success', 'Data balasan disimpan. Silakan cetak PDF dan upload file jika sudah tersedia.');
 }
-
-    
-
-    
-
 }
 

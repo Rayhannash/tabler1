@@ -390,9 +390,6 @@ public function updatePesertaMagang(Request $request, $id)
 
     return redirect()->route('user.daftar_permohonan')->with('success', 'Permohonan berhasil dihapus.');
 }
-<<<<<<< HEAD
-}
-=======
 
 public function daftarPermohonanMasuk(Request $req)
 {
@@ -462,4 +459,3 @@ public function daftarLaporanMagang(Request $req)
 
 }
 
->>>>>>> abc58123d2ed29b972b6daebcd6b7b60855e759c

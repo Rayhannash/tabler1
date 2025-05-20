@@ -97,8 +97,6 @@ Route::get('/permohonan-masuk/{id}', [App\Http\Controllers\UserExtrasController:
 Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
 Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
 Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');
-<<<<<<< HEAD
-=======
 
 //Nota Dinas
 Route::get('/nota-dinas', [App\Http\Controllers\NotaDinasController::class, 'daftar'])->name('nota_dinas.daftar');
@@ -113,4 +111,3 @@ Route::get('/nota_dinas/cetakpdf/{id}', [App\Http\Controllers\NotaDinasControlle
 
 //Daftar Laporan
 Route::get('/laporan-magang', [App\Http\Controllers\UserExtrasController::class, 'daftarLaporanMagang'])->name('user.daftar_laporanmagang');
->>>>>>> abc58123d2ed29b972b6daebcd6b7b60855e759c

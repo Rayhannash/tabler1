@@ -32,10 +32,16 @@
                                         <td>Tanggal Surat Permintaan</td><td>{{ \Carbon\Carbon::parse($rc->tanggal_surat_permintaan)->translatedFormat('d F Y') }}</td>
                                     </tr>
                                     <tr>
-                                        <td>File Scan Surat Permintaan</td><td><a href="{{ asset('storage/scan_surat_permintaan/'.$rc->scan_surat_permintaan) }}" target="_blank">Lihat Surat Permintaan</a></td>
+                                        <td>File Scan Surat Permintaan</td>
+                                        <td>
+                                            <a href="{{ asset('storage/' . $rc->scan_surat_permintaan) }}" target="_blank">Lihat Surat Permintaan</a>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>File Scan Proposal Magang</td><td><a href="{{ asset('storage/scan_proposal_magang/'.$rc->scan_proposal_magang) }}" target="_blank">Lihat Proposal</a></td>
+                                        <td>File Scan Proposal Magang</td>
+                                        <td>
+                                            <a href="{{ asset('storage/' . $rc->scan_proposal_magang) }}" target="_blank">Lihat Proposal</a>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -61,7 +67,7 @@
                                                 <td>{{ $peserta->nis_peserta }}</td>
                                                 <td>{{ $peserta->program_studi }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('masterpsrt.view', ['id' => $peserta->id]) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ route('masterpsrt.view', ['id' => $peserta->id]) }}" class="btn btn-primary">
                                                         <span class="mdi mdi-eye"></span> 
                                                     </a>
                                                 </td>

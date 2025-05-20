@@ -174,13 +174,21 @@
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
-                                <tr>
+                                <tr> 
                                     <td>File Scan Surat Permintaan</td>
-                                    <td><a href="{{ url('storage/scan_surat_permintaan/'.$permohonan->scan_surat_permintaan) }}" target="_blank">{{ $permohonan->scan_surat_permintaan }}</a></td>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $permohonan->scan_surat_permintaan) }}" target="_blank">
+                                            {{ basename($permohonan->scan_surat_permintaan) }}
+                                        </a>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>File Scan Proposal Magang</td>
-                                    <td><a href="{{ url('storage/scan_proposal_magang/'.$permohonan->scan_proposal_magang) }}" target="_blank">{{ $permohonan->scan_proposal_magang }}</a></td>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $permohonan->scan_proposal_magang) }}" target="_blank">
+                                            {{ basename($permohonan->scan_proposal_magang) }}
+                                        </a>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

@@ -68,7 +68,7 @@
                                         <td>{{ $dt->bidang->nama_bidang ?? '-' }}</td>
                                         <td>{{ $dt->sub_bidang_pejabat ?? '-' }}</td>
                                         <td class="text-center">
-                                        <a href="{{ route('master_petugas.edit', $dt->member_id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('master_petugas.edit', $dt->member_id) }}" class="btn btn-primary">
                                             <span class="mdi mdi-eye"></span>
                                         </a>
                                         </td>

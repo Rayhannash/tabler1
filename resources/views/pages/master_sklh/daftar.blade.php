@@ -74,9 +74,8 @@
                                     @endphp
                                     {{ $akreditasi[$dt->akreditasi_sklh] ?? '-' }}
                                     <br>
-                                    <a target="_blank"
-                                       href="{{ asset('storage/scan_surat_akreditasi_sklh/' . $dt->scan_surat_akreditasi_sklh) }}">
-                                       Surat akreditasi
+                                    <a target="_blank" href="{{ asset('storage/' . $dt->scan_surat_akreditasi_sklh) }}">
+                                        Surat Akreditasi
                                     </a>
                                 </td>
 

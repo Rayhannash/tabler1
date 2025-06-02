@@ -1,8 +1,8 @@
 <x-app-layout pageTitle="Edit Data!">
     <x-page-header>
-        <div class="container-xl">
+        <div class="container-xl">   
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Edit Data!"></x-breadcrumb>
+                <x-breadcrumb pageTitle="Edit Data"></x-breadcrumb>
             </div>
         </div>
     </x-page-header>
@@ -15,12 +15,12 @@
                 </div>
             @endif
 
-            <form action="{{ route('master_sklh.update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('user_extras.updatesklh') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3 class="card-title">Edit Data!</h3>
+                        <h3 class="card-title">Edit Data</h3>
                         <button type="submit" class="btn btn-primary text-white">
                             <span class="mdi mdi-content-save"> Simpan</span>
                         </button>
@@ -120,7 +120,12 @@
                                             <label class="form-label">File Surat Akreditasi</label>
                                             <input name="scan_surat_akreditasi_sklh" type="file" class="form-control" accept=".pdf,.jpg,.jpeg">
                                             @if($dt->scan_surat_akreditasi_sklh)
-                                                <small class="text-muted">File saat ini: {{ $dt->scan_surat_akreditasi_sklh}}</small>
+                                                <small class="text-muted">
+                                                    File saat ini: 
+                                                    <a href="{{ asset('storage/' . $dt->scan_surat_akreditasi_sklh) }}" target="_blank" style="text-decoration: underline;">
+                                                        {{ basename($dt->scan_surat_akreditasi_sklh) }}
+                                                    </a>
+                                                </small>
                                             @endif
                                         </div>
                                     </div>

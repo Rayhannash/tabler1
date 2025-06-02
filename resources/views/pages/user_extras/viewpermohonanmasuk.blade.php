@@ -86,9 +86,22 @@
                                                     <td>{{ $dt->nis_peserta }}</td>
                                                     <td>{{ $dt->program_studi }}</td>
                                                     <td>
-                                                        <a href="{{ route('user.editpesertamagang', ['id' => $dt->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-eye"></i></a>
-                                                        @if($dt->status_scan_penilaian == 'sudah')
-                                                            <a href="{{ asset('storage/scan_penilaian/'.$dt->scan_penilaian) }}" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-fw fa-trophy"></i><i class="fa fa-fw fa-print"></i></a>
+                                                        <a href="{{ route('user.editpesertamagang', ['id' => $dt->id]) }}" class="btn btn-primary btn-sm">
+                                                            <span class="mdi mdi-eye"></span>
+                                                        </a>
+
+                                                        {{-- Tombol piala --}}
+                                                        @if($dt->status_penilaian == 'sudah' && $dt->scan_penilaian)
+                                                            <a href="{{ asset('storage/' . $dt->scan_penilaian) }}" class="btn btn-sm btn-success" target="_blank">
+                                                                <span class="mdi mdi-trophy"></span>
+                                                            </a>
+                                                        @endif
+
+                                                        {{-- Tombol sertifikat --}}
+                                                        @if($dt->status_sertifikat == 'terkirim' && $dt->scan_sertifikat)
+                                                            <a href="{{ asset('storage/' . $dt->scan_sertifikat) }}" class="btn btn-sm btn-info" target="_blank">
+                                                                <span class="mdi mdi-certificate"></span>
+                                                            </a>
                                                         @endif
                                                     </td>
                                                 </tr>

@@ -128,6 +128,8 @@ public function updatesklh(Request $req)
         : back()->with('result', 'fail');
 }
 
+
+
 public function simpanproposalmagang(Request $request)
 {
     // Ambil data sekolah yang login

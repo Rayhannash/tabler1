@@ -15,7 +15,7 @@
 
 <body class="{{ in_array($pageTitle, ['Login', 'Daftar Akun Baru']) ? 'd-flex flex-column' : 'layout-fluid' }}" data-bs-theme="light">
         <!-- Sidebar -->
-        @if(!in_array($pageTitle, ['Login', 'Daftar Akun Baru']))
+        @if(!in_array($pageTitle, ['Login', 'Daftar Akun Baru', 'Reset Password', 'Lupa Password']))
             @include('partials.sidebar')
             @include('partials.navbar')
             <div class="page-wrapper">
@@ -23,7 +23,7 @@
             <!-- Page body -->
             {{ $slot }}
             <!-- Footer -->
-        @if(!in_array($pageTitle, ['Login', 'Daftar Akun Baru']))
+        @if(!in_array($pageTitle, ['Login', 'Daftar Akun Baru', 'Reset Password', 'Lupa Password']))
             @include('partials.footer')
             </div>
         @endif

@@ -32,7 +32,9 @@ class ProposalFinalController extends Controller
             }
         })
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10)
+        ->withQueryString();
+
 
     // Ambil peserta berdasarkan nota_dinas.permintaan_mgng_id, bukan langsung dari permintaan_mgng_id
     $data2 = MasterPsrt::whereIn('permintaan_mgng_id', $data->pluck('id'))->get();

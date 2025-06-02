@@ -1,99 +1,105 @@
 <x-app-layout pageTitle="Daftar Akun Baru">
-    <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="container container-normal">
-            <div class="row align-items-center g-4">
-                <!-- Form Pendaftaran -->
-                <div class="col-lg">
-                    <div class="container-tight">
-                        <div class="text-center mb-4">
-                            <a href="." class="navbar-brand navbar-brand-autodark">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="110" height="32" viewBox="0 0 232 68" class="navbar-brand-image">
-                                    <!-- SVG Logo Content -->
-                                    <path d="..." fill="#066fd1" style="fill: var(--tblr-primary, #066fd1)" />
-                                    <path d="..." fill-rule="evenodd" clip-rule="evenodd" fill="#4a4a4a" />
-                                </svg>
-                            </a>
-                        </div>
 
-                        <div class="card card-md">
-                            <div class="card-body">
-                                <h2 class="h3 text-center mb-4">Buat Akun</h2>
+    <div class="d-flex flex-column justify-content-center align-items-center vh-100" style="background-color: #ccd1d9;">
 
-                                <form action="{{ route('auth.register') }}" method="POST" onsubmit="showLoader(event)">
-                                    @csrf
+         <div class="text-center mb-2" style="line-height: 1.1;">
+            <h1 style="margin-bottom: 0;">SIMA KOMINFO</h1>
+            <h1 style="margin-top: 0;">JATIM</h1>
+        </div>
 
-                                    <div class="mb-3">
-                                        <label for="fullname" class="form-label">Nama Lengkap</label>
-                                        <input type="text" name="fullname" class="form-control @error('fullname') is-invalid @enderror" value="{{ old('fullname') }}" required>
-                                        @error('fullname')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+        <div class="card" style="width: 350px; border-radius: 0;">
+            <div class="card-body">
+                <h4 class="text-center mb-4">Daftar Akun Baru</h4>
 
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" required>
-                                        @error('username')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                <form action="{{ route('auth.register') }}" method="POST" onsubmit="showLoader(event)">
+                    @csrf
 
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
-                                        @error('email')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Password</label>
-                                        <div class="input-group input-group-flat">
-                                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required id="password" autocomplete="off">
-                                            <span class="input-group-text">
-                                                <a href="#" class="input-group-link" id="toggle-password">
-                                                    <span class="mdi mdi-eye-outline"></span>
-                                                </a>
-                                            </span>
-                                        </div>
-                                        @error('password')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                                        <div class="input-group input-group-flat">
-                                            <input type="password" name="password_confirmation" class="form-control" required id="password_confirmation" autocomplete="off">
-                                            <span class="input-group-text">
-                                                <a href="#" class="input-group-link" id="toggle-password-confirmation">
-                                                    <span class="mdi mdi-eye-outline"></span>
-                                                </a>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-footer">
-                                        <button type="submit" class="btn btn-primary w-100" id="loginBtn">Daftar</button>
-                                    </div>
-
-                                    <x-page-loader message="" sizeProgressBar="md" />
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="text-center text-secondary mt-3">
-                            Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
-                        </div>
+                    <div class="mb-3 position-relative">
+                        <input 
+                            type="text" 
+                            name="fullname" 
+                            class="form-control @error('fullname') is-invalid @enderror" 
+                            placeholder="Nama Lembaga Pendidikan" 
+                            value="{{ old('fullname') }}" 
+                            required>
+                        <span class="mdi mdi-bank position-absolute" style="top: 50%; right: 12px; transform: translateY(-50%); font-size: 20px; color: #6c757d;"></span>
+                        @error('fullname')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                </div>
 
-                <!-- Ilustrasi -->
-                <div class="col-lg d-none d-lg-block">
-                    <img src="{{ asset('static/illustrations/light/computer-fix.png') }}" alt="Illustration" class="img d-block mx-auto" height="400">
-                </div>
+                    <div class="mb-3 position-relative">
+                        <input 
+                            type="text" 
+                            name="username" 
+                            class="form-control @error('username') is-invalid @enderror" 
+                            placeholder="Username" 
+                            value="{{ old('username') }}" 
+                            required>
+                        <span class="mdi mdi-account position-absolute" style="top: 50%; right: 12px; transform: translateY(-50%); font-size: 20px; color: #6c757d;"></span>
+                        @error('username')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 position-relative">
+                        <input 
+                            type="email" 
+                            name="email" 
+                            class="form-control pe-5 @error('email') is-invalid @enderror" 
+                            placeholder="Email" 
+                            value="{{ old('email') }}" 
+                            required>
+                        <span class="mdi mdi-email position-absolute" style="top: 50%; right: 12px; transform: translateY(-50%); font-size: 20px; color: #6c757d;"></span>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 position-relative">
+                        <input 
+                            type="password" 
+                            name="password" 
+                            class="form-control pe-5 @error('password') is-invalid @enderror" 
+                            placeholder="Password" 
+                            required 
+                            id="password" 
+                            autocomplete="off">
+
+                        <a href="#" class="position-absolute" id="toggle-password" style="top: 50%; right: 12px; transform: translateY(-50%); cursor: pointer; color: #6c757d; font-size: 20px;">
+                            <span class="mdi mdi-eye"></span>
+                        </a>
+
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 position-relative">
+                        <input 
+                            type="password" 
+                            name="password_confirmation" 
+                            class="form-control pe-5" 
+                            placeholder="Konfirmasi Password" 
+                            required 
+                            id="password_confirmation" 
+                            autocomplete="off">
+
+                        <a href="#" class="position-absolute" id="toggle-password-confirmation" style="top: 50%; right: 12px; transform: translateY(-50%); cursor: pointer; color: #6c757d; font-size: 20px;">
+                            <span class="mdi mdi-eye"></span>
+                        </a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100" id="loginBtn">Daftar</button>
+
+                    <div class="mt-2 text-center">
+                        Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
+                    </div>
+                </form>
+
             </div>
         </div>
+
     </div>
 
     @push('scripts')
@@ -101,7 +107,7 @@
             function showLoader(event) {
                 event.preventDefault();
                 document.getElementById('loginBtn').disabled = true;
-                showLoading();
+                // showLoading(); // Kalau ada fungsi loader, aktifkan ini
                 setTimeout(() => event.target.submit(), 2000);
             }
 
@@ -113,7 +119,7 @@
                 const isHidden = passwordField.type === 'password';
 
                 passwordField.type = isHidden ? 'text' : 'password';
-                passwordIcon.classList.toggle('mdi-eye-outline');
+                passwordIcon.classList.toggle('mdi-eye');
                 passwordIcon.classList.toggle('mdi-eye-off');
             });
 
@@ -125,9 +131,10 @@
                 const isHidden = confirmationField.type === 'password';
 
                 confirmationField.type = isHidden ? 'text' : 'password';
-                confirmationIcon.classList.toggle('mdi-eye-outline');
+                confirmationIcon.classList.toggle('mdi-eye');
                 confirmationIcon.classList.toggle('mdi-eye-off');
             });
         </script>
     @endpush
+
 </x-app-layout>

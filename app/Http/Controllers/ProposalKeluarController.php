@@ -14,20 +14,25 @@ class ProposalKeluarController extends Controller
     public function index(Request $req)
 {
     // Ambil data permohonan magang beserta relasi masterMgng, masterSklh, user, dan balasan
-    $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan'])  // Memuat relasi balasan
-        ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
-            if ($req->has('keyword')) {
-                $keyword = $req->keyword;
-                $query->where('fullname', 'like', "%{$keyword}%")
-                    ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
-                    ->orWhere('telp_sklh', 'like', "%{$keyword}%")
-                    ->orWhere('email', 'like', "%{$keyword}%")
-                    ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
-                    ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
-            }
-        })
-        ->orderBy('created_at', 'desc')
-        ->get();
+    $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan'])
+    ->where('status_surat_permintaan', 'terkirim')
+    ->whereHas('balasan', function ($q) {
+        $q->whereNotNull('scan_surat_balasan');  // pastikan balasan ada dan scan tidak null
+    })
+    ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
+        if ($req->has('keyword')) {
+            $keyword = $req->keyword;
+            $query->where('fullname', 'like', "%{$keyword}%")
+                ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+                ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+                ->orWhere('email', 'like', "%{$keyword}%")
+                ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+                ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+        }
+    })
+    ->orderBy('created_at', 'desc')
+    ->paginate(10)
+    ->withQueryString();
 
     // Ambil data peserta magang
     $data2 = MasterPsrt::all(); 
@@ -91,21 +96,15 @@ public function tanggapiPermohonanKeluar(Request $request, $id)
 
     // Cek jika ada file baru yang di-upload
     if ($request->hasFile('scan_surat_balasan')) {
-        $filename = time().'_'.$request->file('scan_surat_balasan')->getClientOriginalName();
-        $request->file('scan_surat_balasan')->storeAs('public/scan_surat_balasan', $filename);
-        $balasan->scan_surat_balasan = $filename;
-    }
-
+    $path = $request->file('scan_surat_balasan')->store('scan_surat_balasan', 'public');
+    $filename = basename($path);
+    $balasan->scan_surat_balasan = $filename;
     $balasan->save();
+    
+}
 
-    // Cek kondisi apakah file sudah diupload atau belum
-    if ($request->hasFile('scan_surat_balasan')) {
-        // Jika file sudah diupload, redirect ke daftar permohonan keluar
-        return redirect()->route('proposal_keluar')->with('success', 'Balasan berhasil diperbarui dengan file.');
-    } else {
-        // Jika tidak ada file, langsung ke halaman daftar permohonan keluar tanpa cetak PDF
-        return redirect()->route('proposal_keluar')->with('success', 'Balasan berhasil diperbarui tanpa file.');
-    }
+     return redirect()->route('proposal_keluar.balaspermohonan', ['id' => $id])
+        ->with('success', 'Balasan berhasil diperbarui.');
     
 }
 
@@ -120,17 +119,19 @@ public function cetakpdfpermohonankeluar($id)
     // Ambil daftar peserta berdasarkan permohonan
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
+    // Ambil petugas
     $pejabat = null;
-    if ($balasan->id_bdng_member) {
+    if ($balasan && $balasan->id_bdng_member) {
         $pejabat = MasterBdngMember::find($balasan->id_bdng_member);
     }
 
     // Generate PDF dengan menggunakan view yang sesuai
-    $pdf = Pdf::loadView('pages.proposal_keluar.cetakpdfpermohonankeluar', compact('rc', 'rd', 'balasan', 'petugas'));
+    $pdf = Pdf::loadView('pages.proposal_keluar.cetakpdfpermohonankeluar', compact('rc', 'rd', 'balasan', 'pejabat'));
 
-    // Return PDF download
-    return $pdf->download('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
+    // Return PDF untuk preview (stream)
+    return $pdf->stream('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
 }
+
 
 
 

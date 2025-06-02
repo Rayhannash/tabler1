@@ -31,7 +31,7 @@
                     @csrf
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title">FORM PERMOHONAN MAGANG</h3>
+                            <h3 class="card-title">Form Permohonan Magang</h3>
                             <button type="submit" class="btn btn-primary text-white">
                                 <span class="mdi mdi-send"> Kirim</span>
                             </button>

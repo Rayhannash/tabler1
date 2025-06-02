@@ -31,7 +31,7 @@ class ProposalMasukController extends Controller
             $query->where('status_surat_balasan', 'terkirim');
         })
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10);
 
     // Ambil data peserta magang
     $data2 = MasterPsrt::all();
@@ -39,6 +39,12 @@ class ProposalMasukController extends Controller
     return view('pages.proposal_masuk.daftar', compact('data', 'data2'));
 }
 
+    public function destroy($id)
+{
+    $permohonan = PermintaanMgng::findOrFail($id);
+    $permohonan->delete();
+    return redirect()->route('proposal_masuk')->with('success', 'Permohonan magang berhasil dihapus.');
+}
 
       
    public function cetakpdfpermohonanmasuk($id)

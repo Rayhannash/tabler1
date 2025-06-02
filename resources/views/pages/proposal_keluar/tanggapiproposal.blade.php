@@ -100,18 +100,17 @@
                                 </div><br>
 
                                 <div class="form-group" id="lampiranSection">
-                                    <label for="iScanSuratBalasan"><strong>Scan Surat Balasan</strong></label>
-                                    @if($balasan->scan_surat_balasan)
-                                        <p>File saat ini: 
-                                            <a href="{{ asset('storage/scan_surat_balasan/'.optional($balasan)->scan_surat_balasan) }}" target="_blank" class="text-primary">
-                                        
-                                                {{ $balasan->scan_surat_balasan }}
-                                            </a>
-                                        </p>
-                                    @endif
+                                    <label for="iScanSuratBalasan" class="mb-2"><strong>Scan Surat Balasan</strong></label>
                                     <input type="file" name="scan_surat_balasan" id="iScanSuratBalasan" class="form-control" accept=".pdf,.jpg,.png">
+                                    @if($balasan->scan_surat_balasan)
+                                        <small class="text-muted mt-2 d-block">
+                                            File saat ini:
+                                            <a href="{{ asset('storage/scan_surat_balasan/' . $balasan->scan_surat_balasan) }}" target="_blank" style="text-decoration: underline;">
+                                                {{ basename($balasan->scan_surat_balasan) }}
+                                            </a>
+                                        </small>
+                                    @endif
                                 </div><br>
-
                                 <div class="form-group">
                                     <label for="iTanggalAwalMagang"><strong>Tanggal Awal Magang</strong></label>
                                     <input type="date" name="tanggal_awal_magang" id="iTanggalAwalMagang" class="form-control" 

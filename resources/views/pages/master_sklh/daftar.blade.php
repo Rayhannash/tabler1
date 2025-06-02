@@ -22,7 +22,7 @@
 
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <form method="GET" action="{{ route('master_sklh') }}" class="d-flex">
+                    <form method="GET" action="{{ route('master_sklh') }}" class="d-flex ms-auto" style="max-width: 300px;">
                             <input type="text" name="keyword" value="{{ request('keyword') }}" class="form-control me-2" placeholder="Pencarian">
                             <button type="submit" class="btn btn-secondary">
                                 <span class="mdi mdi-magnify"></span>
@@ -30,7 +30,6 @@
                     </form>
                 </div>
 
-            {{-- Detil Data Lembaga Pendidikan --}}
             <div class="box-body table-responsive no-padding">
                 <table class="table table-head-fixed table-hover">
                     <thead>
@@ -118,28 +117,28 @@
                                     @endphp
 
                                     @if ($status == 'belum')
-                                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#verify_{{ $dt->id }}">
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#verify_{{ $dt->id }}">
                                             <span class="mdi mdi-check-bold"></span>
                                         </button>
                                     @elseif ($status == 'sudah')
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#suspend_{{ $dt->id }}">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#suspend_{{ $dt->id }}">
                                             <span class="mdi mdi-close-thick"></span>
                                         </button>
                                     @elseif ($status == 'suspended')
-                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#unlock_{{ $dt->id }}">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#unlock_{{ $dt->id }}">
                                             <span class="mdi mdi-lock-open"></span>
                                         </button>
                                     @endif
 
-                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete_{{ $dt->id }}">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_{{ $dt->id }}">
                                         <span class="mdi mdi-delete"></span>
                                     </button>
 
-                                    <a href="{{ route('master_sklh.edit', ['id' => $dt->id]) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('master_sklh.edit', ['id' => $dt->id]) }}" class="btn btn-primary">
                                         <span class="mdi mdi-eye"></span>
                                     </a>
 
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#reset_{{ $dt->id }}">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reset_{{ $dt->id }}">
                                         Reset Password
                                     </button>
                                 </td>
@@ -221,7 +220,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Yakin ingin menghapus <strong>{{ $dt->nama }}</strong>?
+                    Yakin ingin menghapus <strong>{{ $dt->fullname }}</strong>?
                     <input type="hidden" name="id" value="{{ $dt->id }}">
                 </div>
                 <div class="modal-footer">
@@ -233,7 +232,28 @@
     </div>
 </form>
 
-
+<!-- Modal Reset Password -->
+<div class="modal fade" id="reset_{{ $dt->id }}" tabindex="-1" aria-labelledby="resetLabel_{{ $dt->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('master_sklh.reset_password') }}" method="POST">
+            @csrf
+            <input type="hidden" name="user_id" value="{{ $dt->id_user }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetLabel_{{ $dt->id }}">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Yakin ingin reset password untuk user <strong>{{ $dt->fullname }}</strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 
@@ -249,7 +269,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-center">
+            <div class="card-footer d-flex justify-content-center">
                 {{ $data->links() }}
             </div>
         </div>

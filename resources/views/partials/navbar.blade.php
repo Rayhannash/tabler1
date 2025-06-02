@@ -158,7 +158,6 @@
                         <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}');"></span>
                         <div class="d-none d-xl-block ps-2">
                             <div class="fw-bolder">{{ Auth::user()->fullname }}</div>
-                            <div class="mt-1 small text-secondary">{{ Auth::user()->role->name }}</div>
                         </div>
                     @endauth
                 </a>
@@ -168,6 +167,7 @@
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a> -->
+                    <a href="{{ route('user.setting') }}" class="dropdown-item">Personalisasi Akun</a>
                     <button class="dropdown-item" onclick="logoutNow()">Keluar</button>
                 </div>
 

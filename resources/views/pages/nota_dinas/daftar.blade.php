@@ -9,6 +9,9 @@
 
     <div class="page-body">
         <div class="container-xl">
+            <div class="card-header mb-3">
+                <h1 class="card-title h1">DAFTAR NOTA DINAS</h1>
+            </div>
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <a class="btn btn-success text-white" href="{{ route('nota_dinas.proposalselector') }}">
@@ -120,11 +123,14 @@
                             @endforeach
                             @if($data->isEmpty())
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted">Data permohonan magang tidak ditemukan.</td>
+                                    <td colspan="7" class="text-center text-muted">Nota Dinas magang tidak ditemukan.</td>
                                 </tr>
                             @endif
                         </tbody>
                     </table>
+                    <div class="card-footer d-flex justify-content-center">
+                        {{ $data->links() }}
+                    </div>
                 </div>
             </div>
         </div>

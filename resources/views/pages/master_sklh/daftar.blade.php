@@ -10,9 +10,9 @@
     <div class="page-body">
         <div class="container-xl">
             {{-- Notifikasi jika ada --}}
-            @if (session('result') == 'success')
+            @if (session('result'))
                 <div class="alert alert-success">
-                    Data berhasil disimpan.
+                    {{ session('result') }}
                 </div>
             @endif
 

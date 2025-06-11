@@ -13,7 +13,7 @@
             {{-- Notifikasi jika ada --}}
             @if (session('result') == 'success')
                 <div class="alert alert-success">
-                    Data berhasil disimpan.
+                    Data petugas berhasil diperbarui
                 </div>
             @endif
 

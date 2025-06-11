@@ -105,12 +105,13 @@
                                     @if($balasan->scan_surat_balasan)
                                         <small class="text-muted mt-2 d-block">
                                             File saat ini:
-                                            <a href="{{ asset('storage/scan_surat_balasan/' . $balasan->scan_surat_balasan) }}" target="_blank" style="text-decoration: underline;">
+                                            <a href="{{ asset('storage/scan_surat_balasan/' . $balasan->scan_surat_balasan) }}" target="_blank">
                                                 {{ basename($balasan->scan_surat_balasan) }}
                                             </a>
                                         </small>
                                     @endif
                                 </div><br>
+
                                 <div class="form-group">
                                     <label for="iTanggalAwalMagang"><strong>Tanggal Awal Magang</strong></label>
                                     <input type="date" name="tanggal_awal_magang" id="iTanggalAwalMagang" class="form-control" 
@@ -123,9 +124,15 @@
                                            value="{{ old('tanggal_akhir_magang', $balasan->tanggal_akhir_magang) }}" required>
                                 </div><br>
 
-                                <!-- Tombol Simpan dan Cetak PDF -->
-                                <button type="submit" class="btn btn-primary" id="submitButton">Simpan</button>
-                                <a href="{{ route('proposal_keluar.cetakpdfpermohonankeluar', ['id' => $rc->id]) }}" class="btn btn-success" id="cetakPdfButton" target="_blank">Cetak PDF</a>
+                                <div class="d-flex align-items-center gap-2">
+                                    <!-- Tombol Simpan -->
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+
+                                    <!-- Tombol Cetak PDF, tampil jika file scan_surat_balasan belum ada -->
+                                    @if(isset($balasan) && !is_null($balasan->scan_surat_balasan))
+                                        <a href="{{ route('proposal_keluar.cetakpdfpermohonankeluar', ['id' => $rc->id]) }}" class="btn btn-success" target="_blank">Cetak PDF</a>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

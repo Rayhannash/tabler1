@@ -190,4 +190,3 @@ Route::post('password/reset', function (Illuminate\Http\Request $request) {
                 : back()->withErrors(['email' => [__($status)]]);
 })->name('password.update');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

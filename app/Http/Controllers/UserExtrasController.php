@@ -128,8 +128,6 @@ public function updatesklh(Request $req)
         : back()->with('result', 'fail');
 }
 
-
-
 public function simpanproposalmagang(Request $request)
 {
     // Ambil data sekolah yang login
@@ -140,7 +138,7 @@ public function simpanproposalmagang(Request $request)
         'master_sklh_id' => $datasklh->id
     ]);
 
-    // Validasi input, sesuaikan nama file dengan input di form
+    // Validasi input
     $validated = $request->validate([
         'nomor_surat_permintaan' => 'required|unique:permintaan_mgng,nomor_surat_permintaan',
         'tanggal_surat_permintaan' => 'required|date',
@@ -173,7 +171,7 @@ public function simpanproposalmagang(Request $request)
         'tanggal_surat_permintaan' => $validated['tanggal_surat_permintaan'],
         'perihal_surat_permintaan' => $validated['perihal_surat_permintaan'],
         'ditandatangani_oleh' => $validated['ditandatangani_oleh'],
-        'scan_surat_permintaan' => $filePathSurat,
+        'scan_surat_permintaan' => $filePathSurat, 
         'scan_proposal_magang' => $filePathProposal,
         'status_surat_permintaan' => 'belum',
         'status_baca_surat_permintaan' => 'belum',
@@ -183,14 +181,6 @@ public function simpanproposalmagang(Request $request)
 }
 
 
-protected function uploadFile($file, $folder)
-{
-    $filename = time() . '_' . str_replace(' ', '', $file->getClientOriginalName());
-    $file->storeAs('public/' . $folder, $filename);
-    return $filename;
-}
-
-    
 
 public function daftarPermohonanKeluar()
 {
@@ -286,13 +276,13 @@ public function updatepermohonan(Request $request, $id)
 
     // Handle file upload jika ada
     if ($request->hasFile('scan_surat_permintaan')) {
-        $scan_surat_permintaan = $this->uploadFile($request->file('scan_surat_permintaan'), 'scan_surat_permintaan');
-        $permohonan->scan_surat_permintaan = $scan_surat_permintaan;
+    $filePathSurat = $request->file('scan_surat_permintaan')->store('uploads/scan_surat_permintaan', 'public');
+    $permohonan->scan_surat_permintaan = $filePathSurat;
     }
 
     if ($request->hasFile('scan_proposal_magang')) {
-        $scan_proposal_magang = $this->uploadFile($request->file('scan_proposal_magang'), 'scan_proposal_magang');
-        $permohonan->scan_proposal_magang = $scan_proposal_magang;
+        $filePathProposal = $request->file('scan_proposal_magang')->store('uploads/scan_proposal_magang', 'public');
+        $permohonan->scan_proposal_magang = $filePathProposal;
     }
 
     // Simpan perubahan permohonan

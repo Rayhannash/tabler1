@@ -8,11 +8,13 @@ use App\Models\BalasanMgng;
 use App\Models\MasterBdngMember;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ProposalKeluarController extends Controller
 {
     public function index(Request $req)
-{
+{   
+     Carbon::setLocale('id');
     // Ambil data permohonan magang beserta relasi masterMgng, masterSklh, user, dan balasan
     $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan'])
     ->where('status_surat_permintaan', 'terkirim')
@@ -42,6 +44,7 @@ class ProposalKeluarController extends Controller
 
     return view('pages.proposal_keluar.daftar', compact('data', 'data2', 'data3'));
 }
+
 public function balasPermohonanKeluar($id)
 {
     // Ambil permohonan berdasarkan ID
@@ -75,17 +78,19 @@ public function tanggapiPermohonanKeluar(Request $request, $id)
         'tanggal_akhir_magang' => 'required|date',
     ]);
 
+    // Ambil data permohonan berdasarkan ID
     $permohonan = PermintaanMgng::findOrFail($id);
 
     // Cek apakah balasan sudah ada berdasarkan master_mgng_id
     $balasan = BalasanMgng::where('master_mgng_id', $permohonan->master_mgng_id)->first();
 
+    // Jika balasan tidak ada, buat balasan baru
     if (!$balasan) {
         $balasan = new BalasanMgng();
         $balasan->master_mgng_id = $permohonan->master_mgng_id;
     }
 
-    // Update atau isi ulang data
+    // Update data balasan
     $balasan->nomor_surat_balasan = $request->nomor_surat_balasan;
     $balasan->tanggal_surat_balasan = $request->tanggal_surat_balasan;
     $balasan->sifat_surat_balasan = $request->sifat_surat_balasan;
@@ -96,16 +101,17 @@ public function tanggapiPermohonanKeluar(Request $request, $id)
 
     // Cek jika ada file baru yang di-upload
     if ($request->hasFile('scan_surat_balasan')) {
-    $path = $request->file('scan_surat_balasan')->store('scan_surat_balasan', 'public');
-    $filename = basename($path);
-    $balasan->scan_surat_balasan = $filename;
-    $balasan->save();
-    
-}
+        $path = $request->file('scan_surat_balasan')->store('scan_surat_balasan', 'public');
+        $filename = basename($path);
+        $balasan->scan_surat_balasan = $filename;
+    }
 
-     return redirect()->route('proposal_keluar.balaspermohonan', ['id' => $id])
+    // Simpan data balasan yang sudah diperbarui
+    $balasan->save();
+
+    // Redirect ke halaman balasan permohonan dengan pesan sukses
+    return redirect()->route('proposal_keluar.balaspermohonan', ['id' => $id])
         ->with('success', 'Balasan berhasil diperbarui.');
-    
 }
 
 public function cetakpdfpermohonankeluar($id)

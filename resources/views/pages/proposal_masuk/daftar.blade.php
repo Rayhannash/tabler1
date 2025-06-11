@@ -59,7 +59,7 @@
                                         {{-- Data Surat Permohonan --}}
                                         <table>
                                             <span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}<br>
-                                            <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}<br>
+                                            <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->locale('id')->translatedFormat('d F Y') }}<br>
                                             <span class="mdi mdi-email"></span>&nbsp;<a href="{{ asset('storage/' . $dt->scan_surat_permintaan) }}" target="_blank">Surat Permohonan</a><br>
                                             <span class="mdi mdi-file"></span>&nbsp;<a href="{{ asset('storage/' . $dt->scan_proposal_magang) }}" target="_blank">Proposal Magang</a><br>
                                         </table>

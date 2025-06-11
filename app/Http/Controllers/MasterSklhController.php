@@ -127,7 +127,7 @@ public function resetPassword(Request $request)
     $user->password = bcrypt('instansi'); 
     $user->save();
 
-    return redirect()->route('master_sklh')->with('result', 'Password user berhasil direset ke "password123"');
+    return redirect()->route('master_sklh')->with('result', 'Password user berhasil direset ke "instansi"');
 }
 
 }

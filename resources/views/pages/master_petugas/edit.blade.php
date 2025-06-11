@@ -8,7 +8,7 @@
                             <a href="{{ route('home') }}">Beranda</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('daftar_petugas') }}">Daftar Penilai</a>
+                            <a href="{{ route('master_petugas') }}">Daftar Penilai</a>
                         </li>
                         <li class="breadcrumb-item">
                             <a href="{{ route('master_petugas.edit', $petugas->id) }}">Edit Penilai</a>
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="col-12 d-flex justify-content-end gap-2 mt-3">
-                            <a href="{{ route('daftar_petugas') }}" class="btn btn-secondary">Kembali</a>
+                            <a href="{{ route('master_petugas') }}" class="btn btn-secondary">Kembali</a>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>

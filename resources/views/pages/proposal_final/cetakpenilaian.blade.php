@@ -83,8 +83,7 @@
 
     <table class="no-border" width="100%">
         <tr><td>Nama</td><td>{{ $rc->nama_peserta }}</td></tr>
-        <tr><td>@if($rc->jenis_sklh != 'ptg') NIS @else NIM @endif</td><td>{{ $rc->nis_peserta }}</td></tr>
-        <tr><td>Universitas</td><td>{{ $rc->permintaan->masterMgng->masterSklh->user->fullname ?? '-' }}</td></tr>
+        <tr><td>@if(optional($rc->permintaan->masterMgng->masterSklh)->jenis_sklh == 'pgt') NIM @else NIS @endif</td><td>{{ $rc->nis_peserta }}</td></tr>
         <tr><td>Lokasi Magang</td><td>Dinas Komunikasi dan Informatika Jawa Timur</td></tr>
         <tr><td>Unit/Bagian</td><td>{{ ($rc->notaDinas->masterBdng)->nama_bidang ?? 'Belum ditempatkan' }}</td></tr>
         <tr><td>Periode Magang</td><td>{{ \Carbon\Carbon::parse(optional($rc->permintaan->balasan)->tanggal_awal_magang ?? now())->translatedFormat('d F Y') }} s.d. {{ \Carbon\Carbon::parse(optional($rc->permintaan->balasan)->tanggal_akhir_magang ?? now())->translatedFormat('d F Y') }}</td></tr>
@@ -93,44 +92,179 @@
     <table>
         <thead>
             <tr>
-                <th colspan="2">Aspek yang dinilai</th>
+                <th>No.</th>
+                <th>Parameter</th>
                 <th style="text-align:center">Bobot (%)</th>
-                <th style="text-align:center">Skor<br>(40-100)</th>
-                <th style="text-align:center">Nilai<br>(Bobot x Skor)</th>
+                <th style="text-align:center">Angka</th>
+                <th style="text-align:center">Nilai (Bobot x Skor)</th>
+                <th style="text-align:center">Predikat</th>
             </tr>
         </thead>
         <tbody>
-            <tr><th colspan="5" style="text-align:left;">Personal</th></tr>
-            <tr>
-                <td>1.</td><td>Kedisiplinan (kehadiran, ketepatan waktu, kepatuhan pada tata tertib)</td><td align="center">10</td><td align="center">{{ $rc->nilai_kedisiplinan }}</td><td align="center">{{ number_format($rc->nilai_kedisiplinan * 0.1,2) }}</td>
-            </tr>
-            <tr>
-                <td>2.</td><td>Tanggung Jawab (bertanggung jawab atas penyelesaian tugas)</td><td align="center">10</td><td align="center">{{ $rc->nilai_tanggungjawab }}</td><td align="center">{{ number_format($rc->nilai_tanggungjawab * 0.1,2) }}</td>
-            </tr>
-            <tr>
-                <td>3.</td><td>Kerjasama (kemampuan bekerja dalam kelompok)</td><td align="center">10</td><td align="center">{{ $rc->nilai_kerjasama }}</td><td align="center">{{ number_format($rc->nilai_kerjasama * 0.1,2) }}</td>
-            </tr>
-            <tr>
-                <td>4.</td><td>Motivasi (inisiatif dan kreatifitas)</td><td align="center">10</td><td align="center">{{ $rc->nilai_motivasi }}</td><td align="center">{{ number_format($rc->nilai_motivasi * 0.1,2) }}</td>
-            </tr>
-            <tr>
-                <td>5.</td><td>Kepribadian (sikap, kematangan emosi, integritas)</td><td align="center">15</td><td align="center">{{ $rc->nilai_kepribadian }}</td><td align="center">{{ number_format($rc->nilai_kepribadian * 0.15,2) }}</td>
-            </tr>
-            <tr><th colspan="5" style="text-align:left;">Profesional</th></tr>
-            <tr>
-                <td>6.</td><td>Pengetahuan (penguasaan materi)</td><td align="center">15</td><td align="center">{{ $rc->nilai_pengetahuan }}</td><td align="center">{{ number_format($rc->nilai_pengetahuan * 0.15,2) }}</td>
-            </tr>
-            <tr>
-                <td>7.</td><td>Pelaksanaan Kerja (ketelitian, sistematis, inisiatif)</td><td align="center">15</td><td align="center">{{ $rc->nilai_pelaksanaankerja }}</td><td align="center">{{ number_format($rc->nilai_pelaksanaankerja * 0.15,2) }}</td>
-            </tr>
-            <tr>
-                <td>8.</td><td>Hasil Kerja (kualitas dan kuantitas hasil kerja)</td><td align="center">15</td><td align="center">{{ $rc->nilai_hasilkerja }}</td><td align="center">{{ number_format($rc->nilai_hasilkerja * 0.15,2) }}</td>
-            </tr>
-            <tr>
-                <td colspan="4" align="right"><strong>Total Nilai</strong></td>
-                <td align="center"><strong>{{ number_format($rc->nilai_akhir,2) }}</strong></td>
-            </tr>
-        </tbody>
+    <tr>
+        <td style="text-align:center; font-weight: bold;">A</td><td colspan="5" style="text-align:left; font-weight: bold;">KEDISIPLINAN</td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">1.</td><td>Kehadiran dan Kepatuhan Tata Tertib</td><td align="center">6,67</td><td align="center">{{ $rc->nilai_kehadiran }}</td><td align="center">{{ number_format($rc->nilai_kehadiran * 0.0667,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_kehadiran;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">2.</td><td>Kerapian penampilan</td><td align="center">6,67</td><td align="center">{{ $rc->nilai_kerapian }}</td><td align="center">{{ number_format($rc->nilai_kerapian * 0.0667,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_kerapian;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">3.</td><td>Sikap/perilaku kerja</td><td align="center">10</td><td align="center">{{ $rc->nilai_sikap }}</td><td align="center">{{ number_format($rc->nilai_sikap * 0.1,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_sikap;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">4.</td><td>Tanggung jawab kerja</td><td align="center">6,67</td><td align="center">{{ $rc->nilai_tanggungjawab }}</td><td align="center">{{ number_format($rc->nilai_tanggungjawab * 0.0667,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_tanggungjawab;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">5.</td><td>Kepatuhan aturan dan tata tertib</td><td align="center">6,67</td><td align="center">{{ $rc->nilai_kepatuhan }}</td><td align="center">{{ number_format($rc->nilai_kepatuhan * 0.0667,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_kepatuhan;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+
+    <!-- Profesional -->
+    <tr>
+        <td style="text-align:center; font-weight: bold;">B</td><td colspan="5" style="text-align:left; font-weight: bold;">KREATIVITAS</td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">1.</td><td>Kemampuan komunikasi</td><td align="center">6,67</td><td align="center">{{ $rc->nilai_komunikasi }}</td><td align="center">{{ number_format($rc->nilai_komunikasi * 0.0667,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_komunikasi;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">2.</td><td>Kemampuan kerjasama</td><td align="center">6,67</td><td align="center">{{ $rc->nilai_kerjasama }}</td><td align="center">{{ number_format($rc->nilai_kerjasama * 0.0667,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_kerjasama;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">3.</td><td>Kemampuan memberikan ide/solusi/inisiatif</td><td align="center">6,67</td><td align="center">{{ $rc->nilai_inisiatif }}</td><td align="center">{{ number_format($rc->nilai_inisiatif * 0.0667,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_inisiatif;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+
+    <!-- Teknis -->
+    <tr>
+        <td style="text-align:center; font-weight: bold;">C</td><td colspan="5" style="text-align:left; font-weight: bold;">ASPEK TEKNIS</td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">1.</td><td>Nilai Teknis 1</td><td align="center">10</td><td align="center">{{ $rc->nilai_teknis1 }}</td><td align="center">{{ number_format($rc->nilai_teknis1 * 0.1,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_teknis1;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">2.</td><td>Nilai Teknis 2</td><td align="center">10</td><td align="center">{{ $rc->nilai_teknis2 }}</td><td align="center">{{ number_format($rc->nilai_teknis2 * 0.1,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_teknis2;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">3.</td><td>Nilai Teknis 3</td><td align="center">10</td><td align="center">{{ $rc->nilai_teknis3}}</td><td align="center">{{ number_format($rc->nilai_teknis3 * 0.1,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_teknis3;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center;">4.</td><td>Nilai Teknis 4</td><td align="center">10</td><td align="center">{{ $rc->nilai_teknis4 }}</td><td align="center">{{ number_format($rc->nilai_teknis4 * 0.1,2) }}</td>
+        <td align="center">
+            @php
+                $nilai = $rc->nilai_teknis4;
+                if ($nilai >= 91) echo 'Sangat Baik';
+                elseif ($nilai >= 80) echo 'Baik';
+                elseif ($nilai >= 70) echo 'Cukup';
+                else echo 'Kurang';
+            @endphp
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="5" align="right"><strong>Nilai Akhir</strong></td>
+        <td align="center"><strong>{{ number_format($rc->nilai_akhir,2) }}</strong></td>
+    </tr>
+</tbody>
+
     </table>
 
     <div class="catatan">
@@ -148,9 +282,9 @@
         <tr>
             <td style="width: 75%;"></td>
             <td align="center">
-                Surabaya, {{ \Carbon\Carbon::parse($rc->tanggal_akhir_magang)->translatedFormat('d F Y') }}<br>
+                Surabaya, {{ \Carbon\Carbon::parse(optional($rc->permintaan->balasan)->tanggal_akhir_magang ?? now())->translatedFormat('d F Y') }}<br>
                 Pembimbing Lapangan<br><br><br><br><br><br>
-                <u><b>{{ $rc->bdngMember->nama_pejabat ?? '-' }}</b></u><br><br>
+                <u><b>{{ $rc->bdngMember->nama_pejabat ?? '-' }}</b></u><br>
                 {{ $rc->bdngMember->jabatan_pejabat ?? '-' }}<br>
                 NIP: {{ $rc->bdngMember->nip_pejabat ?? '-' }}
             </td>

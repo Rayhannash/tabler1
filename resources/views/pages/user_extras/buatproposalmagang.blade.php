@@ -97,9 +97,11 @@
 
                                             <div class="mb-3">
                                                 <label for="file_surat_permintaan">Scan Surat Permintaan (.jpg, .pdf, max 10MB)</label>
-                                                <input type="file" 
-                                                    name="file_surat_permintaan" 
+                                                <input 
+                                                    type="file"
+                                                    name="file_surat_permintaan"
                                                     id="file_surat_permintaan"
+                                                    accept=".pdf,.jpg,.jpeg,.png"
                                                     class="form-control @error('file_surat_permintaan') is-invalid @enderror">
                                                 @error('file_surat_permintaan')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -108,14 +110,17 @@
 
                                             <div class="mb-3">
                                                 <label for="file_proposal_magang">Scan Proposal Magang (.jpg, .pdf, max 10MB)</label>
-                                                <input type="file" 
-                                                    name="file_proposal_magang" 
+                                                <input 
+                                                    type="file"
+                                                    name="file_proposal_magang"
                                                     id="file_proposal_magang"
+                                                    accept=".pdf,.jpg,.jpeg,.png"
                                                     class="form-control @error('file_proposal_magang') is-invalid @enderror">
                                                 @error('file_proposal_magang')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
+
 
                                         </div>
                                     </div>

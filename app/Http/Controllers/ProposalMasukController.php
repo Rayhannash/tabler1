@@ -8,11 +8,14 @@ use App\Models\BalasanMgng;
 use App\Models\MasterBdngMember;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ProposalMasukController extends Controller
 {
     public function index(Request $req)
 {
+    Carbon::setLocale('id');
+    
     // Ambil data permohonan magang beserta relasi, hanya permohonan yang belum dibalas (status_surat_balasan != 'terkirim')
     $data = PermintaanMgng::with(['masterMgng.masterSklh.user'])
         ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
@@ -49,33 +52,29 @@ class ProposalMasukController extends Controller
       
    public function cetakpdfpermohonanmasuk($id)
 {
-    // Ambil permohonan berdasarkan ID
+
+    Carbon::setLocale('id');
+    
     $rc = PermintaanMgng::findOrFail($id);
 
-    // Ambil balasan berdasarkan master_mgng_id
     $balasan = BalasanMgng::where('master_mgng_id', $rc->master_mgng_id)->first();
 
-    // Ambil daftar peserta berdasarkan permohonan
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
-    // Ambil petugas
     $pejabat = null;
     if ($balasan->id_bdng_member) {
         $pejabat = MasterBdngMember::find($balasan->id_bdng_member);
     }
-    // Generate PDF
     $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'pejabat'));
 
-    // Return preview (stream) instead of download
     return $pdf->stream('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
 }
 
 
-
-
-
     public function balasPermohonan($id)
     {
+        Carbon::setLocale('id');
+        
         // Ambil permohonan berdasarkan ID
         $rc = PermintaanMgng::findOrFail($id);
 

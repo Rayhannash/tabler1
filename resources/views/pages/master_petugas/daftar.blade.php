@@ -13,7 +13,7 @@
             {{-- Notifikasi jika ada --}}
             @if (session('result') == 'success')
                 <div class="alert alert-success">
-                    Data berhasil disimpan.
+                    Data petugas berhasil diperbarui
                 </div>
             @endif
 
@@ -22,28 +22,18 @@
             </div>
 
             <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <form method="GET" action="{{ route('master_petugas') }}" class="ms-auto" style="max-width: 300px;">
-                        <div class="input-icon">
-                            <input type="text" name="keyword" value="{{ request('keyword') }}" class="form-control" placeholder="Search…">
-                            <span class="input-icon-addon">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search"
-                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                     stroke="currentColor" fill="none" stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                                    <path d="M21 21l-6 -6"></path>
-                                </svg>
-                            </span>
-                        </div>
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                    <form method="GET" action="{{ route('master_petugas') }}" class="d-flex ms-auto" style="max-width: 300px; min-width: 100%;">
+                        <input type="text" name="keyword" value="{{ request('keyword') }}" class="form-control me-2" placeholder="Pencarian">
+                        <button type="submit" class="btn btn-secondary">
+                            <span class="mdi mdi-magnify"></span>
+                        </button>
                     </form>
                 </div>
-
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-vcenter">
-                            <thead>
+                        <table class="table table-vcenter table-hover table-sm">
+                            <thead class="table-light">
                                 <tr>
                                     <th>Nama</th>
                                     <th>NIP</th>
@@ -68,9 +58,9 @@
                                         <td>{{ $dt->bidang->nama_bidang ?? '-' }}</td>
                                         <td>{{ $dt->sub_bidang_pejabat ?? '-' }}</td>
                                         <td class="text-center">
-                                        <a href="{{ route('master_petugas.edit', $dt->member_id) }}" class="btn btn-primary btn-sm">
-                                            <span class="mdi mdi-eye"></span>
-                                        </a>
+                                            <a href="{{ route('master_petugas.edit', $dt->member_id) }}" class="btn btn-primary btn-sm" title="Lihat Detail">
+                                                <span class="mdi mdi-eye"></span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty
@@ -80,6 +70,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer d-flex justify-content-center">
+                        {{ $data->links() }}
                     </div>
                 </div>
             </div>

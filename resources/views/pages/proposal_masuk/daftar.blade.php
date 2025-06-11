@@ -9,12 +9,15 @@
 
     <div class="page-body">
         <div class="container-xl">
+            <div class="card-header mb-3">
+                <h1 class="card-title h1">DAFTAR PERMOHONAN MAGANG</h1>
+            </div>
             <div class="card">
                 <div class="card-header">
-                    <form method="GET" action="{{ route('proposal_masuk') }}" class="d-flex">
+                    <form method="GET" action="{{ route('proposal_masuk') }}" class="d-flex ms-auto" style="max-width: 300px;">
                         <input type="text" name="keyword" value="{{ request('keyword') }}" class="form-control me-2" placeholder="Pencarian">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-search"></i> Cari
+                        <button type="submit" class="btn btn-secondary">
+                            <span class="mdi mdi-magnify"></span>
                         </button>
                     </form>
                 </div>
@@ -36,8 +39,8 @@
                         </thead>
                         <tbody>
                         @foreach($data as $dt)
-                            {{-- Filter: Menampilkan hanya yang status_surat_permintaan = "terkirim" dan status_surat_balasan = "belum" --}}
-                            @if($dt->status_surat_permintaan == 'terkirim')
+                            {{-- Menampilkan hanya yang status_surat_permintaan = "terkirim" dan belum ada balasan --}}
+                            @if($dt->status_surat_permintaan == 'terkirim' && !$dt->balasan)
                                 <tr>
                                     <td>
                                         {{-- Data Lembaga Pendidikan --}}
@@ -56,9 +59,9 @@
                                         {{-- Data Surat Permohonan --}}
                                         <table>
                                             <span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}<br>
-                                            <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}<br>
-                                            <span class="mdi mdi-email"></span> <a href="{{ asset('storage/scan_surat_permintaan/'.$dt->scan_surat_permintaan) }}" target="_blank"> Surat Permohonan</a><br>
-                                            <span class="mdi mdi-file"></span> <a href="{{ asset('storage/scan_proposal_magang/'.$dt->scan_proposal_magang) }}" target="_blank"> Proposal Magang</a><br>
+                                            <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->locale('id')->translatedFormat('d F Y') }}<br>
+                                            <span class="mdi mdi-email"></span>&nbsp;<a href="{{ asset('storage/' . $dt->scan_surat_permintaan) }}" target="_blank">Surat Permohonan</a><br>
+                                            <span class="mdi mdi-file"></span>&nbsp;<a href="{{ asset('storage/' . $dt->scan_proposal_magang) }}" target="_blank">Proposal Magang</a><br>
                                         </table>
                                     </td>
                                     <td class="text-center">
@@ -86,17 +89,43 @@
                                     </td>
 
                                     <td class="text-center">
-                                            @foreach($data2 as $de)
-                                                @if($de->permintaan_mgng_id == $dt->id)
-                                                    <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat data peserta</a><br>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        <td style="text-align: center">
-                                            <a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-reply"></span></a>
-                                            <button type="button" class="btn btn-sm btn-danger btn-trash" data-id="{{$dt->id}}"><span class="mdi mdi-delete"></span></i></button>
-                                        </td>
+                                        @foreach($data2 as $de)
+                                            @if($de->permintaan_mgng_id == $dt->id)
+                                                <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat data peserta</a><br>
+                                            @endif
+                                        @endforeach
+                                    </td>
+
+                                    <td style="text-align: center">
+                                        <a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success"><span class="mdi mdi-reply"></span></a>
+                                        <button type="button" class="btn btn-danger btn-trash" data-bs-toggle="modal" data-bs-target="#delete_{{ $dt->id }}">
+                                            <span class="mdi mdi-delete"></span>
+                                        </button>
+                                    </td>
                                 </tr>
+                                <!-- MODAL DELETE -->
+<form action="{{ route('proposal_masuk.hapus', ['id' => $dt->id]) }}" method="POST">
+    @csrf
+    @method('DELETE')
+    <div class="modal fade" id="delete_{{ $dt->id }}" tabindex="-1" aria-labelledby="deleteLabel_{{ $dt->id }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteLabel_{{ $dt->id }}">Hapus Permohonan Magang</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Yakin ingin menghapus permohonan magang dari <strong>{{ $dt->masterMgng->masterSklh->user->fullname ?? 'Lembaga Tidak Diketahui' }}</strong>?
+                    <input type="hidden" name="id" value="{{ $dt->id }}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
                             @endif
                         @endforeach
                         @if($data->isEmpty())
@@ -106,6 +135,9 @@
                         @endif
                         </tbody>
                     </table>
+                    <div class="card-footer d-flex justify-content-center">
+                        {{ $data->links() }}
+                    </div>
                 </div>
             </div>
         </div>

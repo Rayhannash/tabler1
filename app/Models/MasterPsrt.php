@@ -57,4 +57,8 @@ class MasterPsrt extends Model
 {
     return $this->belongsTo(PermintaanMgng::class, 'permintaan_mgng_id');
 }
+public function notaDinas()
+{
+    return $this->hasOne(NotaDinas::class, 'permintaan_mgng_id', 'permintaan_mgng_id');
+}
 }

@@ -1,19 +1,24 @@
-<aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="light">
+<aside class="navbar navbar-vertical navbar-expand-lg black" data-bs-theme="light">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8; display: flex; align-items: center; justify-content: center;">
-            <!-- Teks Logo -->
+        
+        <!-- Logo desktop -->
+        <div class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8;color:black; display: flex; align-items: center; justify-content: center;">
             <span class="navbar-brand-text text-white me-2" id="brand-text" style="margin-right: 8px;">
                 <span style="font-weight: bold; font-size: 1.5em;">SI</span> 
                 <span style="font-weight: normal; font-size: 1.5em;" id="magang-text">MAGANG</span> 
             </span>
+        </div>
 
-            <!-- Ikon Toggle -->
-            <span class="mdi mdi-reorder-horizontal text-white fs-4 cursor-pointer" id="toggle-btn"></span>
-        </div>
-
+        <!-- Logo mobile -->
+        <div class="navbar navbar-expand-md d-flex d-lg-none d-print-none" style="background-color: transparent; color: #605ca8; display: flex; align-items: center; justify-content: center;">
+            <span class="navbar-brand-text me-2" style="margin-right: 8px;">
+                <span style="font-weight: bold; font-size: 1.2em; color: #605ca8;">SI</span> 
+                <span style="font-weight: normal; font-size: 1.2em; color: #605ca8;">MAGANG</span> 
+            </span>
+        </div>
         <div class="navbar-nav flex-row d-lg-none">
             <div class="nav-item d-none d-lg-flex me-3">
                 <div class="btn-list">
@@ -146,19 +151,20 @@
             @auth
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    @php
+                        $avatarImg = Auth::user()->role->name == 'Super Admin'
+                            ? asset('static/avatars/Jatim.png')
+                            : asset('static/avatars/TWH.png');
+                    @endphp
+                    <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}')"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ Auth::user()->fullname }}</div>
                         <div class="mt-1 small text-secondary">{{ Auth::user()->role->name }}</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Status</a>
-                    <a href="./profile.html" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Feedback</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="./settings.html" class="dropdown-item">Settings</a>
-                    <a href="./sign-in.html" class="dropdown-item">Logout</a>
+                    <a href="{{ route('user.setting') }}" class="dropdown-item">Personalisasi Akun</a>
+                    <button class="dropdown-item" onclick="logoutNow()">Keluar</button>
                 </div>
             </div>
         </div>

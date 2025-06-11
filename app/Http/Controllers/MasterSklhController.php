@@ -17,21 +17,22 @@ class MasterSklhController extends Controller
 {
     $keyword = $request->keyword;
 
+    // Query untuk mengambil data lembaga pendidikan dengan pagination
     $query = MasterSklh::join('users','users.id','=','master_sklh.id_user')
         ->select('master_sklh.*','users.fullname','users.akun_diverifikasi')
-        ->orderBy('users.fullname','asc');
+        ->orderBy('users.fullname', 'asc');
 
     if ($keyword) {
         $query->where(function($q) use($keyword) {
-            $q->where('users.fullname','like',"%{$keyword}%")
-              ->orWhere('master_sklh.kabko_sklh','like',"%{$keyword}%");
+            $q->where('users.fullname', 'like', "%{$keyword}%")
+              ->orWhere('master_sklh.kabko_sklh', 'like', "%{$keyword}%");
         });
     }
 
-    $data = $query->get();
-
+    $data = $query->paginate(10); 
     return view('pages.master_sklh.daftar', compact('data'));
 }
+
 
 public function verify($id)
 {
@@ -72,12 +73,61 @@ public function delete(Request $req)
       return view('pages.master_sklh.edit', compact('data'));
   }
   
-  public function update($id, Request $req)
-  {
-      $sklh = MasterSklh::find($id);
-      // Proses update data di sini
-  }
+  public function update(Request $request)
+{
+    $id = $request->input('id'); 
+    $data = MasterSklh::findOrFail($id);
 
+    if (!$data) {
+        return back()->withErrors(['error' => 'Data tidak ditemukan.']);
+    }
 
+    // Validasi input
+    $validated = $request->validate([
+        'jenis_sklh' => 'required',
+        'alamat_sklh' => 'required',
+        'kabko_sklh' => 'required',
+        'telp_sklh' => 'required|unique:master_sklh,telp_sklh,' . $data->id,
+        'akreditasi_sklh' => 'required',
+        'no_akreditasi_sklh' => 'required|unique:master_sklh,no_akreditasi_sklh,' . $data->id,
+        'scan_surat_akreditasi_sklh' => 'nullable|mimes:pdf,doc,docx|max:10000',
+        'nama_narahubung' => 'required',
+        'jenis_kelamin_narahubung' => 'required',
+        'jabatan_narahubung' => 'required',
+        'handphone_narahubung' => 'required|unique:master_sklh,handphone_narahubung,' . $data->id,
+    ]);
+
+    // Upload file jika ada
+    if ($request->hasFile('scan_surat_akreditasi_sklh')) {
+        $file = $request->file('scan_surat_akreditasi_sklh');
+        $filename = time() . '_' . str_replace(' ', '', $file->getClientOriginalName());
+        $file->storeAs('public/scan_surat_akreditasi_sklh', $filename);
+        $validated['scan_surat_akreditasi_sklh'] = $filename;
+    }
+
+    // Update data
+    $data->update($validated);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('master_sklh')->with('result', 'success');
+}
+
+public function resetPassword(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+    ]);
+
+    $user = User::find($request->user_id);
+
+    if (!$user) {
+        return back()->withErrors(['error' => 'User tidak ditemukan.']);
+    }
+
+    $user->password = bcrypt('instansi'); 
+    $user->save();
+
+    return redirect()->route('master_sklh')->with('result', 'Password user berhasil direset ke "instansi"');
+}
 
 }

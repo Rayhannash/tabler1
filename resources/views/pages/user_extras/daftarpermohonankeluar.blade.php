@@ -13,7 +13,7 @@
             {{-- Notifikasi jika ada --}}
             @if (session('result') == 'success')
                 <div class="alert alert-success">
-                    Data berhasil disimpan.
+                    Data berhasil disimpan. Silahkan Tambahkan Peserta
                 </div>
             @endif
 
@@ -47,8 +47,8 @@
                                                 <li><span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}</li>
                                                 <li><span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}</li>
                                                 <li><span class="mdi mdi-information-variant"></span> {{ $dt->perihal_surat_permintaan }}</li>
-                                                <li><span class="mdi mdi-email"></span> <a href="{{ asset('storage/scan_surat_permintaan/'.$dt->scan_surat_permintaan) }}" target="_blank"> Surat Permohonan</a></li>
-                                                <li><span class="mdi mdi-file"></span> <a href="{{ asset('storage/scan_proposal_magang/'.$dt->scan_proposal_magang) }}" target="_blank"> Proposal Magang</a></li>
+                                                <li><span class="mdi mdi-email"></span> <a href="{{ asset('storage/' . $dt->scan_surat_permintaan) }}" target="_blank">Surat Permohonan</a></li>
+                                                <li><span class="mdi mdi-file"></span>  <a href="{{ asset('storage/' . $dt->scan_proposal_magang) }}" target="_blank">Proposal Magang</a></li>
                                             </ul>
                                         </td>
 
@@ -102,13 +102,13 @@
 
                                         <!-- Kolom OPSI -->
                                         <td class="text-center">
-                                            <a href="{{ route('user.viewpermohonankeluar', ['id' => $dt->id]) }}" class="btn btn-primary btn-sm">
+                                            <a href="{{ route('user.viewpermohonankeluar', ['id' => $dt->id]) }}" class="btn btn-primary">
                                                 <span class="mdi mdi-eye"></span>
                                             </a>
                                             
                                             {{-- Tombol "Tambah Peserta" hanya tampil jika status_surat_permintaan = 'belum' --}}
                                             @if($dt->status_surat_permintaan == 'belum')
-                                                <a href="{{ route('user.addpesertamagang', ['id' => $dt->id]) }}" class="btn btn-success btn-sm">
+                                                <a href="{{ route('user.addpesertamagang', ['id' => $dt->id]) }}" class="btn btn-success">
                                                     <span class="mdi mdi-account-plus"></span>
                                                 </a>
                                             @endif
@@ -116,7 +116,7 @@
                                             <form action="{{ route('user.hapus_permohonan', ['id' => $dt->id]) }}" method="POST" class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                <button type="submit" class="btn btn-danger">
                                                     <span class="mdi mdi-delete"></span>
                                                 </button>
                                             </form>

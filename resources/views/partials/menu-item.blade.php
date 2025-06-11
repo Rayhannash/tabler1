@@ -2,6 +2,10 @@
     $hasChildren = !empty($menuItem->children) && count($menuItem->children) > 0;
     $menuSlug = Str::slug($menuItem->name);
     $maxDepth = 3;
+    //$loggedUser = Auth::user();
+    
+    //$checkMasterSekolah = DB::table('master_sklh')->where('id_user', $loggedUser->id)->get();
+    //dd($checkMasterSekolah);
 
     // Fungsi untuk mengecek active state
     $isMenuActive = function($item) use (&$isMenuActive) {
@@ -79,7 +83,7 @@
         <a class="nav-link {{ $isActive ? 'fw-bold active' : '' }}"
            href="{{ $menuItem->url ? route($menuItem->url) : '#' }}">
             @if($menuItem->icon)
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <span class="nav-link-icon d-md-none d-lg-inline-block color-black">
                     @svg($menuItem->icon)
                 </span>
             @endif

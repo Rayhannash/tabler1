@@ -15,6 +15,9 @@ class AuthController extends Controller
         $request->validate([
             'user_prefix' => 'required|string',
             'password' => 'required|string|min:4'
+        ], [
+            'user_prefix.required' => 'Kolom email wajib diisi.',
+            'password.required' => 'Kolom password wajib diisi.',
         ]);
 
         $userPrefix = $request->user_prefix;
@@ -31,6 +34,7 @@ class AuthController extends Controller
             ->withErrors(['user_prefix' => 'Email atau Password anda tidak tepat'])
             ->withInput();
     }
+
 
 
     public function register(Request $request)

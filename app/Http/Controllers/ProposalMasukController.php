@@ -8,62 +8,73 @@ use App\Models\BalasanMgng;
 use App\Models\MasterBdngMember;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ProposalMasukController extends Controller
 {
     public function index(Request $req)
-    {
-        // Ambil data permohonan magang beserta relasi
-        $data = PermintaanMgng::with(['masterMgng.masterSklh.user'])
-            ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
-                if ($req->has('keyword')) {
-                    $keyword = $req->keyword;
-                    $query->where('fullname', 'like', "%{$keyword}%")
-                        ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
-                        ->orWhere('telp_sklh', 'like', "%{$keyword}%")
-                        ->orWhere('email', 'like', "%{$keyword}%")
-                        ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
-                        ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
-                }
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        // Ambil data peserta magang
-        $data2 = MasterPsrt::all(); 
-
-        return view('pages.proposal_masuk.daftar', compact('data', 'data2'));
-    }
-
-      
-    public function cetakpdfpermohonanmasuk($id)
 {
-    // Ambil permohonan berdasarkan ID
-    $rc = PermintaanMgng::findOrFail($id);
-
-    // Ambil balasan berdasarkan master_mgng_id
-    $balasan = BalasanMgng::where('master_mgng_id', $rc->master_mgng_id)->first();
-
-    // Ambil daftar peserta berdasarkan permohonan
-    $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
-
-    $petugas = MasterBdngMember::with('masterBdng') // Eager load relasi masterBdng
-                            ->findOrFail($id);
-
-    // Generate PDF
-    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'petugas'));
-
+    Carbon::setLocale('id');
     
-    // Return PDF download
-    return $pdf->download('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
+    // Ambil data permohonan magang beserta relasi, hanya permohonan yang belum dibalas (status_surat_balasan != 'terkirim')
+    $data = PermintaanMgng::with(['masterMgng.masterSklh.user'])
+        ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
+            if ($req->has('keyword')) {
+                $keyword = $req->keyword;
+                $query->where('fullname', 'like', "%{$keyword}%")
+                    ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+                    ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+                    ->orWhere('email', 'like', "%{$keyword}%")
+                    ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+                    ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+            }
+        })
+        // Pastikan hanya permohonan yang tidak memiliki balasan dengan status 'terkirim'
+        ->whereDoesntHave('balasan', function ($query) {
+            $query->where('status_surat_balasan', 'terkirim');
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
+    // Ambil data peserta magang
+    $data2 = MasterPsrt::all();
+
+    return view('pages.proposal_masuk.daftar', compact('data', 'data2'));
 }
 
+    public function destroy($id)
+{
+    $permohonan = PermintaanMgng::findOrFail($id);
+    $permohonan->delete();
+    return redirect()->route('proposal_masuk')->with('success', 'Permohonan magang berhasil dihapus.');
+}
 
+      
+   public function cetakpdfpermohonanmasuk($id)
+{
 
+    Carbon::setLocale('id');
+    
+    $rc = PermintaanMgng::findOrFail($id);
+
+    $balasan = BalasanMgng::where('master_mgng_id', $rc->master_mgng_id)->first();
+
+    $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
+
+    $pejabat = null;
+    if ($balasan->id_bdng_member) {
+        $pejabat = MasterBdngMember::find($balasan->id_bdng_member);
+    }
+    $pdf = Pdf::loadView('pages.proposal_masuk.cetakpdfpermohonanmasuk', compact('rc', 'rd', 'balasan', 'pejabat'));
+
+    return $pdf->stream('PermohonanMagang_' . $rc->nomor_surat_permintaan . '.pdf');
+}
 
 
     public function balasPermohonan($id)
     {
+        Carbon::setLocale('id');
+        
         // Ambil permohonan berdasarkan ID
         $rc = PermintaanMgng::findOrFail($id);
 
@@ -90,15 +101,15 @@ class ProposalMasukController extends Controller
 
     $permohonan = PermintaanMgng::findOrFail($id);
 
-    // Cek apakah balasan sudah ada berdasarkan master_mgng_id
-    $balasan = BalasanMgng::where('master_mgng_id', $permohonan->master_mgng_id)->first();
+    // Ambil atau buat balasan berdasarkan master_mgng_id
+    $balasan = BalasanMgng::firstOrNew([
+        'master_mgng_id' => $permohonan->master_mgng_id,
+    ]);
 
-    if (!$balasan) {
-        $balasan = new BalasanMgng();
-        $balasan->master_mgng_id = $permohonan->master_mgng_id;
-    }
+    // Menetapkan permintaan_mgng_id pada balasan
+    $balasan->permintaan_mgng_id = $permohonan->id;
 
-    // Update atau isi ulang data
+    // Isi atau update field lainnya
     $balasan->nomor_surat_balasan = $request->nomor_surat_balasan;
     $balasan->tanggal_surat_balasan = $request->tanggal_surat_balasan;
     $balasan->sifat_surat_balasan = $request->sifat_surat_balasan;
@@ -106,28 +117,34 @@ class ProposalMasukController extends Controller
     $balasan->lampiran_surat_balasan = $request->lampiran_surat_balasan;
     $balasan->tanggal_awal_magang = $request->tanggal_awal_magang;
     $balasan->tanggal_akhir_magang = $request->tanggal_akhir_magang;
+    $balasan->status_surat_balasan = 'terkirim';
 
-    if ($request->hasFile('scan_surat_balasan')) {
-        $filename = time().'_'.$request->file('scan_surat_balasan')->getClientOriginalName();
-        $request->file('scan_surat_balasan')->storeAs('public/scan_surat_balasan', $filename);
-        $balasan->scan_surat_balasan = $filename;
+    $datamember = MasterBdngMember::where('jabatan_pejabat', 'Sekretaris')->first();
+    
+    // Cek jika data pejabat ditemukan dan set id_bdng_member
+    if ($datamember) {
+        $balasan->id_bdng_member = $datamember->id;
     }
 
+    // Simpan awal (tanpa file)
     $balasan->save();
 
-    // Redirect sesuai kondisi apakah file sudah diupload atau belum
-if ($request->hasFile('scan_surat_balasan')) {
-    // Kalau ada file dikirim, redirect ke halaman daftar permohonan
-    return redirect()->route('proposal_keluar')->with('success', 'Balasan berhasil diperbarui dengan file.');
-} else {
-    // Kalau belum ada file, lanjut ke cetak PDF
-    return redirect()->route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $id]);
+    // Jika ada file diupload, simpan file dan update
+    if ($request->hasFile('scan_surat_balasan')) {
+        $path = $request->file('scan_surat_balasan')->store('scan_surat_balasan', 'public');
+        $filename = basename($path);
+        $balasan->scan_surat_balasan = $filename;
+        $balasan->save();
+
+        return redirect()->route('proposal_keluar')->with('success', 'Balasan berhasil diperbarui dengan file.');
+    }
+
+    // Kembali ke halaman tanggapi proposal
+    $rc = $permohonan;
+    $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
+
+    return view('pages.proposal_masuk.tanggapiproposal', compact('rc', 'rd', 'balasan'))
+        ->with('success', 'Data balasan disimpan. Silakan cetak PDF dan upload file jika sudah tersedia.');
 }
-}
-
-    
-
-    
-
 }
 

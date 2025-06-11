@@ -9,13 +9,16 @@ use App\Models\PermintaanMgng;
 use App\Models\BalasanMgng;
 use App\Models\MasterMgng;
 use App\Models\MasterPsrt;
+use App\Models\NotaDinas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 
 class UserExtrasController extends Controller
@@ -43,16 +46,16 @@ class UserExtrasController extends Controller
         'jenis_kelamin' => 'required',
         'jabatan_narahubung' => 'required',
         'telepon_narahubung' => 'required',
-        'file_akreditasi' => 'required|file|mimes:pdf,jpeg,png|max:10240',  // Maksimal ukuran 10MB
+        'file_akreditasi' => 'required|file|mimes:pdf,jpeg,png|max:10240',
     ]);
 
-    // Proses penyimpanan file
+    $filePath = null;
     if ($request->hasFile('file_akreditasi')) {
-        // Menyimpan file di storage public
         $filePath = $request->file('file_akreditasi')->store('uploads', 'public');
+    } else {
+        return back()->withErrors(['file_akreditasi' => 'File belum diupload.']);
     }
 
-    // Simpan data menggunakan Eloquent Model MasterSklh
     $data = MasterSklh::create([
         'id_user' => Auth::id(),
         'jenis_sklh' => $request->jenis,
@@ -61,20 +64,19 @@ class UserExtrasController extends Controller
         'telp_sklh' => $request->telepon_lembaga,
         'akreditasi_sklh' => $request->akreditasi,
         'no_akreditasi_sklh' => $request->no_akreditasi,
-        'scan_surat_akreditasi_sklh' => $filePath ?? null,
+        'scan_surat_akreditasi_sklh' => $filePath,  
         'nama_narahubung' => $request->nama_narahubung,
         'jenis_kelamin_narahubung' => $request->jenis_kelamin,
         'jabatan_narahubung' => $request->jabatan_narahubung,
         'handphone_narahubung' => $request->telepon_narahubung,
     ]);
-    
-    User::where('id', Auth::id())->update(['is_data_completed' => true]);
-    
 
-    // Redirect ke halaman detail data setelah berhasil disimpan
+    User::where('id', Auth::id())->update(['is_data_completed' => true]);
+
     return redirect()->route('user_extras.viewsklh', $data->id)
                      ->with('result', 'success');
 }
+
 
 public function show()
     {
@@ -126,7 +128,7 @@ public function updatesklh(Request $req)
         : back()->with('result', 'fail');
 }
 
-public function simpanproposalmagang(Request $req)
+public function simpanproposalmagang(Request $request)
 {
     // Ambil data sekolah yang login
     $datasklh = MasterSklh::where('id_user', Auth::id())->firstOrFail();
@@ -136,46 +138,49 @@ public function simpanproposalmagang(Request $req)
         'master_sklh_id' => $datasklh->id
     ]);
 
-    // Validasi
-    $validated = $req->validate([
+    // Validasi input
+    $validated = $request->validate([
         'nomor_surat_permintaan' => 'required|unique:permintaan_mgng,nomor_surat_permintaan',
         'tanggal_surat_permintaan' => 'required|date',
         'perihal_surat_permintaan' => 'required',
         'ditandatangani_oleh' => 'required',
-        'scan_surat_permintaan' => 'required|file|max:10000|mimes:pdf,doc,docx',
-        'scan_proposal_magang' => 'required|file|max:10000|mimes:pdf,doc,docx',
+        'file_surat_permintaan' => 'required|file|mimes:pdf,jpeg,png|max:10240',
+        'file_proposal_magang' => 'required|file|mimes:pdf,jpeg,png|max:10240',
     ]);
 
-    // Upload file
-    $filescansurat = $this->uploadFile($req->file('scan_surat_permintaan'), 'scan_surat_permintaan');
-    $filescanproposal = $this->uploadFile($req->file('scan_proposal_magang'), 'scan_proposal_magang');
+    // Upload file Surat Permintaan
+    $filePathSurat = null;
+    if ($request->hasFile('file_surat_permintaan')) {
+        $filePathSurat = $request->file('file_surat_permintaan')->store('uploads', 'public');
+    } else {
+        return back()->withErrors(['file_surat_permintaan' => 'File belum diupload.']);
+    }
+
+    // Upload file Proposal Magang
+    $filePathProposal = null;
+    if ($request->hasFile('file_proposal_magang')) {
+        $filePathProposal = $request->file('file_proposal_magang')->store('uploads', 'public');
+    } else {
+        return back()->withErrors(['file_proposal_magang' => 'File belum diupload.']);
+    }
 
     // Simpan ke permintaan_mgng
-    $saved = PermintaanMgng::create([
+    PermintaanMgng::create([
         'master_mgng_id' => $masterMgng->id,
         'nomor_surat_permintaan' => $validated['nomor_surat_permintaan'],
         'tanggal_surat_permintaan' => $validated['tanggal_surat_permintaan'],
         'perihal_surat_permintaan' => $validated['perihal_surat_permintaan'],
         'ditandatangani_oleh' => $validated['ditandatangani_oleh'],
-        'scan_surat_permintaan' => $filescansurat,
-        'scan_proposal_magang' => $filescanproposal,
+        'scan_surat_permintaan' => $filePathSurat, 
+        'scan_proposal_magang' => $filePathProposal,
         'status_surat_permintaan' => 'belum',
         'status_baca_surat_permintaan' => 'belum',
     ]);
 
-    // Redirect ke halaman daftar permohonan dengan parameter ID
     return redirect()->route('user.daftar_permohonan')->with('result', 'success');
 }
 
 
-protected function uploadFile($file, $folder)
-{
-    $filename = time() . '_' . str_replace(' ', '', $file->getClientOriginalName());
-    $file->storeAs('public/' . $folder, $filename);
-    return $filename;
-}
-
-    
 
 public function daftarPermohonanKeluar()
 {
@@ -193,14 +198,19 @@ public function daftarPermohonanKeluar()
         abort(404, 'Data master magang belum tersedia.');
     }
 
-    // Ambil semua permintaan magang dengan relasi balasan
-    $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)->get();
+    // Ambil semua permintaan magang dengan relasi balasan yang status_surat_balasan-nya tidak "terkirim"
+    $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)
+        ->whereDoesntHave('balasan', function($query) {
+            $query->where('status_surat_balasan', 'terkirim');
+        })
+        ->get();
 
     // Ambil data peserta magang jika perlu
     $data2 = MasterPsrt::all();
 
     return view('pages.user_extras.daftarpermohonankeluar', compact('permintaan', 'data2'));
 }
+
 
 
 public function viewpermohonankeluar($id)
@@ -266,13 +276,13 @@ public function updatepermohonan(Request $request, $id)
 
     // Handle file upload jika ada
     if ($request->hasFile('scan_surat_permintaan')) {
-        $scan_surat_permintaan = $this->uploadFile($request->file('scan_surat_permintaan'), 'scan_surat_permintaan');
-        $permohonan->scan_surat_permintaan = $scan_surat_permintaan;
+    $filePathSurat = $request->file('scan_surat_permintaan')->store('uploads/scan_surat_permintaan', 'public');
+    $permohonan->scan_surat_permintaan = $filePathSurat;
     }
 
     if ($request->hasFile('scan_proposal_magang')) {
-        $scan_proposal_magang = $this->uploadFile($request->file('scan_proposal_magang'), 'scan_proposal_magang');
-        $permohonan->scan_proposal_magang = $scan_proposal_magang;
+        $filePathProposal = $request->file('scan_proposal_magang')->store('uploads/scan_proposal_magang', 'public');
+        $permohonan->scan_proposal_magang = $filePathProposal;
     }
 
     // Simpan perubahan permohonan
@@ -298,13 +308,34 @@ public function addPesertaMagang($id)
 public function simpanpesertamagang($id, Request $request)
 {
     // Validasi input
-    $validated = $request->validate([
+     $validated = $request->validate([
         'nama_peserta' => 'required',
-        'nik_peserta' => 'required|unique:master_psrt,nik_peserta',
-        'nis_peserta' => 'required|unique:master_psrt,nis_peserta',
+        'nik_peserta' => [
+            'required',
+            Rule::unique('master_psrt')->where(function ($query) use ($id) {
+                return $query->where('permintaan_mgng_id', $id);
+            }),
+        ],
+        'nis_peserta' => [
+            'required',
+            Rule::unique('master_psrt')->where(function ($query) use ($id) {
+                return $query->where('permintaan_mgng_id', $id);
+            }),
+        ],
         'program_studi' => 'required',
-        'no_handphone_peserta' => 'required|unique:master_psrt,no_handphone_peserta',
-        'email_peserta' => 'required|email|unique:master_psrt,email_peserta',
+        'no_handphone_peserta' => [
+            'required',
+            Rule::unique('master_psrt')->where(function ($query) use ($id) {
+                return $query->where('permintaan_mgng_id', $id);
+            }),
+        ],
+        'email_peserta' => [
+            'required',
+            'email',
+            Rule::unique('master_psrt')->where(function ($query) use ($id) {
+                return $query->where('permintaan_mgng_id', $id);
+            }),
+        ],
         'jenis_kelamin' => 'required',
     ]);
 
@@ -385,4 +416,145 @@ public function updatePesertaMagang(Request $request, $id)
 
     return redirect()->route('user.daftar_permohonan')->with('success', 'Permohonan berhasil dihapus.');
 }
+
+public function daftarPermohonanMasuk(Request $req)
+{
+    // Ambil data master_sklh berdasarkan user yang login
+    $masterSklh = MasterSklh::where('id_user', Auth::id())->first();
+
+    if (!$masterSklh) {
+        abort(404, 'Sekolah tidak ditemukan.');
+    }
+
+    // Ambil data master_mgng berdasarkan master_sklh_id
+    $masterMgng = MasterMgng::where('master_sklh_id', $masterSklh->id)->first();
+
+    if (!$masterMgng) {
+        abort(404, 'Data master magang belum tersedia.');
+    }
+
+    // Ambil semua permintaan magang dengan relasi balasan yang status_surat_balasan-nya "terkirim"
+    $permintaan = PermintaanMgng::with('balasan') // Memuat relasi balasan
+        ->where('master_mgng_id', $masterMgng->id)
+        ->whereHas('balasan', function($query) {
+            $query->where('status_surat_balasan', 'terkirim');
+        })
+        ->get();
+
+    // Ambil data peserta magang jika perlu
+    $data2 = MasterPsrt::all(); 
+
+    return view('pages.user_extras.daftarpermohonanmasuk', compact('permintaan', 'data2'));
 }
+
+public function detailPermohonanMasuk($id)
+{
+    // Ambil data permohonan berdasarkan ID
+    $rc = PermintaanMgng::with('balasan')->findOrFail($id);  // Including balasan data
+
+    // Ambil data peserta yang terkait dengan permohonan ini
+    $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
+
+    return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
+}
+
+public function daftarLaporanMagang(Request $req)
+{
+   $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
+    ->whereHas('notaDinas', function($query) {
+        $query->where('status_nota_dinas', 'terkirim');
+    })
+    ->when($req->keyword, function ($query, $keyword) {
+        $query->whereHas('masterMgng.masterSklh.user', function ($q) use ($keyword) {
+            $q->where('fullname', 'like', "%{$keyword}%")
+              ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+              ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+              ->orWhere('email', 'like', "%{$keyword}%")
+              ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+              ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+        });
+    })
+    ->orderBy('created_at', 'desc')
+    ->get();
+
+    $data2 = MasterPsrt::all();
+
+    return view('pages.user_extras.daftarlaporan', compact('data', 'data2'));
+}
+
+public function showUploadLaporan($id)
+{
+    // Ambil permohonan berdasarkan ID
+    $permohonan = PermintaanMgng::findOrFail($id);
+
+    // Cek apakah tanggal akhir magang sudah lewat atau belum
+    $canUpload = now()->isSameDay(\Carbon\Carbon::parse($permohonan->balasan->tanggal_akhir_magang)) || now()->isAfter(\Carbon\Carbon::parse($permohonan->balasan->tanggal_akhir_magang));
+
+    // Tampilkan form upload laporan dan informasikan statusnya
+    return view('pages.user_extras.uploadlaporan', compact('permohonan', 'canUpload'));
+}
+
+public function uploadLaporan(Request $request, $id)
+{
+    // Validasi file upload
+    $request->validate([
+        'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240', // Maksimal 10MB
+    ]);
+
+    // Ambil permohonan berdasarkan ID
+    $permohonan = PermintaanMgng::findOrFail($id);
+
+    // Pastikan tanggal akhir magang sudah lewat
+    if (now()->lt(\Carbon\Carbon::parse($permohonan->balasan->tanggal_akhir_magang))) {
+        return redirect()->back()->with('error', 'Form laporan tidak dapat diakses karena magang belum selesai.');
+    }
+
+    // Cari nota dinas berdasarkan permintaan_mgng_id
+    $notaDinas = NotaDinas::where('permintaan_mgng_id', $permohonan->id)->first();
+
+    if (!$notaDinas) {
+        return redirect()->back()->with('error', 'Nota Dinas tidak ditemukan.');
+    }
+
+    // Menyimpan file yang diupload
+    if ($request->hasFile('file')) {
+        $path = $request->file('file')->store('uploads/laporan', 'public');
+
+        // Update path file dan status laporan
+        $notaDinas->scan_laporan_magang = $path;
+        $notaDinas->status_laporan = 'terkirim';
+        $notaDinas->save();
+
+        return redirect()->route('user.daftar_laporanmagang')->with('success', 'Laporan berhasil diunggah!');
+    }
+
+    return redirect()->back()->with('error', 'Tidak ada file yang diupload.');
+}
+public function previewLaporan($id)
+{
+    // Ambil permohonan berdasarkan ID
+    $permohonan = PermintaanMgng::findOrFail($id);
+
+    // Cari nota dinas berdasarkan permintaan_mgng_id
+    $notaDinas = NotaDinas::where('permintaan_mgng_id', $permohonan->id)->first();
+
+    if (!$notaDinas || !$notaDinas->scan_laporan_magang) {
+        return redirect()->back()->with('error', 'Laporan tidak ditemukan.');
+    }
+
+    // Menyusun path file yang ada di direktori penyimpanan
+    $filePath = 'uploads/laporan/' . basename($notaDinas->scan_laporan_magang);
+
+    // Pastikan file ada di penyimpanan publik
+    if (Storage::disk('public')->exists($filePath)) {
+        // Ambil file dan kirimkan sebagai response
+        $file = Storage::disk('public')->get($filePath);
+        
+        // Untuk PDF file, beri header Content-Type yang tepat
+        return response($file, 200)->header('Content-Type', 'application/pdf');
+    }
+
+    return redirect()->back()->with('error', 'File tidak ditemukan.');
+}
+}
+

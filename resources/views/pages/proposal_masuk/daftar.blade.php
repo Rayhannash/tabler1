@@ -62,37 +62,36 @@
                                         </table>
                                     </td>
                                     <td class="text-center">
-    @foreach($data2 as $de)
-        @if($de->permintaan_mgng_id == $dt->id)
-            {{ $de->nis_peserta }}<br>
-        @endif
-    @endforeach
-</td>
+                                        @foreach($data2 as $de)
+                                            @if($de->permintaan_mgng_id == $dt->id)
+                                                {{ $de->nis_peserta }}<br>
+                                            @endif
+                                        @endforeach
+                                    </td>
 
-<td class="text-center">
-    @foreach($data2 as $de)
-        @if($de->permintaan_mgng_id == $dt->id)
-            {{ $de->nama_peserta }}<br>
-        @endif
-    @endforeach
-</td>
+                                    <td class="text-center">
+                                        @foreach($data2 as $de)
+                                            @if($de->permintaan_mgng_id == $dt->id)
+                                                {{ $de->nama_peserta }}<br>
+                                            @endif
+                                        @endforeach
+                                    </td>
 
-<td class="text-center">
-    @foreach($data2 as $de)
-        @if($de->permintaan_mgng_id == $dt->id)
-            {{ $de->program_studi }}<br>
-        @endif
-    @endforeach
-</td>
+                                    <td class="text-center">
+                                        @foreach($data2 as $de)
+                                            @if($de->permintaan_mgng_id == $dt->id)
+                                                {{ $de->program_studi }}<br>
+                                            @endif
+                                        @endforeach
+                                    </td>
 
-<td class="text-center">
+                                    <td class="text-center">
                                             @foreach($data2 as $de)
                                                 @if($de->permintaan_mgng_id == $dt->id)
                                                     <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat data peserta</a><br>
                                                 @endif
                                             @endforeach
                                         </td>
-
                                         <td style="text-align: center">
                                             <a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-reply"></span></a>
                                             <button type="button" class="btn btn-sm btn-danger btn-trash" data-id="{{$dt->id}}"><span class="mdi mdi-delete"></span></i></button>

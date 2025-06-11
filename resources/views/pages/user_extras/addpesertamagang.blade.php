@@ -3,21 +3,21 @@
         <div class="container-xl">
             <div class="row g-2 align-items-center">
             <nav aria-label="breadcrumb">
-  <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
-    <li class="breadcrumb-item">
-        <a href="{{ route('home') }}">Beranda</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a href="{{ route('user.daftar_permohonan') }}">Daftar Permohonan</a>
-    </li>
-    <li class="breadcrumb-item">
+                <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                    <a href="{{ route('user.daftar_permohonan') }}">Daftar Permohonan</a>
+                    </li>
+                    <li class="breadcrumb-item">
                             <a href="{{ route('user.viewpermohonankeluar', ['id' => $permohonan->id]) }}">Detail Permohonan</a>
-                        </li>
-    <li class="breadcrumb-item muted" aria-current="page">
-      Tambah Peserta
-    </li>
-  </ol>
-</nav>
+                    </li>
+                    <li class="breadcrumb-item muted" aria-current="page">
+                    Tambah Peserta
+                    </li>
+                </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>
@@ -60,19 +60,18 @@
                                         </div>
 
                                         <div class="mb-3">
-    <label for="iJenisKelamin" class="form-label">Jenis Kelamin</label>
-    <select name="jenis_kelamin"
-            id="iJenisKelamin"
-            class="form-select {{ $errors->has('jenis_kelamin') ? 'is-invalid' : '' }}"
-            required>
-        <option value="Pria" {{ old('jenis_kelamin', $dt->jenis_kelamin ?? '') == 'Pria' ? 'selected' : '' }}>Pria</option>
-        <option value="Wanita" {{ old('jenis_kelamin', $dt->jenis_kelamin ?? '') == 'Wanita' ? 'selected' : '' }}>Wanita</option>
-    </select>
-    @error('jenis_kelamin')
-        <div class="invalid-feedback d-block">{{ $message }}</div>
-    @enderror
-</div>
-
+                                            <label for="iJenisKelamin" class="form-label">Jenis Kelamin</label>
+                                            <select name="jenis_kelamin"
+                                                    id="iJenisKelamin"
+                                                    class="form-select {{ $errors->has('jenis_kelamin') ? 'is-invalid' : '' }}"
+                                                    required>
+                                                <option value="Pria" {{ old('jenis_kelamin', $dt->jenis_kelamin ?? '') == 'Pria' ? 'selected' : '' }}>Pria</option>
+                                                <option value="Wanita" {{ old('jenis_kelamin', $dt->jenis_kelamin ?? '') == 'Wanita' ? 'selected' : '' }}>Wanita</option>
+                                            </select>
+                                            @error('jenis_kelamin')
+                                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         <div class="mb-3">
                                             <label for="iNikPeserta">NIK Peserta</label>
                                             <input type="number" name="nik_peserta" class="form-control {{ $errors->has('nik_peserta') ? 'is-invalid' : '' }}" value="{{ old('nik_peserta') }}" id="iNikPeserta" placeholder="contoh : 0123456789123456" required>

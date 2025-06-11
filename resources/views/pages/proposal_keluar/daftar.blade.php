@@ -61,56 +61,51 @@
                                             <span class="mdi mdi-email"></span> <a href="{{ asset('storage/scan_surat_permintaan/'.$dt->scan_surat_permintaan) }}" target="_blank"> Surat Permohonan</a><br>
                                             <span class="mdi mdi-file"></span> <a href="{{ asset('storage/scan_proposal_magang/'.$dt->scan_proposal_magang) }}" target="_blank"> Proposal Magang</a><br><br>
                                             <b>Balasan</b><br>
-    <span class="mdi mdi-sort-numeric-ascending"></span> 
-    {{ '400.14.5.4/' . optional($dt->balasan)->nomor_surat_balasan ?? 'Tidak Tersedia' }}/114.1/{{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan)->format('Y') ?? 'Tidak Tersedia' }}<br>
+                                            <span class="mdi mdi-sort-numeric-ascending"></span> 
+                                            {{ '400.14.5.4/' . optional($dt->balasan)->nomor_surat_balasan ?? 'Tidak Tersedia' }}/114.1/{{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan)->format('Y') ?? 'Tidak Tersedia' }}<br>
 
-    <span class="mdi mdi-calendar-month"></span> 
-    {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan ?? now())->translatedFormat('d F Y') ?? 'Tidak Tersedia' }}<br>
+                                            <span class="mdi mdi-calendar-month"></span> 
+                                            {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan ?? now())->translatedFormat('d F Y') ?? 'Tidak Tersedia' }}<br>
 
-    <span class="mdi mdi-email"></span> 
-    <a href="{{ asset('storage/scan_surat_balasan/'.optional($dt->balasan)->scan_surat_balasan) }}" target="_blank"> Surat Balasan</a><br><br>
+                                            <span class="mdi mdi-email"></span> 
+                                            <a href="{{ asset('storage/scan_surat_balasan/'.optional($dt->balasan)->scan_surat_balasan) }}" target="_blank"> Surat Balasan</a><br><br>
 
-    <b>Waktu Pelaksanaan</b><br>
-    <span class="mdi mdi-calendar-check"></span> 
-    {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_awal_magang ?? now())->translatedFormat('d F Y') }} s.d. 
-    {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_akhir_magang ?? now())->translatedFormat('d F Y') }}<br>
-</table>
+                                            <b>Waktu Pelaksanaan</b><br>
+                                            <span class="mdi mdi-calendar-check"></span> 
+                                            {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_awal_magang ?? now())->translatedFormat('d F Y') }} s.d. 
+                                            {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_akhir_magang ?? now())->translatedFormat('d F Y') }}<br>
+                                        </table>
                                     </td>
                                     <td class="text-center">
-    @foreach($data2 as $de)
-        @if($de->permintaan_mgng_id == $dt->id)
-            {{ $de->nis_peserta }}<br>
-        @endif
-    @endforeach
-</td>
-
-<td class="text-center">
-    @foreach($data2 as $de)
-        @if($de->permintaan_mgng_id == $dt->id)
-            {{ $de->nama_peserta }}<br>
-        @endif
-    @endforeach
-</td>
-
-<td class="text-center">
-    @foreach($data2 as $de)
-        @if($de->permintaan_mgng_id == $dt->id)
-            {{ $de->program_studi }}<br>
-        @endif
-    @endforeach
-</td>
-
-<td class="text-center">
-                                            @foreach($data2 as $de)
-                                                @if($de->permintaan_mgng_id == $dt->id)
-                                                    <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat data peserta</a><br>
-                                                @endif
-                                            @endforeach
-                                        </td>
-
-                                        <td style="text-align: center">
-                                            <a href="{{ route('proposal_keluar.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-pencil"></span></a>
-                                        </td>
+                                @foreach($data2 as $de)
+                                    @if($de->permintaan_mgng_id == $dt->id)
+                                        {{ $de->nis_peserta }}<br>
+                                    @endif
+                                @endforeach
+                            </td>
+                                <td class="text-center">
+                                    @foreach($data2 as $de)
+                                        @if($de->permintaan_mgng_id == $dt->id)
+                                            {{ $de->nama_peserta }}<br>
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td class="text-center">
+                                    @foreach($data2 as $de)
+                                        @if($de->permintaan_mgng_id == $dt->id)
+                                            {{ $de->program_studi }}<br>
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td class="text-center">
+                                    @foreach($data2 as $de)
+                                        @if($de->permintaan_mgng_id == $dt->id)
+                                            <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat data peserta</a><br>                                        @endif
+                                        @endforeach
+                                </td>
+                                <td style="text-align: center">
+                                    <a href="{{ route('proposal_keluar.balaspermohonan', ['id' => $dt->id]) }}" class="btn btn-success btn-sm"><span class="mdi mdi-pencil"></span></a>
+                                </td>
                                 </tr>
                             @endif
                         @endforeach

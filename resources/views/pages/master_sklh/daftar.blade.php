@@ -154,102 +154,93 @@
                                     </button>
                                 </td>
                             </tr>
+                            <!-- MODAL VERIFIKASI -->
+                            <form action="{{ route('master_sklh.verification', ['id' => $dt->id]) }}" method="post">
+                                @csrf
+                                @method('POST')
+                                <div class="modal fade" id="verify_{{ $dt->id }}" tabindex="-1" aria-labelledby="verifyLabel_{{ $dt->id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="verifyLabel_{{ $dt->id }}">Verifikasi Lembaga</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Yakin ingin memverifikasi <strong>{{ $dt->fullname }}</strong>?
+                                                <input type="hidden" name="id" value="{{ $dt->id }}">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-success">Verifikasi</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-<!-- MODAL VERIFIKASI -->
-<form action="{{ route('master_sklh.verification', ['id' => $dt->id]) }}" method="post">
-    @csrf
-    @method('POST')
-    <div class="modal fade" id="verify_{{ $dt->id }}" tabindex="-1" aria-labelledby="verifyLabel_{{ $dt->id }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="verifyLabel_{{ $dt->id }}">Verifikasi Lembaga</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Yakin ingin memverifikasi <strong>{{ $dt->fullname }}</strong>?
-                    <input type="hidden" name="id" value="{{ $dt->id }}">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Verifikasi</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                            <!-- MODAL SUSPEND -->
+                            <div class="modal fade" id="suspend_{{ $dt->id }}" tabindex="-1" aria-labelledby="suspendLabel_{{ $dt->id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="suspendLabel_{{ $dt->id }}">Blokir Lembaga</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Yakin ingin blokir <strong>{{ $dt->fullname }}</strong>?
+                                                <input type="hidden" name="id" value="{{ $dt->id }}">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-danger">Blokir</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-<!-- MODAL SUSPEND -->
-<div class="modal fade" id="suspend_{{ $dt->id }}" tabindex="-1" aria-labelledby="suspendLabel_{{ $dt->id }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="suspendLabel_{{ $dt->id }}">Blokir Lembaga</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Yakin ingin blokir <strong>{{ $dt->fullname }}</strong>?
-                    <input type="hidden" name="id" value="{{ $dt->id }}">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger">Blokir</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                            <!-- MODAL UNLOCK -->
+                            <div class="modal fade" id="unlock_{{ $dt->id }}" tabindex="-1" aria-labelledby="unlockLabel_{{ $dt->id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="unlockLabel_{{ $dt->id }}">Buka Blokir</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Yakin ingin buka blokir <strong>{{ $dt->fullname }}</strong>?
+                                                <input type="hidden" name="id" value="{{ $dt->id }}">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-primary">Ok</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
-<!-- MODAL UNLOCK -->
-<div class="modal fade" id="unlock_{{ $dt->id }}" tabindex="-1" aria-labelledby="unlockLabel_{{ $dt->id }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="unlockLabel_{{ $dt->id }}">Buka Blokir</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Yakin ingin buka blokir <strong>{{ $dt->fullname }}</strong>?
-                    <input type="hidden" name="id" value="{{ $dt->id }}">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<!-- MODAL DELETE -->
-<form action="{{ route('master_sklh.delete', ['id' => $dt->id]) }}" method="post">
-    @csrf
-    @method('DELETE')
-    <div class="modal fade" id="delete_{{ $dt->id }}" tabindex="-1" aria-labelledby="deleteLabel_{{ $dt->id }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteLabel_{{ $dt->id }}">Hapus Lembaga</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Yakin ingin menghapus <strong>{{ $dt->nama }}</strong>?
-                    <input type="hidden" name="id" value="{{ $dt->id }}">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger">Hapus</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-
-
-
-
-
-
-
+                            <!-- MODAL DELETE -->
+                            <form action="{{ route('master_sklh.delete', ['id' => $dt->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <div class="modal fade" id="delete_{{ $dt->id }}" tabindex="-1" aria-labelledby="deleteLabel_{{ $dt->id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteLabel_{{ $dt->id }}">Hapus Lembaga</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Yakin ingin menghapus <strong>{{ $dt->nama }}</strong>?
+                                                <input type="hidden" name="id" value="{{ $dt->id }}">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         @endforeach
                         @if($data->isEmpty())
                             <tr>

@@ -40,10 +40,10 @@
                                             </span>
                                         </label>
                                         <div class="input-group input-group-flat">
-                                            <input type="password" name="password" class="form-control @error('password') is-invalid is-invalid-lite @enderror"
+                                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid is-invalid-lite @enderror"
                                                 placeholder="Kata sandi anda" autocomplete="off">
                                             <span class="input-group-text">
-                                                <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
+                                                <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip" id="toggle-password">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                         class="icon icon-1">
@@ -92,6 +92,21 @@
             showLoading();
             setTimeout(() => event.target.submit(), 2000);
         }
+
+        // Fungsi toggle password
+        document.addEventListener("DOMContentLoaded", function () {
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function (e) {
+            e.preventDefault();
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Optional: update title
+            this.setAttribute('title', type === 'password' ? 'Show password' : 'Hide password');
+        });
+    });
     </script>
     @endpush
 </x-app-layout>

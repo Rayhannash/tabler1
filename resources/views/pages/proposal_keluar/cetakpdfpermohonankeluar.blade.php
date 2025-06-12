@@ -163,8 +163,8 @@
                 </td>
             </tr>
             <tr><td></td><td style="height: 40px;"></td></tr>
-            <tr><td></td><td><strong><u>{{ $petugas->nama_pejabat }}</u></strong><br>{{ $petugas->pangkat_pejabat }}</td></tr>
-            <tr><td></td><td>NIP. {{ $petugas->nip_pejabat }}</td></tr>
+            <tr><td></td><td><strong><u>{{ $pejabat->nama_pejabat }}</u></strong><br>{{ $pejabat->pangkat_pejabat }}</td></tr>
+            <tr><td></td><td>NIP. {{ $pejabat->nip_pejabat }}</td></tr>
         </table>
     </div>
 

@@ -2,14 +2,13 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Lengkapi Data!"></x-breadcrumb>
+                <x-breadcrumb pageTitle="Lengkapi Data"></x-breadcrumb>
             </div>
         </div>
     </x-page-header>
 
     <div class="page-body">
         <div class="container-xl">
-            <!-- Menambahkan notifikasi sukses jika ada -->
             @if (session('result') == 'success')
                 <div class="alert alert-success">
                     Data berhasil disimpan!
@@ -21,7 +20,7 @@
 
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3 class="card-title">Lengkapi data!</h3>
+                        <h3 class="card-title">Lengkapi data</h3>
                         <button type="submit" class="btn btn-primary text-white">
                             <span class="mdi mdi-content-save"> Simpan</span>
                         </button>

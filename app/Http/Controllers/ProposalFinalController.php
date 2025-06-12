@@ -13,6 +13,7 @@ use App\Models\PermintaanMgng;
 use App\Models\BalasanMgng;
 use App\Models\MasterBdngMember;
 use App\Models\MasterBdng;
+use Carbon\Carbon;
 
 class ProposalFinalController extends Controller
 {
@@ -32,7 +33,9 @@ class ProposalFinalController extends Controller
             }
         })
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10)
+        ->withQueryString();
+
 
     // Ambil peserta berdasarkan nota_dinas.permintaan_mgng_id, bukan langsung dari permintaan_mgng_id
     $data2 = MasterPsrt::whereIn('permintaan_mgng_id', $data->pluck('id'))->get();
@@ -51,6 +54,7 @@ public function tanggapiProposal($id)
     // Kirim data ke view
     return view('pages.proposal_final.tanggapiproposal', compact('permohonan', 'peserta'));
 }
+
 public function penilaian($id)
 {
     $rc = MasterPsrt::with('notaDinas.masterBdng')->findOrFail($id);
@@ -70,44 +74,52 @@ public function simpanPenilaian(Request $request, $id)
 {
     $rc = MasterPsrt::findOrFail($id);
 
-    // Validasi input (sesuaikan kebutuhan)
     $validated = $request->validate([
         'id_bdng_member' => 'required|exists:master_bdng_member,id',
-        'nilai_kedisiplinan' => 'required|numeric|min:0|max:100',
+        'nilai_kehadiran' => 'required|numeric|min:0|max:100',
+        'nilai_kerapian' => 'required|numeric|min:0|max:100',
+        'nilai_sikap' => 'required|numeric|min:0|max:100',
         'nilai_tanggungjawab' => 'required|numeric|min:0|max:100',
+        'nilai_kepatuhan' => 'required|numeric|min:0|max:100',
+        'nilai_komunikasi' => 'required|numeric|min:0|max:100',
         'nilai_kerjasama' => 'required|numeric|min:0|max:100',
-        'nilai_motivasi' => 'required|numeric|min:0|max:100',
-        'nilai_kepribadian' => 'required|numeric|min:0|max:100',
-        'nilai_pengetahuan' => 'required|numeric|min:0|max:100',
-        'nilai_pelaksanaankerja' => 'required|numeric|min:0|max:100',
-        'nilai_hasilkerja' => 'required|numeric|min:0|max:100',
+        'nilai_inisiatif' => 'required|numeric|min:0|max:100',
+        'nilai_teknis1' => 'required|numeric|min:0|max:100',
+        'nilai_teknis2' => 'required|numeric|min:0|max:100',
+        'nilai_teknis3' => 'required|numeric|min:0|max:100',
+        'nilai_teknis4' => 'required|numeric|min:0|max:100',
         'catatan' => 'nullable|string',
     ]);
 
-    // Simpan data ke model
     $rc->id_bdng_member = $validated['id_bdng_member'];
-    $rc->nilai_kedisiplinan = $validated['nilai_kedisiplinan'];
+    $rc->nilai_kehadiran = $validated['nilai_kehadiran'];
+    $rc->nilai_kerapian = $validated['nilai_kerapian'];
+    $rc->nilai_sikap = $validated['nilai_sikap'];
     $rc->nilai_tanggungjawab = $validated['nilai_tanggungjawab'];
+    $rc->nilai_kepatuhan = $validated['nilai_kepatuhan'];
+    $rc->nilai_komunikasi = $validated['nilai_komunikasi'];
     $rc->nilai_kerjasama = $validated['nilai_kerjasama'];
-    $rc->nilai_motivasi = $validated['nilai_motivasi'];
-    $rc->nilai_kepribadian = $validated['nilai_kepribadian'];
-    $rc->nilai_pengetahuan = $validated['nilai_pengetahuan'];
-    $rc->nilai_pelaksanaankerja = $validated['nilai_pelaksanaankerja'];
-    $rc->nilai_hasilkerja = $validated['nilai_hasilkerja'];
+    $rc->nilai_inisiatif = $validated['nilai_inisiatif'];
+    $rc->nilai_teknis1 = $validated['nilai_teknis1'];
+    $rc->nilai_teknis2 = $validated['nilai_teknis2'];
+    $rc->nilai_teknis3 = $validated['nilai_teknis3'];
+    $rc->nilai_teknis4 = $validated['nilai_teknis4'];
     $rc->catatan = $validated['catatan'];
     $rc->status_penilaian = 'sudah';
     
-
-    // Hitung nilai akhir jika perlu
     $rc->nilai_akhir = (
-        $rc->nilai_kedisiplinan * 0.1 +
-        $rc->nilai_tanggungjawab * 0.1 +
-        $rc->nilai_kerjasama * 0.1 +
-        $rc->nilai_motivasi * 0.1 +
-        $rc->nilai_kepribadian * 0.15 +  
-        $rc->nilai_pengetahuan * 0.15 +
-        $rc->nilai_pelaksanaankerja * 0.15 +
-        $rc->nilai_hasilkerja * 0.15
+        $rc->nilai_kehadiran * 0.0667 +
+        $rc->nilai_kerapian * 0.0667 +
+        $rc->nilai_sikap * 0.1 +
+        $rc->nilai_tanggungjawab * 0.0667 +
+        $rc->nilai_kepatuhan * 0.0667 +  
+        $rc->nilai_komunikasi * 0.0667 +
+        $rc->nilai_kerjasama * 0.0667 +
+        $rc->nilai_inisiatif * 0.0667 +
+        $rc->nilai_teknis1 * 0.1 +
+        $rc->nilai_teknis2 * 0.1 +
+        $rc->nilai_teknis3 * 0.1 +
+        $rc->nilai_teknis4 * 0.1
     );
 
     $rc->save();
@@ -155,6 +167,8 @@ public function simpanPenilaian(Request $request, $id)
 
 public function cetakPenilaian($id)
 {
+    Carbon::setLocale('id');
+    
     $rc = MasterPsrt::with('permintaan.masterMgng.masterSklh', 'notaDinas.masterBdng')->findOrFail($id);
 
     $pdf = Pdf::loadView('pages.proposal_final.cetakpenilaian', compact('rc'));

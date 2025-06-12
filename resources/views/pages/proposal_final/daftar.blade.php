@@ -9,9 +9,12 @@
 
     <div class="page-body">
         <div class="container-xl">
+             <div class="card-header mb-3">
+                <h1 class="card-title h1">DAFTAR LAPORAN & SERTIFIKAT</h1>
+            </div>
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <form method="GET" action="{{ route('nota_dinas.daftar') }}" class="d-flex">
+                    <form method="GET" action="{{ route('nota_dinas.daftar') }}" class="d-flex ms-auto" style="max-width: 300px;">
                         <input type="text" name="keyword" value="{{ request('keyword') }}" class="form-control me-2" placeholder="Pencarian">
                         <button type="submit" class="btn btn-secondary">
                             <span class="mdi mdi-magnify"></span>
@@ -143,6 +146,9 @@
                             @endif
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-center my-3">
+                        {{ $data->links() }}
+                    </div>
                 </div>
             </div>
         </div>

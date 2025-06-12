@@ -2,7 +2,7 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Laporan Nota Dinas" />
+                <x-breadcrumb pageTitle="Laporan Magang" />
             </div>
         </div>
     </x-page-header>
@@ -101,35 +101,34 @@
                                         </td>
                                         <td class="text-center">
                                             @foreach($pesertas as $de)
-                                                {{-- Link Lihat Nilai --}}
-                                                @if($de->status_penilaian == 'sudah' && $de->scan_penilaian)
-                                                    <a href="{{ asset('storage/' . $de->scan_penilaian) }}" target="_blank">
-                                                        Lihat Nilai -
-                                                    </a><br>
-                                                @else
-                                                    <span class="text-muted">N/A</span><br>
-                                                @endif
+                                                <div class="d-inline-block me-3 mb-1 align-middle">
+                                                    {{-- Trophy --}}
+                                                    @if($de->status_penilaian == 'sudah' && $de->scan_penilaian)
+                                                        <a href="{{ asset('storage/' . $de->scan_penilaian) }}" target="_blank" class="btn btn-success btn-sm" title="Lihat Nilai">
+                                                            <span class="mdi mdi-trophy"></span>
+                                                        </a>
+                                                    @else
+                                                        <span class="text-muted">N/A</span>
+                                                    @endif
 
-                                                {{-- Link Lihat Sertifikat --}}
-                                                @if($de->status_sertifikat == 'terkirim' && $de->scan_sertifikat)
-                                                    <a href="{{ asset('storage/' . $de->scan_sertifikat) }}" target="_blank">
-                                                        Lihat Sertifikat
-                                                    </a><br>
-                                                @else
-                                                    <span class="text-muted">N/A</span><br>
-                                                @endif
+                                                    {{-- Sertifikat --}}
+                                                    @if($de->status_sertifikat == 'terkirim' && $de->scan_sertifikat)
+                                                        <a href="{{ asset('storage/' . $de->scan_sertifikat) }}" target="_blank" class="btn btn-info btn-sm ms-1" title="Lihat Sertifikat">
+                                                            <span class="mdi mdi-certificate"></span>
+                                                        </a>
+                                                    @else
+                                                        <span class="text-muted ms-1">N/A</span>
+                                                    @endif
+                                                </div>
                                             @endforeach
                                         </td>
-                                        
-
-                                        <!-- Kolom opsi: tombol eye dan pencil -->
                                         <td style="text-align: center; white-space: nowrap;">
                                             <a href="{{ route('user.previewlaporan', ['id' => $dt->id]) }}" class="btn btn-info" title="View">
-    <span class="mdi mdi-eye"></span>
-</a>
-                                          <a href="{{ route('user.showuploadlaporan', ['id' => $dt->id]) }}" class="btn btn-primary" title="Upload Laporan">
-    <span class="mdi mdi-pencil"></span>
-</a>
+                                                <span class="mdi mdi-eye"></span>
+                                            </a>
+                                            <a href="{{ route('user.showuploadlaporan', ['id' => $dt->id]) }}" class="btn btn-primary" title="Upload Laporan">
+                                                <span class="mdi mdi-pencil"></span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endif

@@ -140,19 +140,22 @@
                        value="{{ $balasan->tanggal_akhir_magang ?? '' }}">
             </div><br>
 
-            <!-- Tombol Simpan -->
-            <button type="submit" class="btn btn-primary">Simpan</button><br><br>
-
-            <!-- Kondisi jika file belum ada -->
             @if(isset($balasan) && is_null($balasan->scan_surat_balasan))
-                <a href="{{ route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $rc->id]) }}" class="btn btn-success mb-3" target="_blank">Cetak PDF</a>
-
-                <div class="form-group">
-                    <label for="iScanSuratBalasan">Lampiran Surat Balasan</label>
+                <div class="form-group mb-3">
+                    <label for="iScanSuratBalasan">Lampiran Surat Balasan</strong></label>
                     <input type="file" name="scan_surat_balasan" id="iScanSuratBalasan" class="form-control" accept=".pdf,.jpg,.png">
                 </div>
             @endif
 
+            <div class="d-flex align-items-center gap-2">
+                <!-- Tombol Simpan -->
+                <button type="submit" class="btn btn-primary">Simpan</button>
+
+                <!-- Tombol Cetak PDF, jika file belum ada -->
+                @if(isset($balasan) && is_null($balasan->scan_surat_balasan))
+                    <a href="{{ route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $rc->id]) }}" class="btn btn-success" target="_blank">Cetak PDF</a>
+                @endif
+            </div>
         </div>
     </div>
 </div>

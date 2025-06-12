@@ -99,20 +99,22 @@
                                 @if($rc->status_scan_penilaian == 'belum')
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h3 class="card-title">Nilai Personal</h3>
+                                        <h3 class="card-title">Form Penilaian Kedisiplinan</h3>
                                     </div>
                                     <div class="card-body">
                                         @foreach([
-                                            'kedisiplinan' => 'Nilai Kedisiplinan',
-                                            'tanggungjawab' => 'Nilai Tanggungjawab',
-                                            'kerjasama' => 'Nilai Kerjasama',
-                                            'motivasi' => 'Nilai Motivasi',
-                                            'kepribadian' => 'Nilai Kepribadian',
+                                            'kehadiran' => 'Nilai Kehadiran',
+                                            'kerapian' => 'Nilai Kerapian',
+                                            'sikap' => 'Nilai Sikap',
+                                            'tanggungjawab' => 'Nilai Tanggung Jawab',
+                                            'kepatuhan' => 'Nilai Kepatuhan',
                                         ] as $field => $label)
                                             <div class="mb-3">
                                                 <label for="iNilai{{ ucfirst($field) }}" class="form-label">{{ $label }}</label>
-                                                <input type="number" id="iNilai{{ ucfirst($field) }}" name="nilai_{{ $field }}" class="form-control @error('nilai_'.$field) is-invalid @enderror" value="{{ old('nilai_'.$field, $rc->{'nilai_'.$field}) }}" placeholder="Masukkan {{ strtolower($label) }}">
-                                                @error('nilai_'.$field) <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                <input type="number" id="iNilai{{ ucfirst($field) }}" name="nilai_{{ $field }}" class="form-control @error('nilai_'.$field) is-invalid @enderror" value="{{ old('nilai_'.$field, $rc->{'nilai_'.$field}) }}" placeholder="Masukkan {{ strtolower($label) }}" step="0.1" min="0" max="100">
+                                                @error('nilai_'.$field)
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         @endforeach
                                     </div>
@@ -120,18 +122,42 @@
 
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h3 class="card-title">Nilai Profesional</h3>
+                                        <h3 class="card-title">Form Penilaian Kreativitas</h3>
                                     </div>
                                     <div class="card-body">
                                         @foreach([
-                                            'pengetahuan' => 'Nilai Pengetahuan',
-                                            'pelaksanaankerja' => 'Nilai Pelaksanaan Kerja',
-                                            'hasilkerja' => 'Nilai Hasil Kerja',
+                                            'komunikasi' => 'Nilai Komunikasi',
+                                            'kerjasama' => 'Nilai Kerjasama',
+                                            'inisiatif' => 'Nilai Inisiatif',
                                         ] as $field => $label)
                                             <div class="mb-3">
                                                 <label for="iNilai{{ ucfirst($field) }}" class="form-label">{{ $label }}</label>
-                                                <input type="number" id="iNilai{{ ucfirst($field) }}" name="nilai_{{ $field }}" class="form-control @error('nilai_'.$field) is-invalid @enderror" value="{{ old('nilai_'.$field, $rc->{'nilai_'.$field}) }}" placeholder="Masukkan {{ strtolower($label) }}">
-                                                @error('nilai_'.$field) <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                <input type="number" id="iNilai{{ ucfirst($field) }}" name="nilai_{{ $field }}" class="form-control @error('nilai_'.$field) is-invalid @enderror" value="{{ old('nilai_'.$field, $rc->{'nilai_'.$field}) }}" placeholder="Masukkan {{ strtolower($label) }}" step="0.1" min="0" max="100">
+                                                @error('nilai_'.$field)
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Form Penilaian Teknis</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        @foreach([
+                                            'teknis1' => 'Nilai Teknis 1',
+                                            'teknis2' => 'Nilai Teknis 2',
+                                            'teknis3' => 'Nilai Teknis 3',
+                                            'teknis4' => 'Nilai Teknis 4',
+                                        ] as $field => $label)
+                                            <div class="mb-3">
+                                                <label for="iNilai{{ ucfirst($field) }}" class="form-label">{{ $label }}</label>
+                                                <input type="number" id="iNilai{{ ucfirst($field) }}" name="nilai_{{ $field }}" class="form-control @error('nilai_'.$field) is-invalid @enderror" value="{{ old('nilai_'.$field, $rc->{'nilai_'.$field}) }}" placeholder="Masukkan {{ strtolower($label) }}" step="0.1" min="0" max="100">
+                                                @error('nilai_'.$field)
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         @endforeach
                                     </div>

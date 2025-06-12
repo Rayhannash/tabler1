@@ -45,11 +45,9 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <!-- Tombol Edit -->
                                 <a class="btn btn-success" href="{{ route('user.editpermohonankeluar', ['id' => $permohonan->id]) }}">
                                     <span class="mdi mdi-square-edit-outline"> Edit</span> 
                                 </a>
-                                <!-- Tombol Kirim -->
                                 <button type="submit" class="btn btn-primary">
                                     <span class="mdi mdi-send"> Kirim</span>
                                 </button>
@@ -60,7 +58,6 @@
                 @endif
             </form>
 
-            <!-- Container Mohon Diperhatikan -->
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -77,7 +74,6 @@
                 </div>
             </div>
 
-            <!-- Start Row untuk Informasi Dasar dan Daftar Peserta -->
             <div class="row mb-4">
                 <!-- Informasi Dasar -->
                 <div class="col-md-6 mb-3">

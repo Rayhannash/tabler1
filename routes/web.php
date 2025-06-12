@@ -39,92 +39,92 @@ Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function 
     Route::get('buat-permohonan', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('buat_permohonan');
 
     
-});
 
-Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
-Route::post('/master_sklh/{id}/verification', [App\Http\Controllers\MasterSklhController::class, 'verification'])
-    ->name('master_sklh.verification');
-Route::delete('/master_sklh/{id}/delete', [App\Http\Controllers\MasterSklhController::class, 'delete'])
-    ->name('master_sklh.delete');
 
     Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
+    Route::post('/master_sklh/{id}/verification', [App\Http\Controllers\MasterSklhController::class, 'verification'])
+        ->name('master_sklh.verification');
+    Route::delete('/master_sklh/{id}/delete', [App\Http\Controllers\MasterSklhController::class, 'delete'])
+        ->name('master_sklh.delete');
 
-Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
+        Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
 
-Route::get('user_extras', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('user_extras');
-Route::post('user_extras', [App\Http\Controllers\UserExtrasController::class, 'store'])->name('user_extras.store');
+    Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
 
-Route::get('user_extras/viewsklh', [App\Http\Controllers\UserExtrasController::class, 'show']) ->name('user_extras.viewsklh');
+    Route::get('user_extras', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('user_extras');
+    Route::post('user_extras', [App\Http\Controllers\UserExtrasController::class, 'store'])->name('user_extras.store');
 
-Route::post('/editsklh', [App\Http\Controllers\UserExtrasController::class, 'updatesklh'])->name('master_sklh.update');
-    
-Route::post('/user-extras/simpan-proposal', [App\Http\Controllers\UserExtrasController::class, 'simpanProposalMagang'])->name('user_extras.simpan_proposal');
+    Route::get('user_extras/viewsklh', [App\Http\Controllers\UserExtrasController::class, 'show']) ->name('user_extras.viewsklh');
 
-
-Route::get('/user/permohonan', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanKeluar'])->name('user.daftar_permohonan');
-// Route::get('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'lihatPermohonan'])->name('user_extras.lihat_permohonan');
-
-Route::post('/user/permohonan/{id}/update-status', [App\Http\Controllers\UserExtrasController::class, 'updatestatuspermohonan'])->name('user.updatestatuspermohonan');
-
-//Data Peserta Magang
-Route::get('addpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'addPesertaMagang'])->name('user.addpesertamagang');
-Route::post('simpanpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'simpanpesertamagang'])->name('user.simpanpeserta');
-Route::delete('/user/hapus-peserta-magang/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapuspesertamagang'])->name('user.hapuspesertamagang');
-Route::get('editpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'editPesertaMagang'])->name('user.editpesertamagang');
-Route::put('updatepesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'updatePesertaMagang'])->name('user.updatepesertamagang');
-Route::get('/detail-peserta/{id}', [App\Http\Controllers\MasterPsrtController::class, 'view'])->name('masterpsrt.view');
+    Route::post('/editsklh', [App\Http\Controllers\UserExtrasController::class, 'updatesklh'])->name('master_sklh.update');
+        
+    Route::post('/user-extras/simpan-proposal', [App\Http\Controllers\UserExtrasController::class, 'simpanProposalMagang'])->name('user_extras.simpan_proposal');
 
 
-Route::get('/permohonan/{id}/detail', [App\Http\Controllers\UserExtrasController::class, 'viewpermohonankeluar'])->name('user.viewpermohonankeluar');
-Route::delete('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapusPermohonan'])->name('user.hapus_permohonan');
-Route::get('/user/permohonan/{id}/edit', [App\Http\Controllers\UserExtrasController::class, 'editpermohonan'])->name('user.editpermohonankeluar');
-Route::put('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'updatepermohonan'])->name('user.updatepermohonankeluar');
+    Route::get('/user/permohonan', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanKeluar'])->name('user.daftar_permohonan');
+    // Route::get('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'lihatPermohonan'])->name('user_extras.lihat_permohonan');
 
-Route::get('/proposal-masuk', [App\Http\Controllers\ProposalMasukController::class, 'index'])->name('proposal_masuk');
-Route::get('/proposal/{id}/balas', [App\Http\Controllers\ProposalMasukController::class, 'balasPermohonan'])->name('proposal_masuk.balaspermohonan');
-Route::post('/proposal/{id}/tanggapiproposal', [App\Http\Controllers\ProposalMasukController::class, 'tanggapiPermohonan'])->name('proposal_masuk.tanggapiproposal');
-Route::get('/proposal-masuk/cetak-pdf/{id}', [App\Http\Controllers\ProposalMasukController::class, 'cetakpdfpermohonanmasuk'])->name('proposal_masuk.cetakpdfpermohonanmasuk');
+    Route::post('/user/permohonan/{id}/update-status', [App\Http\Controllers\UserExtrasController::class, 'updatestatuspermohonan'])->name('user.updatestatuspermohonan');
 
-Route::get('/proposal-keluar', [App\Http\Controllers\ProposalKeluarController::class, 'index'])->name('proposal_keluar');
-Route::get('/proposal_keluar/{id}/balas', [App\Http\Controllers\ProposalKeluarController::class, 'balasPermohonanKeluar'])->name('proposal_keluar.balaspermohonan');
-Route::post('/proposal_keluar/{id}/tanggapiproposal', [App\Http\Controllers\ProposalKeluarController::class, 'tanggapiPermohonanKeluar'])->name('proposal_keluar.tanggapiproposal');
-Route::get('/proposal_keluar/{id}/cetakpdf', [App\Http\Controllers\ProposalKeluarController::class, 'cetakpdfpermohonankeluar'])->name('proposal_keluar.cetakpdfpermohonankeluar');
-
-//Daftar Diterima
-Route::get('/permohonan-masuk', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanMasuk'])->name('user.daftar_permohonanmasuk');
-Route::get('/permohonan-masuk/{id}', [App\Http\Controllers\UserExtrasController::class, 'detailPermohonanMasuk'])->name('user.detail_permohonanmasuk');
-
-Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
-Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
-Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');
-
-//Nota Dinas
-Route::get('/nota-dinas', [App\Http\Controllers\NotaDinasController::class, 'daftar'])->name('nota_dinas.daftar');
-Route::get('/nota-dinas/proposal-selector', [App\Http\Controllers\NotaDinasController::class, 'proposalselector'])->name('nota_dinas.proposalselector');
-Route::get('/nota-dinas/add/{id}', [App\Http\Controllers\NotaDinasController::class, 'add'])->name('nota_dinas.add');
-Route::post('/nota-dinas/save/{id}', [App\Http\Controllers\NotaDinasController::class, 'save'])->name('nota_dinas.save');
-Route::get('/nota_dinas/edit/{id}', [App\Http\Controllers\NotaDinasController::class, 'edit'])->name('nota_dinas.edit');
-Route::put('/nota_dinas/{id}', [App\Http\Controllers\NotaDinasController::class, 'update'])->name('nota_dinas.update');
-Route::get('/nota_dinas/additem/{id}', [App\Http\Controllers\NotaDinasController::class, 'addItem'])->name('nota_dinas.additem');
-Route::post('/nota_dinas/storeitem/{id}', [App\Http\Controllers\NotaDinasController::class, 'storeItem'])->name('nota_dinas.storeitem');
-Route::get('/nota_dinas/cetakpdf/{id}', [App\Http\Controllers\NotaDinasController::class, 'cetakPdf'])->name('nota_dinas.cetak_pdf');
-
-//Daftar Laporan
-Route::get('/laporan-magang', [App\Http\Controllers\UserExtrasController::class, 'daftarLaporanMagang'])->name('user.daftar_laporanmagang');
-Route::get('/user/showuploadlaporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'showUploadLaporan'])->name('user.showuploadlaporan');
-Route::post('/user/uploadlaporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'uploadLaporan'])->name('user.uploadlaporan');
-Route::get('/user/preview-laporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'previewLaporan'])->name('user.previewlaporan');
+    //Data Peserta Magang
+    Route::get('addpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'addPesertaMagang'])->name('user.addpesertamagang');
+    Route::post('simpanpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'simpanpesertamagang'])->name('user.simpanpeserta');
+    Route::delete('/user/hapus-peserta-magang/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapuspesertamagang'])->name('user.hapuspesertamagang');
+    Route::get('editpesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'editPesertaMagang'])->name('user.editpesertamagang');
+    Route::put('updatepesertamagang/{id}', [App\Http\Controllers\UserExtrasController::class, 'updatePesertaMagang'])->name('user.updatepesertamagang');
+    Route::get('/detail-peserta/{id}', [App\Http\Controllers\MasterPsrtController::class, 'view'])->name('masterpsrt.view');
 
 
-//Laporan & Sertifikat
-Route::get('/proposal-final', [App\Http\Controllers\ProposalFinalController::class, 'daftar'])->name('proposal_final.daftar');
-Route::get('/proposal-final/tanggapi/{id}', [App\Http\Controllers\ProposalFinalController::class, 'tanggapiProposal'])->name('proposal_final.tanggapi');
-Route::get('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'penilaian'])->name('proposal_final.penilaian');
-Route::post('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanPenilaian'])->name('proposal_final.penilaian.simpan');
-Route::get('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadPenilaianForm'])->name('proposal_final.uploadpenilaian');
-Route::post('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadPenilaian'])->name('proposal_final.uploadpenilaian.simpan');
-Route::get('/proposal-final/cetak-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'cetakPenilaian'])->name('proposal_final.cetakpenilaian');
-Route::get('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadSertifikatForm'])->name('proposal_final.uploadsertifikat');
-Route::post('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadSertifikat'])->name('proposal_final.uploadsertifikat.simpan');
+    Route::get('/permohonan/{id}/detail', [App\Http\Controllers\UserExtrasController::class, 'viewpermohonankeluar'])->name('user.viewpermohonankeluar');
+    Route::delete('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapusPermohonan'])->name('user.hapus_permohonan');
+    Route::get('/user/permohonan/{id}/edit', [App\Http\Controllers\UserExtrasController::class, 'editpermohonan'])->name('user.editpermohonankeluar');
+    Route::put('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'updatepermohonan'])->name('user.updatepermohonankeluar');
+
+    Route::get('/proposal-masuk', [App\Http\Controllers\ProposalMasukController::class, 'index'])->name('proposal_masuk');
+    Route::get('/proposal/{id}/balas', [App\Http\Controllers\ProposalMasukController::class, 'balasPermohonan'])->name('proposal_masuk.balaspermohonan');
+    Route::post('/proposal/{id}/tanggapiproposal', [App\Http\Controllers\ProposalMasukController::class, 'tanggapiPermohonan'])->name('proposal_masuk.tanggapiproposal');
+    Route::get('/proposal-masuk/cetak-pdf/{id}', [App\Http\Controllers\ProposalMasukController::class, 'cetakpdfpermohonanmasuk'])->name('proposal_masuk.cetakpdfpermohonanmasuk');
+
+    Route::get('/proposal-keluar', [App\Http\Controllers\ProposalKeluarController::class, 'index'])->name('proposal_keluar');
+    Route::get('/proposal_keluar/{id}/balas', [App\Http\Controllers\ProposalKeluarController::class, 'balasPermohonanKeluar'])->name('proposal_keluar.balaspermohonan');
+    Route::post('/proposal_keluar/{id}/tanggapiproposal', [App\Http\Controllers\ProposalKeluarController::class, 'tanggapiPermohonanKeluar'])->name('proposal_keluar.tanggapiproposal');
+    Route::get('/proposal_keluar/{id}/cetakpdf', [App\Http\Controllers\ProposalKeluarController::class, 'cetakpdfpermohonankeluar'])->name('proposal_keluar.cetakpdfpermohonankeluar');
+
+    //Daftar Diterima
+    Route::get('/permohonan-masuk', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanMasuk'])->name('user.daftar_permohonanmasuk');
+    Route::get('/permohonan-masuk/{id}', [App\Http\Controllers\UserExtrasController::class, 'detailPermohonanMasuk'])->name('user.detail_permohonanmasuk');
+
+    Route::get('Kelola Penilai', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('daftar_petugas');
+    Route::get('/master-petugas', [App\Http\Controllers\MasterPetugasController::class, 'index'])->name('master_petugas');
+    Route::get('master-petugas/{id}/edit', [App\Http\Controllers\MasterPetugasController::class, 'edit'])->name('master_petugas.edit');
+
+    //Nota Dinas
+    Route::get('/nota-dinas', [App\Http\Controllers\NotaDinasController::class, 'daftar'])->name('nota_dinas.daftar');
+    Route::get('/nota-dinas/proposal-selector', [App\Http\Controllers\NotaDinasController::class, 'proposalselector'])->name('nota_dinas.proposalselector');
+    Route::get('/nota-dinas/add/{id}', [App\Http\Controllers\NotaDinasController::class, 'add'])->name('nota_dinas.add');
+    Route::post('/nota-dinas/save/{id}', [App\Http\Controllers\NotaDinasController::class, 'save'])->name('nota_dinas.save');
+    Route::get('/nota_dinas/edit/{id}', [App\Http\Controllers\NotaDinasController::class, 'edit'])->name('nota_dinas.edit');
+    Route::put('/nota_dinas/{id}', [App\Http\Controllers\NotaDinasController::class, 'update'])->name('nota_dinas.update');
+    Route::get('/nota_dinas/additem/{id}', [App\Http\Controllers\NotaDinasController::class, 'addItem'])->name('nota_dinas.additem');
+    Route::post('/nota_dinas/storeitem/{id}', [App\Http\Controllers\NotaDinasController::class, 'storeItem'])->name('nota_dinas.storeitem');
+    Route::get('/nota_dinas/cetakpdf/{id}', [App\Http\Controllers\NotaDinasController::class, 'cetakPdf'])->name('nota_dinas.cetak_pdf');
+
+    //Daftar Laporan
+    Route::get('/laporan-magang', [App\Http\Controllers\UserExtrasController::class, 'daftarLaporanMagang'])->name('user.daftar_laporanmagang');
+    Route::get('/user/showuploadlaporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'showUploadLaporan'])->name('user.showuploadlaporan');
+    Route::post('/user/uploadlaporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'uploadLaporan'])->name('user.uploadlaporan');
+    Route::get('/user/preview-laporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'previewLaporan'])->name('user.previewlaporan');
 
 
+    //Laporan & Sertifikat
+    Route::get('/proposal-final', [App\Http\Controllers\ProposalFinalController::class, 'daftar'])->name('proposal_final.daftar');
+    Route::get('/proposal-final/tanggapi/{id}', [App\Http\Controllers\ProposalFinalController::class, 'tanggapiProposal'])->name('proposal_final.tanggapi');
+    Route::get('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'penilaian'])->name('proposal_final.penilaian');
+    Route::post('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanPenilaian'])->name('proposal_final.penilaian.simpan');
+    Route::get('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadPenilaianForm'])->name('proposal_final.uploadpenilaian');
+    Route::post('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadPenilaian'])->name('proposal_final.uploadpenilaian.simpan');
+    Route::get('/proposal-final/cetak-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'cetakPenilaian'])->name('proposal_final.cetakpenilaian');
+    Route::get('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadSertifikatForm'])->name('proposal_final.uploadsertifikat');
+    Route::post('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadSertifikat'])->name('proposal_final.uploadsertifikat.simpan');
+
+});

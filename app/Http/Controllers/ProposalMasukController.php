@@ -72,18 +72,18 @@ class ProposalMasukController extends Controller
 
 
     public function balasPermohonan($id)
-    {
-        Carbon::setLocale('id');
-        
-        // Ambil permohonan berdasarkan ID
-        $rc = PermintaanMgng::findOrFail($id);
+{
+    Carbon::setLocale('id');
+    
+    $rc = PermintaanMgng::findOrFail($id);
 
-        // Ambil daftar peserta magang berdasarkan permohonan
-        $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
+    $rc->status_baca_surat_permintaan = 'dibaca';
+    $rc->save();
 
-        // Kirim data ke view
-        return view('pages.proposal_masuk.tanggapiproposal', compact('rc', 'rd'));
-    }
+    $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
+
+    return view('pages.proposal_masuk.tanggapiproposal', compact('rc', 'rd'));
+}
 
 
     public function tanggapiPermohonan(Request $request, $id)

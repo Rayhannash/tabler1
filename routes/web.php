@@ -48,6 +48,11 @@ Route::post('/master_sklh/{id}/verification', [App\Http\Controllers\MasterSklhCo
     ->name('master_sklh.verification');
 Route::delete('/master_sklh/{id}/delete', [App\Http\Controllers\MasterSklhController::class, 'delete'])
     ->name('master_sklh.delete');
+Route::post('/master_sklh/{id}/suspend', [App\Http\Controllers\MasterSklhController::class, 'suspend'])
+    ->name('master_sklh.suspend');
+Route::post('/master_sklh/{id}/unlock', [App\Http\Controllers\MasterSklhController::class, 'unlock'])
+    ->name('master_sklh.unlock');
+
 
 Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
 Route::post('/editmastersklh', [App\Http\Controllers\MasterSklhController::class, 'update'])->name('master_sklh.update');

@@ -56,6 +56,7 @@ class UserExtrasController extends Controller
         return back()->withErrors(['file_akreditasi' => 'File belum diupload.']);
     }
 
+    // Simpan data ke tabel master_sklh
     $data = MasterSklh::create([
         'id_user' => Auth::id(),
         'jenis_sklh' => $request->jenis,
@@ -71,8 +72,13 @@ class UserExtrasController extends Controller
         'handphone_narahubung' => $request->telepon_narahubung,
     ]);
 
+    // Update is_data_completed di tabel users
     User::where('id', Auth::id())->update(['is_data_completed' => true]);
 
+    // Perbarui session 'isDataComplete' agar status pengisian data reflektif
+    session(['isDataComplete' => true]);
+
+    // Redirect ke halaman yang sesuai setelah data berhasil disimpan
     return redirect()->route('user_extras.viewsklh', $data->id)
                      ->with('result', 'success');
 }
@@ -205,6 +211,15 @@ public function daftarPermohonanKeluar()
         })
         ->get();
 
+    // Memperbarui status_baca_surat_balasan ke 'dibaca' jika status_surat_balasan sudah 'terkirim'
+    foreach ($permintaan as $dt) {
+        $balasan = $dt->balasan;  // Ambil balasan yang terkait dengan permohonan
+        if ($balasan && $balasan->status_surat_balasan == 'terkirim' && $balasan->status_baca_surat_balasan == 'belum') {
+            $balasan->status_baca_surat_balasan = 'dibaca';  // Update status menjadi 'dibaca'
+            $balasan->save();  // Simpan perubahan ke database
+        }
+    }
+
     // Ambil data peserta magang jika perlu
     $data2 = MasterPsrt::all();
 
@@ -212,18 +227,26 @@ public function daftarPermohonanKeluar()
 }
 
 
-
-public function viewpermohonankeluar($id)
+public function viewPermohonanKeluar($id)
 {
     // Ambil data permohonan berdasarkan ID yang diterima dari route
     $permohonan = PermintaanMgng::findOrFail($id);
 
     // Ambil peserta berdasarkan permintaan_mgng_id
-   $peserta = MasterPsrt::where('permintaan_mgng_id', $permohonan->id)->get();
+    $peserta = MasterPsrt::where('permintaan_mgng_id', $permohonan->id)->get();
+
+    // Perbarui status_baca_surat_balasan menjadi 'dibaca' jika status_surat_balasan sudah 'terkirim'
+    $balasan = $permohonan->balasan2; // Menggunakan relasi balasan2
+    if ($balasan && $balasan->status_surat_balasan == 'terkirim' && $balasan->status_baca_surat_balasan == 'belum') {
+        $balasan->status_baca_surat_balasan = 'dibaca';
+        $balasan->save();
+    }
 
     // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonankeluar', compact('permohonan', 'peserta'));
 }
+
+
 
 
 public function updatestatuspermohonan(Request $request, $id)
@@ -244,7 +267,7 @@ public function updatestatuspermohonan(Request $request, $id)
 
     // Jika status tidak sesuai
     return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
-                     ->with('result', 'fail-update'); // Notifikasi gagal
+                     ->with('result', 'fail-update'); 
 }
 
 public function editpermohonan($id)
@@ -292,8 +315,6 @@ public function updatepermohonan(Request $request, $id)
     return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
                      ->with('result', 'success');
 }
-
-
 
 
 public function addPesertaMagang($id)

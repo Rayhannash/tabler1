@@ -7,7 +7,7 @@
         </div>
     </x-page-header>
 
-    <div class="page-body">
+     <div class="page-body">
         <div class="container-xl">
             <div class="card">
                 <div class="card-body table-responsive">

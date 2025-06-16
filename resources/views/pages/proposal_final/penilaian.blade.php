@@ -2,7 +2,9 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                
+                <nav aria-label="breadcrumb">
+                    
+                </nav>
             </div>
         </div>
     </x-page-header>

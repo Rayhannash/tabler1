@@ -56,6 +56,7 @@ class UserExtrasController extends Controller
         return back()->withErrors(['file_akreditasi' => 'File belum diupload.']);
     }
 
+    // Simpan data ke tabel master_sklh
     $data = MasterSklh::create([
         'id_user' => Auth::id(),
         'jenis_sklh' => $request->jenis,
@@ -71,8 +72,13 @@ class UserExtrasController extends Controller
         'handphone_narahubung' => $request->telepon_narahubung,
     ]);
 
+    // Update is_data_completed di tabel users
     User::where('id', Auth::id())->update(['is_data_completed' => true]);
 
+    // Perbarui session 'isDataComplete' agar status pengisian data reflektif
+    session(['isDataComplete' => true]);
+
+    // Redirect ke halaman yang sesuai setelah data berhasil disimpan
     return redirect()->route('user_extras.viewsklh', $data->id)
                      ->with('result', 'success');
 }
@@ -212,18 +218,19 @@ public function daftarPermohonanKeluar()
 }
 
 
-
-public function viewpermohonankeluar($id)
+public function viewPermohonanKeluar($id)
 {
     // Ambil data permohonan berdasarkan ID yang diterima dari route
     $permohonan = PermintaanMgng::findOrFail($id);
 
     // Ambil peserta berdasarkan permintaan_mgng_id
-   $peserta = MasterPsrt::where('permintaan_mgng_id', $permohonan->id)->get();
+    $peserta = MasterPsrt::where('permintaan_mgng_id', $permohonan->id)->get();
 
     // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonankeluar', compact('permohonan', 'peserta'));
 }
+
+
 
 
 public function updatestatuspermohonan(Request $request, $id)
@@ -244,7 +251,7 @@ public function updatestatuspermohonan(Request $request, $id)
 
     // Jika status tidak sesuai
     return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
-                     ->with('result', 'fail-update'); // Notifikasi gagal
+                     ->with('result', 'fail-update'); 
 }
 
 public function editpermohonan($id)
@@ -292,8 +299,6 @@ public function updatepermohonan(Request $request, $id)
     return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
                      ->with('result', 'success');
 }
-
-
 
 
 public function addPesertaMagang($id)
@@ -447,17 +452,26 @@ public function daftarPermohonanMasuk(Request $req)
     return view('pages.user_extras.daftarpermohonanmasuk', compact('permintaan', 'data2'));
 }
 
-public function detailPermohonanMasuk($id)
+public function detailPermohonanMasuk($id) 
 {
-    // Ambil data permohonan berdasarkan ID
+    // Ambil data permohonan berdasarkan ID, termasuk data balasan
     $rc = PermintaanMgng::with('balasan')->findOrFail($id);  // Including balasan data
+
+    // Periksa apakah balasan ada dan status_surat_balasan adalah 'terkirim' dan status_baca_surat_balasan 'belum'
+    $balasan = $rc->balasan; // Mengambil balasan terkait
+    
+    if ($balasan && $balasan->status_surat_balasan == 'terkirim' && $balasan->status_baca_surat_balasan == 'belum') {
+        // Perbarui status_baca_surat_balasan menjadi 'dibaca'
+        $balasan->status_baca_surat_balasan = 'dibaca';
+        $balasan->save();  // Simpan perubahan
+    }
 
     // Ambil data peserta yang terkait dengan permohonan ini
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
+    // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
 }
-
 public function daftarLaporanMagang(Request $req)
 {
    $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])

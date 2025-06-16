@@ -48,6 +48,11 @@ Route::post('/master_sklh/{id}/verification', [App\Http\Controllers\MasterSklhCo
     ->name('master_sklh.verification');
 Route::delete('/master_sklh/{id}/delete', [App\Http\Controllers\MasterSklhController::class, 'delete'])
     ->name('master_sklh.delete');
+Route::post('/master_sklh/{id}/suspend', [App\Http\Controllers\MasterSklhController::class, 'suspend'])
+    ->name('master_sklh.suspend');
+Route::post('/master_sklh/{id}/unlock', [App\Http\Controllers\MasterSklhController::class, 'unlock'])
+    ->name('master_sklh.unlock');
+
 
 Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
 Route::post('/editmastersklh', [App\Http\Controllers\MasterSklhController::class, 'update'])->name('master_sklh.update');
@@ -96,6 +101,8 @@ Route::get('/proposal-keluar', [App\Http\Controllers\ProposalKeluarController::c
 Route::get('/proposal_keluar/{id}/balas', [App\Http\Controllers\ProposalKeluarController::class, 'balasPermohonanKeluar'])->name('proposal_keluar.balaspermohonan');
 Route::post('/proposal_keluar/{id}/tanggapiproposal', [App\Http\Controllers\ProposalKeluarController::class, 'tanggapiPermohonanKeluar'])->name('proposal_keluar.tanggapiproposal');
 Route::get('/proposal_keluar/{id}/cetakpdf', [App\Http\Controllers\ProposalKeluarController::class, 'cetakpdfpermohonankeluar'])->name('proposal_keluar.cetakpdfpermohonankeluar');
+Route::get('/proposal_keluar/{id}/viewpeserta', [App\Http\Controllers\ProposalKeluarController::class, 'viewPeserta'])->name('proposal_keluar.viewpeserta');
+
 
 //Daftar Diterima
 Route::get('/permohonan-masuk', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanMasuk'])->name('user.daftar_permohonanmasuk');

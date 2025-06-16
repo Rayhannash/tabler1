@@ -12,7 +12,7 @@
                         </li>
                         <li class="breadcrumb-item">
                             <a href="{{ route('nota_dinas.edit', ['id' => $notaDinas->id]) }}">Edit Nota Dinas</a>
-                        </li>
+                        </li>
                     </ol>
                 </nav>
             </div>

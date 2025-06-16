@@ -18,8 +18,8 @@ class MasterSklhController extends Controller
     $keyword = $request->keyword;
 
     // Query untuk mengambil data lembaga pendidikan dengan pagination
-    $query = MasterSklh::join('users','users.id','=','master_sklh.id_user')
-        ->select('master_sklh.*','users.fullname','users.akun_diverifikasi')
+    $query = MasterSklh::join('users', 'users.id', '=', 'master_sklh.id_user')
+        ->select('master_sklh.*', 'users.fullname', 'users.akun_diverifikasi')
         ->orderBy('users.fullname', 'asc');
 
     if ($keyword) {
@@ -29,9 +29,17 @@ class MasterSklhController extends Controller
         });
     }
 
-    $data = $query->paginate(10); 
-    return view('pages.master_sklh.daftar', compact('data'));
+    // Hitung jumlah lembaga pendidikan yang belum diverifikasi
+    $unverifiedCount = MasterSklh::join('users', 'users.id', '=', 'master_sklh.id_user')
+        ->where('users.akun_diverifikasi', 'belum')
+        ->count();
+
+    // Ambil data lembaga pendidikan
+    $data = $query->paginate(10);
+
+    return view('pages.master_sklh.daftar', compact('data', 'unverifiedCount'));
 }
+
 
 
 public function verify($id)
@@ -42,20 +50,49 @@ public function verify($id)
 
 public function verification($id, Request $req)
 {
+    // Mengambil data lembaga dan user terkait
     $data = MasterSklh::with('user')->findOrFail($id);
     $user = $data->user;
 
+    // Toggle status verifikasi akun
     $newStatus = in_array($user->akun_diverifikasi, ['belum', 'suspended']) ? 'sudah' : 'suspended';
 
+    // Mengubah status verifikasi akun
     $user->akun_diverifikasi = $newStatus;
     $result = $user->save();
 
     if ($result) {
+        // Perbarui session 'isDataComplete' hanya jika akun berhasil diverifikasi
+        session(['isDataComplete' => $newStatus === 'sudah']);
+
+        // Redirect ke halaman master_sklh
         return redirect()->route('master_sklh')->with('result', 'update');
     } else {
         return back()->with('result', 'fail');
     }
 }
+
+public function suspend($id, Request $request)
+{
+    // Ambil data lembaga dan user terkait
+    $data = MasterSklh::with('user')->findOrFail($id);
+    $user = $data->user;
+
+    // Set akun menjadi 'suspended'
+    $user->akun_diverifikasi = 'suspended';
+    $result = $user->save();
+
+    if ($result) {
+        // Perbarui session 'isDataComplete' jika akun sudah disuspend
+        session(['isDataComplete' => false]);
+
+        // Redirect kembali ke halaman daftar lembaga
+        return redirect()->route('master_sklh')->with('result', 'Account suspended');
+    } else {
+        return back()->with('result', 'fail');
+    }
+}
+
 
 public function delete(Request $req)
   {
@@ -66,6 +103,28 @@ public function delete(Request $req)
       return back()->with('result', 'fail-delete');
     }
   }
+
+public function unlock($id, Request $request)
+{
+    // Ambil data lembaga dan user terkait
+    $data = MasterSklh::with('user')->findOrFail($id);
+    $user = $data->user;
+
+    // Set akun menjadi 'sudah' (membuka blokir)
+    $user->akun_diverifikasi = 'sudah';
+    $result = $user->save();
+
+    if ($result) {
+        // Perbarui session 'isDataComplete' jika akun sudah dibuka blokirnya
+        session(['isDataComplete' => true]);
+
+        // Redirect kembali ke halaman daftar lembaga
+        return redirect()->route('master_sklh')->with('result', 'Account unlocked');
+    } else {
+        return back()->with('result', 'fail');
+    }
+}
+
 
   public function edit($id)
   {

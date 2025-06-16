@@ -106,7 +106,7 @@
                                 <td class="text-center">
                                     @foreach($data2 as $de)
                                         @if($de->permintaan_mgng_id == $dt->id)
-                                            <a href="{{ route('proposal_keluar.viewpeserta', ['id' => $de->id]) }}">Lihat data peserta</a><br>
+                                            <a href="{{ route('proposal_keluar.viewpeserta', $de->id) }}">Lihat data peserta</a><br>
                                         @endif
                                     @endforeach
                                 </td>

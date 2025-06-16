@@ -211,15 +211,6 @@ public function daftarPermohonanKeluar()
         })
         ->get();
 
-    // Memperbarui status_baca_surat_balasan ke 'dibaca' jika status_surat_balasan sudah 'terkirim'
-    foreach ($permintaan as $dt) {
-        $balasan = $dt->balasan;  // Ambil balasan yang terkait dengan permohonan
-        if ($balasan && $balasan->status_surat_balasan == 'terkirim' && $balasan->status_baca_surat_balasan == 'belum') {
-            $balasan->status_baca_surat_balasan = 'dibaca';  // Update status menjadi 'dibaca'
-            $balasan->save();  // Simpan perubahan ke database
-        }
-    }
-
     // Ambil data peserta magang jika perlu
     $data2 = MasterPsrt::all();
 
@@ -234,13 +225,6 @@ public function viewPermohonanKeluar($id)
 
     // Ambil peserta berdasarkan permintaan_mgng_id
     $peserta = MasterPsrt::where('permintaan_mgng_id', $permohonan->id)->get();
-
-    // Perbarui status_baca_surat_balasan menjadi 'dibaca' jika status_surat_balasan sudah 'terkirim'
-    $balasan = $permohonan->balasan2; // Menggunakan relasi balasan2
-    if ($balasan && $balasan->status_surat_balasan == 'terkirim' && $balasan->status_baca_surat_balasan == 'belum') {
-        $balasan->status_baca_surat_balasan = 'dibaca';
-        $balasan->save();
-    }
 
     // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonankeluar', compact('permohonan', 'peserta'));
@@ -468,17 +452,26 @@ public function daftarPermohonanMasuk(Request $req)
     return view('pages.user_extras.daftarpermohonanmasuk', compact('permintaan', 'data2'));
 }
 
-public function detailPermohonanMasuk($id)
+public function detailPermohonanMasuk($id) 
 {
-    // Ambil data permohonan berdasarkan ID
+    // Ambil data permohonan berdasarkan ID, termasuk data balasan
     $rc = PermintaanMgng::with('balasan')->findOrFail($id);  // Including balasan data
+
+    // Periksa apakah balasan ada dan status_surat_balasan adalah 'terkirim' dan status_baca_surat_balasan 'belum'
+    $balasan = $rc->balasan; // Mengambil balasan terkait
+    
+    if ($balasan && $balasan->status_surat_balasan == 'terkirim' && $balasan->status_baca_surat_balasan == 'belum') {
+        // Perbarui status_baca_surat_balasan menjadi 'dibaca'
+        $balasan->status_baca_surat_balasan = 'dibaca';
+        $balasan->save();  // Simpan perubahan
+    }
 
     // Ambil data peserta yang terkait dengan permohonan ini
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
+    // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
 }
-
 public function daftarLaporanMagang(Request $req)
 {
    $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])

@@ -11,19 +11,13 @@
                             <a href="{{ route('nota_dinas.daftar') }}">Nota Dinas Magang</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('nota_dinas.edit', ['id' => $notaDinas->id]) }}') }}">Edit Nota Dinas</a>
+                            <a href="{{ route('nota_dinas.edit', ['id' => $notaDinas->id]) }}">Edit Nota Dinas</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Tambah Peserta Magang
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('nota_dinas.additem', ['id' => $notaDinas->id]) }}">Tambah Peserta Magang</a>
                         </li>
                     </ol>
                 </nav>
-                <h3>Tambah Peserta Nota Dinas</h3>
-                <div class="ms-auto">
-                    <a href="{{ route('nota_dinas.edit', ['id' => $notaDinas->id]) }}" class="btn btn-secondary">
-                        <span class="mdi mdi-arrow-left"> Edit Nota Dinas</span> 
-                    </a>
-                </div>
             </div>
         </div>
     </x-page-header>
@@ -38,9 +32,13 @@
                 @csrf
 
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h3>Pilih Peserta</h3>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="mdi mdi-content-save"> Simpan</span>
+                        </button>
                     </div>
+
                     <div class="card-body">
                         @if($pesertaMaster->isEmpty())
                             <p class="text-muted">Tidak ada peserta yang tersedia untuk ditambahkan.</p>
@@ -63,11 +61,6 @@
                                 @endforeach
                             </div>
                         @endif
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">
-                            <span class="mdi mdi-content-save"> Simpan</span>
-                        </button>
                     </div>
                 </div>
 

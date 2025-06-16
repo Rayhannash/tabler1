@@ -9,6 +9,7 @@
             <span class="navbar-brand-text text-white me-2" id="brand-text" style="margin-right: 8px;">
                 <span style="font-weight: bold; font-size: 1.5em;">SI</span> 
                 <span style="font-weight: normal; font-size: 1.5em;" id="magang-text">MAGANG</span> 
+                <span class="mdi mdi-reorder-horizontal"></span>
             </span>
         </div>
 
@@ -69,38 +70,40 @@
                             </span>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="{{ route('proposal_masuk') }}">
-                            <span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span>
-                            Permohonan Magang
-                            <span class="pull-right-container">
-                                <!-- Menampilkan jumlah permohonan magang yang terkirim dan belum dibaca -->
-                                @if(\App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
-                                    ->where('status_baca_surat_permintaan', 'belum')
-                                    ->count() > 0)
-                                    <small class="label pull-right bg-green" style="font-size: 12px; margin-left: 4px; padding: 4px 5px;">
-                                        {{ \App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
-                                        ->where('status_baca_surat_permintaan', 'belum')
-                                        ->count() }}
-                                    </small>
-                                @endif
+                   <li>
+    <a class="nav-link d-flex justify-content-between align-items-center" href="{{ route('proposal_masuk') }}">
+        <span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span>
+        Permohonan Magang
+        <span class="pull-right-container d-flex align-items-center">
+            <!-- Menampilkan jumlah permohonan magang yang terkirim dan belum dibaca -->
+            @if(\App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                ->where('status_baca_surat_permintaan', 'belum')
+                ->count() > 0)
+                <small class="label pull-right bg-green" style="font-size: 12px; margin-left: 4px; padding: 4px 5px;">
+                    {{ \App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                    ->where('status_baca_surat_permintaan', 'belum')
+                    ->count() }}
+                </small>
+            @endif
 
-                                @if(\App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
-                                    ->whereDoesntHave('balasan2', function($query) {
-                                        $query->whereNotNull('nomor_surat_balasan');
-                                    })
-                                    ->count() > 0)
-                                    <small class="label pull-right bg-red" style="font-size: 12px; margin-left: 4px; padding: 4px 5px;">
-                                        {{ \App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
-                                        ->whereDoesntHave('balasan2', function($query) {
-                                            $query->whereNotNull('nomor_surat_balasan');
-                                        })
-                                        ->count() }}
-                                    </small>
-                                @endif
-                            </span>
-                        </a>
-                    </li>
+            @if(\App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                ->whereDoesntHave('balasan2', function($query) {
+                    $query->whereNotNull('nomor_surat_balasan');
+                })
+                ->count() > 0)
+                <small class="label pull-right bg-red" style="font-size: 12px; margin-left: 4px; padding: 4px 5px;">
+                    {{ \App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                    ->whereDoesntHave('balasan2', function($query) {
+                        $query->whereNotNull('nomor_surat_balasan');
+                    })
+                    ->count() }}
+                </small>
+            @endif
+        </span>
+    </a>
+</li>
+
+
                     <li><a class="nav-link" href="{{ route('proposal_keluar') }}"><span class="mdi mdi-send" style="font-size: 24px; margin-right: 4px;"></span>Balasan Magang</a></li>
                     <li><a class="nav-link" href="{{ route('nota_dinas.daftar') }}"><span class="mdi mdi-note-text-outline" style="font-size: 24px; margin-right: 4px;"></span>Nota Dinas Magang</a></li>
                     <li><a class="nav-link" href="{{ route('proposal_final.daftar') }}"><span class="mdi mdi-decagram" style="font-size: 24px; margin-right: 4px;"></span>Laporan & Sertifikat</a></li>
@@ -124,7 +127,45 @@
                             </li>
                             <li><a class="nav-link" href="{{ route('buat_permohonan') }}"><span class="mdi mdi-plus" style="font-size: 24px; margin-right: 4px;"></span> Buat Permohonan</a></li>
                             <li><a class="nav-link" href="{{ route('user.daftar_permohonan') }}"><span class="mdi mdi-email" style="font-size: 24px; margin-right: 4px;"></span> Daftar Permohonan</a></li>
-                           <li><a class="nav-link" href="{{ route('user.daftar_permohonanmasuk') }}"><span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span>Daftar Diterima</a></li> 
+                            <li><a class="nav-link" href="{{ route('user.daftar_permohonanmasuk') }}"><span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span> Daftar Diterima
+                                <span class="pull-right-container">
+                                    @if(\App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                            ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                            ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                            ->where('users.id', Auth::user()->id)
+                                            ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                            ->where('balasan_mgng.status_baca_surat_balasan', 'belum')
+                                            ->count() > 0)
+                                        <small class="label pull-right bg-green">
+                                            {{ \App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                                ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                                ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                                ->where('users.id', Auth::user()->id)
+                                                ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                                ->where('balasan_mgng.status_baca_surat_balasan', 'belum')
+                                                ->count() }}
+                                        </small>
+                                    @endif
+
+                                    @if(\App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                            ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                            ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                            ->where('users.id', Auth::user()->id)
+                                            ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                            ->where('balasan_mgng.status_baca_surat_balasan', 'belumbacaupdate')
+                                            ->count() > 0)
+                                        <small class="label pull-right bg-red">
+                                            {{ \App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                                ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                                ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                                ->where('users.id', Auth::user()->id)
+                                                ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                                ->where('balasan_mgng.status_baca_surat_balasan', 'belumbacaupdate')
+                                                ->count() }}
+                                        </small>
+                                    @endif
+                                </span>
+                            </a></li>
                             <li><a class="nav-link" href="{{ route('user.daftar_laporanmagang') }}"><span class="mdi mdi-file" style="font-size: 24px; margin-right: 4px;"></span> Daftar Laporan</a></li>
                         @endif
                     @endif
@@ -133,3 +174,5 @@
         </div>
     </div>
 </aside>
+
+

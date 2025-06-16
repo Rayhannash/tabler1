@@ -10,9 +10,9 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('nota_dinas.daftar') }}">Nota Dinas Magang</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Edit Nota Dinas
-                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('nota_dinas.edit', ['id' => $notaDinas->id]) }}">Edit Nota Dinas</a>
+                        </li>
                     </ol>
                 </nav>
             </div>

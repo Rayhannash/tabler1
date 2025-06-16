@@ -6,7 +6,7 @@
                     <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('master_sklh') }}">Daftar Lembaga Pendidikan</a></li>
-                        <li class="breadcrumb-item muted" aria-current="page">Detail Lembaga</li>
+                        <li class="breadcrumb-item"><a href="{{ route('master_sklh.edit', $data) }}">Detail Lembaga</a></li>
                     </ol>
                 </nav>
             </div>

@@ -6,7 +6,7 @@
                     <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a></li>
-                        <li class="breadcrumb-item active">Balas Permohonan</li>
+                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk.tanggapiproposal', ['id' => $rc->id]) }}">Balas Permohonan</a>
                     </ol>
                 </nav>
             </div>

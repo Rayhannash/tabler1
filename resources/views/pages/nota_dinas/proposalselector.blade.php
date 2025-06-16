@@ -10,7 +10,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('nota_dinas.daftar') }}">Nota Dinas Magang</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
+                        <li class="breadcrumb-item"><a href="{{ route('nota_dinas.proposalselector') }}">
                             Pilih Permohonan
                         </li>
                     </ol>

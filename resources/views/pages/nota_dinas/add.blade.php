@@ -2,7 +2,22 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('nota_dinas.daftar') }}">Nota Dinas Magang</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('nota_dinas.proposalselector') }}">Pilih Permohonan</a>
+                        </li>
+                         <li class="breadcrumb-item">
+                            <a href="{{ route('nota_dinas.add', $rc->id) }}">Buat Nota Dinas</a>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>

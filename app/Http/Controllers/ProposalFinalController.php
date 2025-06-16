@@ -55,6 +55,7 @@ public function tanggapiProposal($id)
     return view('pages.proposal_final.tanggapiproposal', compact('permohonan', 'peserta'));
 }
 
+
 public function penilaian($id)
 {
     $rc = MasterPsrt::with('notaDinas.masterBdng')->findOrFail($id);

@@ -46,7 +46,7 @@
                                                 <td>{{ $peserta->nis_peserta }}</td>
                                                 <td>{{ $peserta->program_studi }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('masterpsrt.view', ['id' => $peserta->id]) }}" class="btn btn-primary">
+                                                    <a href="{{ route('proposal_keluar.viewpeserta', $peserta->id) }}" class="btn btn-primary">
                                                         <span class="mdi mdi-eye"></span> 
                                                     </a>
                                                 </td>

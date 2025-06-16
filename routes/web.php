@@ -101,6 +101,8 @@ Route::get('/proposal-keluar', [App\Http\Controllers\ProposalKeluarController::c
 Route::get('/proposal_keluar/{id}/balas', [App\Http\Controllers\ProposalKeluarController::class, 'balasPermohonanKeluar'])->name('proposal_keluar.balaspermohonan');
 Route::post('/proposal_keluar/{id}/tanggapiproposal', [App\Http\Controllers\ProposalKeluarController::class, 'tanggapiPermohonanKeluar'])->name('proposal_keluar.tanggapiproposal');
 Route::get('/proposal_keluar/{id}/cetakpdf', [App\Http\Controllers\ProposalKeluarController::class, 'cetakpdfpermohonankeluar'])->name('proposal_keluar.cetakpdfpermohonankeluar');
+Route::get('/proposal_keluar/{id}/viewpeserta', [App\Http\Controllers\ProposalKeluarController::class, 'viewPeserta'])->name('proposal_keluar.viewpeserta');
+
 
 //Daftar Diterima
 Route::get('/permohonan-masuk', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanMasuk'])->name('user.daftar_permohonanmasuk');

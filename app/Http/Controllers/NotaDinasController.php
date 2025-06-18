@@ -33,7 +33,7 @@ class NotaDinasController extends Controller
             }
         })
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10);
 
     $data2 = MasterPsrt::all();
 
@@ -41,24 +41,27 @@ class NotaDinasController extends Controller
 }
 
 
-
 public function proposalselector(Request $request)
 {
-    // Ambil data permohonan magang beserta relasi masterMgng, masterSklh, user, dan balasan
     $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan'])
-        ->whereHas('masterMgng.masterSklh.user', function ($query) use ($request) {
-            if ($request->filled('keyword')) {
-                $keyword = $request->keyword;
-                $query->where('fullname', 'like', "%{$keyword}%")
-                    ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
-                    ->orWhere('telp_sklh', 'like', "%{$keyword}%")
-                    ->orWhere('email', 'like', "%{$keyword}%")
-                    ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
-                    ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
-            }
-        })
-        ->orderBy('created_at', 'desc')
-        ->get();
+    ->where('status_surat_permintaan', 'terkirim')
+    ->whereHas('balasan', function ($q) {
+        $q->whereNotNull('scan_surat_balasan');
+    })
+    ->whereHas('masterMgng.masterSklh.user', function ($query) use ($request) {
+        if ($request->filled('keyword')) {
+            $keyword = $request->keyword;
+            $query->where('fullname', 'like', "%{$keyword}%")
+                ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+                ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+                ->orWhere('email', 'like', "%{$keyword}%")
+                ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+                ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+        }
+    })
+    ->orderBy('created_at', 'desc')
+    ->paginate(10)
+    ->withQueryString();
 
     // Ambil semua peserta magang
     $data2 = MasterPsrt::all();
@@ -79,7 +82,6 @@ public function add($id)
 
         $bidangOptions = MasterBdng::all();
         
-
         // Kirim data ke view
         return view('pages.nota_dinas.add', compact('rc', 'rd', 'bidangOptions'));
 

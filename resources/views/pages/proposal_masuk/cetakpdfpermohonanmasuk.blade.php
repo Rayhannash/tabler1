@@ -88,7 +88,7 @@
         <tr>
             <td style="width: 60%"></td>
             <td style="text-align: right;">
-                Surabaya, {{ \Carbon\Carbon::parse($balasan->tanggal_surat_balasan)->format('d F Y') }}
+                Surabaya, {{ \Carbon\Carbon::parse($balasan->tanggal_surat_balasan)->locale('id')->translatedFormat('d F Y') }}
             </td>
         </tr>
         <tr>
@@ -144,7 +144,7 @@
     <!-- Ketentuan -->
     <p class="section">Pelaksanaan magang diatur dalam ketentuan sebagai berikut :</p>
     <table>
-        <tr><td>1.</td><td>Jadwal Magang: {{ \Carbon\Carbon::parse($balasan->tanggal_awal_magang)->format('d F Y') }} s.d. {{ \Carbon\Carbon::parse($balasan->tanggal_akhir_magang)->format('d F Y') }}</td></tr>
+        <tr><td>1.</td><td>Jadwal Magang: {{ \Carbon\Carbon::parse($balasan->tanggal_awal_magang)->locale('id')->translatedFormat('d F Y') }} s.d. {{ \Carbon\Carbon::parse($balasan->tanggal_akhir_magang)->locale('id')->translatedFormat('d F Y') }}</td></tr>
         <tr><td>2.</td><td>Jam kerja: 08.00 - 14.00 WIB</td></tr>
         <tr><td>3.</td><td>{{ $rc->masterMgng->masterSklh->user->fullname }} wajib mengunggah laporan magang melalui sima.jatimprov.go.id</td></tr>
     </table>

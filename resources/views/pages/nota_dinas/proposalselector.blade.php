@@ -10,8 +10,8 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('nota_dinas.daftar') }}">Nota Dinas Magang</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Pilih Permohonan
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('nota_dinas.proposalselector') }}">Pilih Permohonan</a>
                         </li>
                     </ol>
                 </nav>
@@ -48,7 +48,6 @@
                     </thead>
                     <tbody>
                         @foreach($data as $dt)
-                            @if($dt->status_surat_permintaan == 'terkirim' && optional($dt->balasan)->scan_surat_balasan != null)
                             <tr>
                                 <td>
                                     <b>Lembaga Pendidikan</b><br>
@@ -112,16 +111,18 @@
                                     </a>
                                 </td>
                             </tr>
-                            @endif
                         @endforeach
 
                         @if($data->isEmpty())
                             <tr>
-                                <td colspan="6" class="text-center text-muted">Data permohonan magang tidak ditemukan.</td>
+                                <td colspan="6" class="text-center text-muted">Proposal magang tidak ditemukan.</td>
                             </tr>
                         @endif
                     </tbody>
                 </table>
+                <div class="card-footer d-flex justify-content-center">
+                    {{ $data->links() }}
+                </div>
             </div>
         </div>
     </div>

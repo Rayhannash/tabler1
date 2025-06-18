@@ -3,17 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\MasterBdng;
 use App\Models\MasterBdngMember;
+use App\Models\MasterBdng;
 
 class MasterPetugasController extends Controller
 {
-    // Menampilkan daftar petugas
-    public function index(Request $request)
-{
-    return $this->daftar($request);
-}
-    // Menampilkan daftar dengan join ke bidang
     public function daftar(Request $request)
     {
         $query = MasterBdngMember::join('master_bdng', 'master_bdng.id', '=', 'master_bdng_member.id_bdng')
@@ -45,37 +39,34 @@ class MasterPetugasController extends Controller
 
     public function edit($id)
     {
-        // Ambil data petugas
         $data1 = MasterBdngMember::where('master_bdng_member.id', $id)
             ->join('master_bdng', 'master_bdng.id', '=', 'master_bdng_member.id_bdng')
             ->select('master_bdng_member.*', 'nama_bidang')
             ->first();
         
-        // Ambil data bidang
         $bidang = MasterBdng::all();
     
-        // Kirim kedua data ke view
         return view('pages.master_petugas.edit', [
             'petugas' => $data1,
             'bidang' => $bidang
         ]);
     }
     
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'nama_pejabat' => 'required',
-        'nip_pejabat' => 'required',
-        'pangkat_pejabat' => 'required',
-        'golongan_pejabat' => 'required',
-        'ruang_pejabat' => 'required',
-        'jabatan_pejabat' => 'required',
-        'id_bdng' => 'required',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama_pejabat' => 'required',
+            'nip_pejabat' => 'required',
+            'pangkat_pejabat' => 'required',
+            'golongan_pejabat' => 'required',
+            'ruang_pejabat' => 'required',
+            'jabatan_pejabat' => 'required',
+            'id_bdng' => 'required',
+        ]);
 
-    $petugas = MasterBdngMember::findOrFail($id);
-    $petugas->update($request->all());
+        $petugas = MasterBdngMember::findOrFail($id);
+        $petugas->update($request->all());
 
-    return redirect()->route('master_petugas')->with('result', 'success');
-}
+        return redirect()->route('master_petugas')->with('result', 'success');
+    }
 }

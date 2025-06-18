@@ -12,4 +12,6 @@ class MasterBdng extends Model
     {
         return $this->hasMany(NotaDinas::class, 'bdng_id', 'id');
     }
+
+    
 }

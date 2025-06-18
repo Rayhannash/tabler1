@@ -4022,7 +4022,7 @@ fieldset:disabled .btn {
     padding: var(--tblr-nav-link-padding-y) var(--tblr-nav-link-padding-x);
     font-size: var(--tblr-nav-link-font-size);
     font-weight: var(--tblr-nav-link-font-weight);
-    color: var(--tblr-nav-link-color);
+    color: #000000 !important;
     background: 0 0;
     border: 0;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
@@ -10539,6 +10539,7 @@ body[data-bs-theme="dark"] [data-bs-theme="light"] .btn-close {
 }
 .fw-bolder {
     font-weight: bolder !important;
+    color: white;
 }
 .lh-1 {
     line-height: 1 !important;
@@ -17163,7 +17164,7 @@ body {
         z-index: 1030;
         align-items: flex-start;
         transition: transform 0.3s;
-        overflow-y: scroll;
+        overflow-y: hidden;
         padding: 0;
     }
 }
@@ -17457,7 +17458,7 @@ body {
         z-index: 1030;
         align-items: flex-start;
         transition: transform 0.3s;
-        overflow-y: scroll;
+        overflow-y: hidden;
         padding: 0;
     }
 }
@@ -17544,7 +17545,7 @@ body {
         padding-left: calc(
             calc(calc(var(--tblr-page-padding) * 2) / 2) + 1.75rem
         );
-        color: inherit;
+        color: #000000;
     }
     .navbar-vertical.navbar-expand-lg
         .navbar-collapse
@@ -18490,7 +18491,7 @@ body[data-bs-theme="dark"] [data-bs-theme="light"] {
 .avatar {
     --tblr-avatar-size: 2.5rem;
     --tblr-avatar-status-size: 0.75rem;
-    --tblr-avatar-bg: var(--tblr-bg-surface-secondary);
+    --tblr-avatar-bg: #eef3f600;
     --tblr-avatar-box-shadow: var(--tblr-box-shadow-border);
     --tblr-avatar-font-size: 1rem;
     --tblr-avatar-icon-size: 1.5rem;
@@ -22741,7 +22742,7 @@ fieldset:empty {
     width: 1.25rem;
     height: 1.25rem;
     margin-right: 0.5rem;
-    color: var(--tblr-icon-color);
+    color: #000000 !important;
 }
 .nav-link-icon svg {
     display: block;
@@ -25508,7 +25509,7 @@ a:hover:has(.icon) {
 }
 .text-secondary {
     --tblr-text-opacity: 1;
-    color: rgba(var(--tblr-secondary-rgb), var(--tblr-text-opacity)) !important;
+    color: #ffffff !important;
 }
 .text-secondary-fg {
     color: var(--tblr-secondary-fg) !important;

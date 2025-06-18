@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('order');
             $table->boolean('is_active')->default(false);
             $table->string('match_segment')->nullable();
+            $table->boolean('is_data_complete')->default(false);
             $table->timestamps();
             $table->softDeletes();
 

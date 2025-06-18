@@ -6,7 +6,7 @@
                     <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a></li>
-                        <li class="breadcrumb-item active">Balas Permohonan</li>
+                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $rc->id]) }}">Balas Permohonan</a>
                     </ol>
                 </nav>
             </div>
@@ -32,10 +32,16 @@
                                         <td>Tanggal Surat Permintaan</td><td>{{ \Carbon\Carbon::parse($rc->tanggal_surat_permintaan)->translatedFormat('d F Y') }}</td>
                                     </tr>
                                     <tr>
-                                        <td>File Scan Surat Permintaan</td><td><a href="{{ asset('storage/scan_surat_permintaan/'.$rc->scan_surat_permintaan) }}" target="_blank">Lihat Surat Permintaan</a></td>
+                                        <td>File Scan Surat Permintaan</td>
+                                        <td>
+                                            <a href="{{ asset('storage/' . $rc->scan_surat_permintaan) }}" target="_blank">Lihat Surat Permintaan</a>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>File Scan Proposal Magang</td><td><a href="{{ asset('storage/scan_proposal_magang/'.$rc->scan_proposal_magang) }}" target="_blank">Lihat Proposal</a></td>
+                                        <td>File Scan Proposal Magang</td>
+                                        <td>
+                                            <a href="{{ asset('storage/' . $rc->scan_proposal_magang) }}" target="_blank">Lihat Proposal</a>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -61,7 +67,7 @@
                                                 <td>{{ $peserta->nis_peserta }}</td>
                                                 <td>{{ $peserta->program_studi }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('masterpsrt.view', ['id' => $peserta->id]) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ route('masterpsrt.view', ['id' => $peserta->id]) }}" class="btn btn-primary">
                                                         <span class="mdi mdi-eye"></span> 
                                                     </a>
                                                 </td>
@@ -134,19 +140,22 @@
                        value="{{ $balasan->tanggal_akhir_magang ?? '' }}">
             </div><br>
 
-            <!-- Tombol Simpan -->
-            <button type="submit" class="btn btn-primary">Simpan</button><br><br>
-
-            <!-- Kondisi jika file belum ada -->
             @if(isset($balasan) && is_null($balasan->scan_surat_balasan))
-                <a href="{{ route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $rc->id]) }}" class="btn btn-success mb-3" target="_blank">Cetak PDF</a>
-
-                <div class="form-group">
-                    <label for="iScanSuratBalasan">Lampiran Surat Balasan</label>
+                <div class="form-group mb-3">
+                    <label for="iScanSuratBalasan">Lampiran Surat Balasan</strong></label>
                     <input type="file" name="scan_surat_balasan" id="iScanSuratBalasan" class="form-control" accept=".pdf,.jpg,.png">
                 </div>
             @endif
 
+            <div class="d-flex align-items-center gap-2">
+                <!-- Tombol Simpan -->
+                <button type="submit" class="btn btn-primary">Simpan</button>
+
+                <!-- Tombol Cetak PDF, jika file belum ada -->
+                @if(isset($balasan) && is_null($balasan->scan_surat_balasan))
+                    <a href="{{ route('proposal_masuk.cetakpdfpermohonanmasuk', ['id' => $rc->id]) }}" class="btn btn-success" target="_blank">Cetak PDF</a>
+                @endif
+            </div>
         </div>
     </div>
 </div>

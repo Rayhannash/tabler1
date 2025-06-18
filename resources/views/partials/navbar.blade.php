@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8;">
+<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8; color:white;">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
             aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +10,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <!-- Download SVG icon from http://tabler.io/icons/icon/moon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="icon icon-1">
                         <path
                             d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
@@ -31,7 +31,7 @@
                     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                         aria-label="Show notifications">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="icon icon-1">
                             <path
                                 d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
@@ -152,13 +152,12 @@
                         @php
                             $avatarImg = Auth::user()->role->name == 'Super Admin'
                                 ? asset('static/avatars/Jatim.png')
-                                : asset('static/avatars/TWH.jpg');
+                                : asset('static/avatars/TWH.png');
                         @endphp
 
                         <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}');"></span>
                         <div class="d-none d-xl-block ps-2">
                             <div class="fw-bolder">{{ Auth::user()->fullname }}</div>
-                            <div class="mt-1 small text-secondary">{{ Auth::user()->role->name }}</div>
                         </div>
                     @endauth
                 </a>
@@ -168,6 +167,7 @@
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a> -->
+                    <a href="{{ route('user.setting') }}" class="dropdown-item">Personalisasi Akun</a>
                     <button class="dropdown-item" onclick="logoutNow()">Keluar</button>
                 </div>
 

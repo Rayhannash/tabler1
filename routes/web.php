@@ -1,4 +1,4 @@
- <?php
+<?php
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +27,7 @@ Route::middleware(['auth', 'check-access', 'authorize-access'])->group(function 
     Route::resource('menu', App\Http\Controllers\MenuController::class);
     
     Route::get('test', [App\Http\Controllers\UserExtrasController::class, 'index'])->name('test');
+    
 
 
     
@@ -199,6 +200,5 @@ Route::post('password/reset', function (Illuminate\Http\Request $request) {
 
     return $status == Password::PASSWORD_RESET
                 ? redirect()->route('login')->with('status', __($status))
-                : back()->withErrors(['email' => [__($status)]]);
+                : back()->withErrors(['email' => [($status)]]);
 })->name('password.update');
-

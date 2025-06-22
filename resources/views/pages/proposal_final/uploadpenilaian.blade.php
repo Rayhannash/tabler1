@@ -2,7 +2,22 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.daftar') }}">Laporan & Sertifikat</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.tanggapi', ['id' => $permohonan->id]) }}">Detail Laporan & Sertifikat</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.uploadpenilaian', ['id' => $rc->id]) }}">Upload Penilaian</a>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>

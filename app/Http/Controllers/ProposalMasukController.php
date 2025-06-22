@@ -146,5 +146,17 @@ class ProposalMasukController extends Controller
     return view('pages.proposal_masuk.tanggapiproposal', compact('rc', 'rd', 'balasan'))
         ->with('success', 'Data balasan disimpan. Silakan cetak PDF dan upload file jika sudah tersedia.');
 }
+public function viewPeserta($id)
+{
+    // Ambil data peserta berdasarkan ID
+    $data = MasterPsrt::findOrFail($id);
+
+    // Ambil permohonan terkait dengan peserta
+    $rc = PermintaanMgng::where('id', $data->permintaan_mgng_id)->first();
+
+    // Kirim data peserta dan permohonan ke view
+    return view('pages.proposal_masuk.viewpeserta', compact('data', 'rc'));
+}
+
 }
 

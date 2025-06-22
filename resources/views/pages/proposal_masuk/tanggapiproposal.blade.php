@@ -5,7 +5,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan Magang</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $rc->id]) }}">Balas Permohonan</a>
                     </ol>
                 </nav>
@@ -61,18 +61,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($rd as $peserta)
+                                        @foreach($rd as $dt)
                                             <tr>
-                                                <td>{{ $peserta->nama_peserta }}</td>
-                                                <td>{{ $peserta->nis_peserta }}</td>
-                                                <td>{{ $peserta->program_studi }}</td>
+                                                <td>{{ $dt->nama_peserta }}</td>
+                                                <td>{{ $dt->nis_peserta }}</td>
+                                                <td>{{ $dt->program_studi }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('masterpsrt.view', ['id' => $peserta->id]) }}" class="btn btn-primary">
-                                                        <span class="mdi mdi-eye"></span> 
+                                                    <a href="{{ route('proposal_masuk.viewpeserta', ['id' => $dt->id]) }}" class="btn btn-primary">
+                                                        <span class="mdi mdi-eye"></span>
                                                     </a>
                                                 </td>
                                             </tr>
                                         @endforeach
+
+
                                     </tbody>
                                 </table>
                             </div>

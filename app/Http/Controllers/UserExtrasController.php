@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 class UserExtrasController extends Controller
@@ -423,7 +424,9 @@ public function updatePesertaMagang(Request $request, $id)
 }
 
 public function daftarPermohonanMasuk(Request $req)
-{
+{   
+    Carbon::setLocale('id');
+
     // Ambil data master_sklh berdasarkan user yang login
     $masterSklh = MasterSklh::where('id_user', Auth::id())->first();
 
@@ -472,25 +475,40 @@ public function detailPermohonanMasuk($id)
     // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
 }
+
 public function daftarLaporanMagang(Request $req)
 {
-   $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
-    ->whereHas('notaDinas', function($query) {
-        $query->where('status_nota_dinas', 'terkirim');
-    })
-    ->when($req->keyword, function ($query, $keyword) {
-        $query->whereHas('masterMgng.masterSklh.user', function ($q) use ($keyword) {
-            $q->where('fullname', 'like', "%{$keyword}%")
-              ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
-              ->orWhere('telp_sklh', 'like', "%{$keyword}%")
-              ->orWhere('email', 'like', "%{$keyword}%")
-              ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
-              ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
-        });
-    })
-    ->orderBy('created_at', 'desc')
-    ->get();
+    Carbon::setLocale('id');
 
+    // Get the logged-in user's school/institiution
+    $masterSklh = MasterSklh::where('id_user', Auth::id())->first();
+
+    if (!$masterSklh) {
+        abort(404, 'Sekolah tidak ditemukan.');
+    }
+
+    // Now filter PermintaanMgng based on the logged-in user's school
+    $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
+        ->whereHas('masterMgng', function ($query) use ($masterSklh) {
+            $query->where('master_sklh_id', $masterSklh->id); // Filter by user's school
+        })
+        ->whereHas('notaDinas', function ($query) {
+            $query->where('status_nota_dinas', 'terkirim');
+        })
+        ->when($req->keyword, function ($query, $keyword) {
+            $query->whereHas('masterMgng.masterSklh.user', function ($q) use ($keyword) {
+                $q->where('fullname', 'like', "%{$keyword}%")
+                  ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+                  ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+                  ->orWhere('email', 'like', "%{$keyword}%")
+                  ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+                  ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+            });
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    // Ambil data peserta magang jika perlu
     $data2 = MasterPsrt::all();
 
     return view('pages.user_extras.daftarlaporan', compact('data', 'data2'));
@@ -570,5 +588,17 @@ public function previewLaporan($id)
 
     return redirect()->back()->with('error', 'File tidak ditemukan.');
 }
+public function viewPesertaMasuk($id)
+{
+    // Ambil data peserta berdasarkan ID
+    $data = MasterPsrt::findOrFail($id);
+
+    // Ambil permohonan terkait dengan peserta
+    $rc = PermintaanMgng::where('id', $data->permintaan_mgng_id)->first();
+
+    // Kirim data peserta dan permohonan ke view
+    return view('pages.user_extras.viewpesertamasuk', compact('data', 'rc'));
+}
+
 }
 

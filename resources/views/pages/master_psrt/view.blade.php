@@ -10,8 +10,8 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Detail Peserta
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('masterpsrt.view', $data) }}">Detail Peserta</a>
                         </li>
                     </ol>
                 </nav>

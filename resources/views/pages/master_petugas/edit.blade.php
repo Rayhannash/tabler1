@@ -90,7 +90,9 @@
 
                         <div class="col-12 d-flex justify-content-end gap-2 mt-3">
                             <a href="{{ route('master_petugas') }}" class="btn btn-secondary">Kembali</a>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="mdi mdi-content-save"> Simpan</span>
+                            </button>
                         </div>
                     </form>
                 </div>

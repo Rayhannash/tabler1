@@ -2,7 +2,7 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Laporan Magang" />
+                <x-breadcrumb pageTitle="Daftar Laporan Magang" />
             </div>
         </div>
     </x-page-header>

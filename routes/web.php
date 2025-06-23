@@ -130,16 +130,16 @@ Route::post('/user/uploadlaporan/{id}', [App\Http\Controllers\UserExtrasControll
 Route::get('/user/preview-laporan/{id}', [App\Http\Controllers\UserExtrasController::class, 'previewLaporan'])->name('user.previewlaporan');
 
 
-//Laporan & Sertifikat
-Route::get('/proposal-final', [App\Http\Controllers\ProposalFinalController::class, 'daftar'])->name('proposal_final.daftar');
-Route::get('/proposal-final/tanggapi/{id}', [App\Http\Controllers\ProposalFinalController::class, 'tanggapiProposal'])->name('proposal_final.tanggapi');
-Route::get('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'penilaian'])->name('proposal_final.penilaian');
-Route::post('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanPenilaian'])->name('proposal_final.penilaian.simpan');
-Route::get('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadPenilaianForm'])->name('proposal_final.uploadpenilaian');
-Route::post('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadPenilaian'])->name('proposal_final.uploadpenilaian.simpan');
-Route::get('/proposal-final/cetak-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'cetakPenilaian'])->name('proposal_final.cetakpenilaian');
-Route::get('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadSertifikatForm'])->name('proposal_final.uploadsertifikat');
-Route::post('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadSertifikat'])->name('proposal_final.uploadsertifikat.simpan');
+    //Laporan & Sertifikat
+    Route::get('/proposal-final', [App\Http\Controllers\ProposalFinalController::class, 'daftar'])->name('proposal_final.daftar');
+    Route::get('/proposal-final/tanggapi/{id}', [App\Http\Controllers\ProposalFinalController::class, 'tanggapiProposal'])->name('proposal_final.tanggapi');
+    Route::get('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'penilaian'])->name('proposal_final.penilaian');
+    Route::post('/proposal-final/penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanPenilaian'])->name('proposal_final.penilaian.simpan');
+    Route::get('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadPenilaianForm'])->name('proposal_final.uploadpenilaian');
+    Route::post('/proposal-final/upload-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadPenilaian'])->name('proposal_final.uploadpenilaian.simpan');
+    Route::get('/proposal-final/cetak-penilaian/{id}', [App\Http\Controllers\ProposalFinalController::class, 'cetakPenilaian'])->name('proposal_final.cetakpenilaian');
+    Route::get('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'uploadSertifikatForm'])->name('proposal_final.uploadsertifikat');
+    Route::post('/proposal-final/upload-sertifikat/{id}', [App\Http\Controllers\ProposalFinalController::class, 'simpanUploadSertifikat'])->name('proposal_final.uploadsertifikat.simpan');
 
 //personalisasi akun
 Route::get('/user/setting', [App\Http\Controllers\UserController::class, 'setting'])->name('user.setting');

@@ -26,7 +26,7 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> Simpan
+                                        <span class="mdi mdi-content-save"> Simpan</span>
                                     </button>
                                     <a href="{{ route('proposal_final.tanggapi', ['id' => $rc->permintaan_mgng_id]) }}" class="btn btn-secondary">
                                         <i class="fa fa-arrow-left"></i> Kembali

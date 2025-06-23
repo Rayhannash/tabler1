@@ -92,7 +92,9 @@
                                     </select>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="mdi mdi-content-save"> Simpan</span>
+                                </button>
                             </div>
                         </div>
                     </div>

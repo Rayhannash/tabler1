@@ -125,7 +125,9 @@
 
                                 <div class="d-flex align-items-center gap-2">
                                     <!-- Tombol Simpan -->
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="mdi mdi-content-save"> Simpan</span>
+                                    </button>
 
                                     <!-- Tombol Cetak PDF, tampil jika file scan_surat_balasan belum ada -->
                                     @if(isset($balasan) && !is_null($balasan->scan_surat_balasan))

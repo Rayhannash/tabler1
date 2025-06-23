@@ -116,7 +116,7 @@
                                             <form action="{{ route('user.hapus_permohonan', ['id' => $dt->id]) }}" method="POST" class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal_{{ $dt->id }}">
                                                     <span class="mdi mdi-delete"></span>
                                                 </button>
                                             </form>
@@ -134,4 +134,5 @@
             </div>
         </div>
     </div>
+    
 </x-app-layout>

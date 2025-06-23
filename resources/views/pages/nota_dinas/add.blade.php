@@ -139,7 +139,9 @@
 </div><br>
 
             <!-- Tombol Simpan -->
-            <button type="submit" class="btn btn-primary">Simpan</button><br><br>
+            <button type="submit" class="btn btn-primary text-white">
+                <span class="mdi mdi-content-save"> Simpan</span> 
+            </button><br><br>
 
         </div>
     </div>

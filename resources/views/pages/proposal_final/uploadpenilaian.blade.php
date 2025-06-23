@@ -2,7 +2,22 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.daftar') }}">Laporan & Sertifikat</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.tanggapi', $rc) }}">Detail Laporan & Sertifikat</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.uploadpenilaian', $rc) }}">Upload File Penilaian</a>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>
@@ -26,9 +41,9 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> Simpan
+                                        <span class="mdi mdi-content-save"> Simpan</span>
                                     </button>
-                                    <a href="{{ route('proposal_final.cetakpenilaian', ['id' => $rc->id]) }}" target="_blank" class="btn btn-primary">
+                                    <a href="{{ route('proposal_final.cetakpenilaian', ['id' => $rc->id]) }}" target="_blank" class="btn btn-warning">
                                         <i class="fa fa-print"></i> Cetak Penilaian
                                     </a>
                                 </div>

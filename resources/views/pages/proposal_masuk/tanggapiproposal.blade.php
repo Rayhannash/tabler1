@@ -5,7 +5,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan Magang</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $rc->id]) }}">Balas Permohonan</a>
                     </ol>
                 </nav>
@@ -149,7 +149,9 @@
 
             <div class="d-flex align-items-center gap-2">
                 <!-- Tombol Simpan -->
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary">
+                    <span class="mdi mdi-content-save"> Simpan</span>
+                </button>
 
                 <!-- Tombol Cetak PDF, jika file belum ada -->
                 @if(isset($balasan) && is_null($balasan->scan_surat_balasan))

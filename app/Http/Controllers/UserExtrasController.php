@@ -472,6 +472,7 @@ public function detailPermohonanMasuk($id)
     // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
 }
+
 public function daftarLaporanMagang(Request $req)
 {
    $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])

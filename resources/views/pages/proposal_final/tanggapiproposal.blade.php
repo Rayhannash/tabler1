@@ -10,7 +10,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('proposal_final.daftar') }}">Laporan & Sertifikat</a>
                         </li>
-                         <li class="breadcrumb-item">
+                        <li class="breadcrumb-item">
                             <a href="{{ route('proposal_final.tanggapi', ['id' => $permohonan->id]) }}">Detail Laporan & Sertifikat</a>
                         </li>
                     </ol>

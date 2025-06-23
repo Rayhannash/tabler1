@@ -33,5 +33,8 @@ class MasterSklh extends Model
 {
     return $this->belongsTo(User::class, 'id_user'); 
 }
-
+    public function masterMgng()
+{
+    return $this->hasOne(MasterMgng::class, 'master_sklh_id');
+}
 }

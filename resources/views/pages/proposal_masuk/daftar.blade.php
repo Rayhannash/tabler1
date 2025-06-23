@@ -2,7 +2,7 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Permohonan Magang" />
+                <x-breadcrumb pageTitle="Daftar Permohonan Magang" />
             </div>
         </div>
     </x-page-header>
@@ -91,7 +91,7 @@
                                     <td class="text-center">
                                         @foreach($data2 as $de)
                                             @if($de->permintaan_mgng_id == $dt->id)
-                                                <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat data peserta</a><br>
+                                                <a href="{{ route('proposal_masuk.viewpeserta', ['id' => $de->id]) }}">Lihat data peserta</a><br>
                                             @endif
                                         @endforeach
                                     </td>

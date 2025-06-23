@@ -16,9 +16,11 @@ use App\Models\MasterBdng;
 use Carbon\Carbon;
 
 class ProposalFinalController extends Controller
-{
+{   
     public function daftar(Request $req)
-{
+{   
+    Carbon::setLocale('id');
+    
     $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
         ->whereHas('notaDinas') // **Hanya permohonan yang punya nota dinas**
         ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
@@ -55,20 +57,23 @@ public function tanggapiProposal($id)
     return view('pages.proposal_final.tanggapiproposal', compact('permohonan', 'peserta'));
 }
 
+
 public function penilaian($id)
 {
     $rc = MasterPsrt::with('notaDinas.masterBdng')->findOrFail($id);
 
+    $permohonan = $rc->permintaan;  
+
     $masterBdngId = optional($rc->notaDinas)->master_bdng_id;
 
-    // Ambil anggota bidang yang sesuai bidang peserta
     $bdngMembers = [];
     if ($masterBdngId) {
         $bdngMembers = MasterBdngMember::where('id_bdng', $masterBdngId)->orderBy('nama_pejabat')->get();
     }
 
-    return view('pages.proposal_final.penilaian', compact('rc', 'bdngMembers'));
+    return view('pages.proposal_final.penilaian', compact('rc', 'bdngMembers', 'permohonan'));
 }
+
 
 public function simpanPenilaian(Request $request, $id)
 {
@@ -132,7 +137,9 @@ public function simpanPenilaian(Request $request, $id)
     {
         $rc = MasterPsrt::findOrFail($id);
 
-        return view('pages.proposal_final.uploadpenilaian', compact('rc'));
+        $permohonan = $rc->permintaan;
+
+        return view('pages.proposal_final.uploadpenilaian', compact('rc', 'permohonan'));
     }
 
     // Proses simpan file upload penilaian
@@ -181,7 +188,9 @@ public function uploadSertifikatForm($id)
 {
     $rc = MasterPsrt::findOrFail($id);
 
-    return view('pages.proposal_final.uploadsertifikat', compact('rc'));
+    $permohonan = $rc->permintaan;
+
+    return view('pages.proposal_final.uploadsertifikat', compact('rc', 'permohonan'));
 }
 
 public function simpanUploadSertifikat(Request $request, $id)

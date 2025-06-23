@@ -48,6 +48,11 @@ Route::post('/master_sklh/{id}/verification', [App\Http\Controllers\MasterSklhCo
     ->name('master_sklh.verification');
 Route::delete('/master_sklh/{id}/delete', [App\Http\Controllers\MasterSklhController::class, 'delete'])
     ->name('master_sklh.delete');
+Route::post('/master_sklh/{id}/suspend', [App\Http\Controllers\MasterSklhController::class, 'suspend'])
+    ->name('master_sklh.suspend');
+Route::post('/master_sklh/{id}/unlock', [App\Http\Controllers\MasterSklhController::class, 'unlock'])
+    ->name('master_sklh.unlock');
+
 
 Route::get('master_sklh/{id}/edit', [App\Http\Controllers\MasterSklhController::class, 'edit'])->name('master_sklh.edit');
 Route::post('/editmastersklh', [App\Http\Controllers\MasterSklhController::class, 'update'])->name('master_sklh.update');
@@ -85,17 +90,24 @@ Route::get('/permohonan/{id}/detail', [App\Http\Controllers\UserExtrasController
 Route::delete('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'hapusPermohonan'])->name('user.hapus_permohonan');
 Route::get('/user/permohonan/{id}/edit', [App\Http\Controllers\UserExtrasController::class, 'editpermohonan'])->name('user.editpermohonankeluar');
 Route::put('/user/permohonan/{id}', [App\Http\Controllers\UserExtrasController::class, 'updatepermohonan'])->name('user.updatepermohonankeluar');
+Route::get('/user_extras/viewpeserta/{id}', [App\Http\Controllers\UserExtrasController::class, 'viewPesertaMasuk'])->name('user_extras.viewpesertamasuk');
+
 
 Route::get('/proposal-masuk', [App\Http\Controllers\ProposalMasukController::class, 'index'])->name('proposal_masuk');
 Route::get('/proposal/{id}/balas', [App\Http\Controllers\ProposalMasukController::class, 'balasPermohonan'])->name('proposal_masuk.balaspermohonan');
 Route::post('/proposal/{id}/tanggapiproposal', [App\Http\Controllers\ProposalMasukController::class, 'tanggapiPermohonan'])->name('proposal_masuk.tanggapiproposal');
 Route::get('/proposal-masuk/cetak-pdf/{id}', [App\Http\Controllers\ProposalMasukController::class, 'cetakpdfpermohonanmasuk'])->name('proposal_masuk.cetakpdfpermohonanmasuk');
 Route::delete('/proposal-masuk/{id}', [App\Http\Controllers\ProposalMasukController::class, 'destroy'])->name('proposal_masuk.hapus');
+Route::get('/proposal_masuk/{id}/viewpeserta', [App\Http\Controllers\ProposalMasukController::class, 'viewPeserta'])->name('proposal_masuk.viewpeserta');
+
+
 
 Route::get('/proposal-keluar', [App\Http\Controllers\ProposalKeluarController::class, 'index'])->name('proposal_keluar');
 Route::get('/proposal_keluar/{id}/balas', [App\Http\Controllers\ProposalKeluarController::class, 'balasPermohonanKeluar'])->name('proposal_keluar.balaspermohonan');
 Route::post('/proposal_keluar/{id}/tanggapiproposal', [App\Http\Controllers\ProposalKeluarController::class, 'tanggapiPermohonanKeluar'])->name('proposal_keluar.tanggapiproposal');
 Route::get('/proposal_keluar/{id}/cetakpdf', [App\Http\Controllers\ProposalKeluarController::class, 'cetakpdfpermohonankeluar'])->name('proposal_keluar.cetakpdfpermohonankeluar');
+Route::get('/proposal_keluar/{id}/viewpeserta', [App\Http\Controllers\ProposalKeluarController::class, 'viewPeserta'])->name('proposal_keluar.viewpeserta');
+
 
 //Daftar Diterima
 Route::get('/permohonan-masuk', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanMasuk'])->name('user.daftar_permohonanmasuk');
@@ -115,6 +127,7 @@ Route::put('/nota_dinas/{id}', [App\Http\Controllers\NotaDinasController::class,
 Route::get('/nota_dinas/additem/{id}', [App\Http\Controllers\NotaDinasController::class, 'addItem'])->name('nota_dinas.additem');
 Route::post('/nota_dinas/storeitem/{id}', [App\Http\Controllers\NotaDinasController::class, 'storeItem'])->name('nota_dinas.storeitem');
 Route::get('/nota_dinas/cetakpdf/{id}', [App\Http\Controllers\NotaDinasController::class, 'cetakPdf'])->name('nota_dinas.cetak_pdf');
+Route::get('/nota-dinas/viewpeserta/{id}', [App\Http\Controllers\NotaDinasController::class, 'viewPeserta'])->name('nota_dinas.viewpeserta');
 
 //Daftar Laporan
 Route::get('/laporan-magang', [App\Http\Controllers\UserExtrasController::class, 'daftarLaporanMagang'])->name('user.daftar_laporanmagang');

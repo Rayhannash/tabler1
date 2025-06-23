@@ -44,5 +44,8 @@ public function notaDinas()
     return $this->hasOne(NotaDinas::class, 'permintaan_mgng_id', 'id');
 }
 
-
+public function balasan2()
+{
+    return $this->hasOne(BalasanMgng::class, 'permintaan_mgng_id');
+}
 }

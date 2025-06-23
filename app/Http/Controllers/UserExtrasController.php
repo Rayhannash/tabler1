@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 class UserExtrasController extends Controller
@@ -56,6 +57,7 @@ class UserExtrasController extends Controller
         return back()->withErrors(['file_akreditasi' => 'File belum diupload.']);
     }
 
+    // Simpan data ke tabel master_sklh
     $data = MasterSklh::create([
         'id_user' => Auth::id(),
         'jenis_sklh' => $request->jenis,
@@ -71,8 +73,13 @@ class UserExtrasController extends Controller
         'handphone_narahubung' => $request->telepon_narahubung,
     ]);
 
+    // Update is_data_completed di tabel users
     User::where('id', Auth::id())->update(['is_data_completed' => true]);
 
+    // Perbarui session 'isDataComplete' agar status pengisian data reflektif
+    session(['isDataComplete' => true]);
+
+    // Redirect ke halaman yang sesuai setelah data berhasil disimpan
     return redirect()->route('user_extras.viewsklh', $data->id)
                      ->with('result', 'Data berhasil disimpan! Menunggu verifikasi admin.');
 }
@@ -212,18 +219,19 @@ public function daftarPermohonanKeluar()
 }
 
 
-
-public function viewpermohonankeluar($id)
+public function viewPermohonanKeluar($id)
 {
     // Ambil data permohonan berdasarkan ID yang diterima dari route
     $permohonan = PermintaanMgng::findOrFail($id);
 
     // Ambil peserta berdasarkan permintaan_mgng_id
-   $peserta = MasterPsrt::where('permintaan_mgng_id', $permohonan->id)->get();
+    $peserta = MasterPsrt::where('permintaan_mgng_id', $permohonan->id)->get();
 
     // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonankeluar', compact('permohonan', 'peserta'));
 }
+
+
 
 
 public function updatestatuspermohonan(Request $request, $id)
@@ -244,7 +252,7 @@ public function updatestatuspermohonan(Request $request, $id)
 
     // Jika status tidak sesuai
     return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
-                     ->with('result', 'Gagal'); // Notifikasi gagal
+                     ->with('result', 'fail-update'); 
 }
 
 public function editpermohonan($id)
@@ -292,8 +300,6 @@ public function updatepermohonan(Request $request, $id)
     return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
                      ->with('result_edit', 'Informasi berhasil diperbarui!');
 }
-
-
 
 
 public function addPesertaMagang($id)
@@ -418,7 +424,9 @@ public function updatePesertaMagang(Request $request, $id)
 }
 
 public function daftarPermohonanMasuk(Request $req)
-{
+{   
+    Carbon::setLocale('id');
+
     // Ambil data master_sklh berdasarkan user yang login
     $masterSklh = MasterSklh::where('id_user', Auth::id())->first();
 
@@ -447,36 +455,60 @@ public function daftarPermohonanMasuk(Request $req)
     return view('pages.user_extras.daftarpermohonanmasuk', compact('permintaan', 'data2'));
 }
 
-public function detailPermohonanMasuk($id)
+public function detailPermohonanMasuk($id) 
 {
-    // Ambil data permohonan berdasarkan ID
+    // Ambil data permohonan berdasarkan ID, termasuk data balasan
     $rc = PermintaanMgng::with('balasan')->findOrFail($id);  // Including balasan data
+
+    // Periksa apakah balasan ada dan status_surat_balasan adalah 'terkirim' dan status_baca_surat_balasan 'belum'
+    $balasan = $rc->balasan; // Mengambil balasan terkait
+    
+    if ($balasan && $balasan->status_surat_balasan == 'terkirim' && $balasan->status_baca_surat_balasan == 'belum') {
+        // Perbarui status_baca_surat_balasan menjadi 'dibaca'
+        $balasan->status_baca_surat_balasan = 'dibaca';
+        $balasan->save();  // Simpan perubahan
+    }
 
     // Ambil data peserta yang terkait dengan permohonan ini
     $rd = MasterPsrt::where('permintaan_mgng_id', $rc->id)->get();
 
+    // Kirimkan data ke view
     return view('pages.user_extras.viewpermohonanmasuk', compact('rc', 'rd'));
 }
 
 public function daftarLaporanMagang(Request $req)
 {
-   $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
-    ->whereHas('notaDinas', function($query) {
-        $query->where('status_nota_dinas', 'terkirim');
-    })
-    ->when($req->keyword, function ($query, $keyword) {
-        $query->whereHas('masterMgng.masterSklh.user', function ($q) use ($keyword) {
-            $q->where('fullname', 'like', "%{$keyword}%")
-              ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
-              ->orWhere('telp_sklh', 'like', "%{$keyword}%")
-              ->orWhere('email', 'like', "%{$keyword}%")
-              ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
-              ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
-        });
-    })
-    ->orderBy('created_at', 'desc')
-    ->get();
+    Carbon::setLocale('id');
 
+    // Get the logged-in user's school/institiution
+    $masterSklh = MasterSklh::where('id_user', Auth::id())->first();
+
+    if (!$masterSklh) {
+        abort(404, 'Sekolah tidak ditemukan.');
+    }
+
+    // Now filter PermintaanMgng based on the logged-in user's school
+    $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
+        ->whereHas('masterMgng', function ($query) use ($masterSklh) {
+            $query->where('master_sklh_id', $masterSklh->id); // Filter by user's school
+        })
+        ->whereHas('notaDinas', function ($query) {
+            $query->where('status_nota_dinas', 'terkirim');
+        })
+        ->when($req->keyword, function ($query, $keyword) {
+            $query->whereHas('masterMgng.masterSklh.user', function ($q) use ($keyword) {
+                $q->where('fullname', 'like', "%{$keyword}%")
+                  ->orWhere('alamat_sklh', 'like', "%{$keyword}%")
+                  ->orWhere('telp_sklh', 'like', "%{$keyword}%")
+                  ->orWhere('email', 'like', "%{$keyword}%")
+                  ->orWhere('no_akreditasi_sklh', 'like', "%{$keyword}%")
+                  ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
+            });
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    // Ambil data peserta magang jika perlu
     $data2 = MasterPsrt::all();
 
     return view('pages.user_extras.daftarlaporan', compact('data', 'data2'));
@@ -556,5 +588,17 @@ public function previewLaporan($id)
 
     return redirect()->back()->with('error', 'File tidak ditemukan.');
 }
+public function viewPesertaMasuk($id)
+{
+    // Ambil data peserta berdasarkan ID
+    $data = MasterPsrt::findOrFail($id);
+
+    // Ambil permohonan terkait dengan peserta
+    $rc = PermintaanMgng::where('id', $data->permintaan_mgng_id)->first();
+
+    // Kirim data peserta dan permohonan ke view
+    return view('pages.user_extras.viewpesertamasuk', compact('data', 'rc'));
+}
+
 }
 

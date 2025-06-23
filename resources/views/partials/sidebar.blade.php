@@ -3,12 +3,13 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <!-- Logo desktop -->
         <div class="navbar navbar-expand-md d-none d-lg-flex d-print-none" style="background-color: #605ca8;color:black; display: flex; align-items: center; justify-content: center;">
             <span class="navbar-brand-text text-white me-2" id="brand-text" style="margin-right: 8px;">
                 <span style="font-weight: bold; font-size: 1.5em;">SI</span> 
                 <span style="font-weight: normal; font-size: 1.5em;" id="magang-text">MAGANG</span> 
+                <span class="mdi mdi-reorder-horizontal"></span>
             </span>
         </div>
 
@@ -20,146 +21,25 @@
             </span>
         </div>
         <div class="navbar-nav flex-row d-lg-none">
-            <div class="nav-item d-none d-lg-flex me-3">
-                <div class="btn-list">
-                    <a href="https://github.com/tabler/tabler" class="btn btn-5" target="_blank" rel="noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-2">
-                            <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-                        </svg>
-                        Source code
-                    </a>
-                    <a href="https://github.com/sponsors/codecalm" class="btn btn-6" target="_blank" rel="noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-pink icon-2">
-                            <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                        </svg>
-                        Sponsor
-                    </a>
-                </div>
-            </div>
-            <div class="d-none d-lg-flex">
-                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom">
-                    <!-- Download SVG icon from http://tabler.io/icons/icon/moon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
-                        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
-                    </svg>
-                </a>
-                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom">
-                    <!-- Download SVG icon from http://tabler.io/icons/icon/sun -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
-                        <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                        <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
-                    </svg>
-                </a>
-                <div class="nav-item dropdown d-none d-md-flex me-3">
-                    <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
-                        <!-- Download SVG icon from http://tabler.io/icons/icon/bell -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
-                            <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                        </svg>
-                        <span class="badge bg-red"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Last updates</h3>
-                            </div>
-                            <div class="list-group list-group-flush list-group-hoverable">
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 1</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                Change deprecated html tags to text decoration classes (#29604)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions">
-                                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-muted icon-2">
-                                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span class="status-dot d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 2</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                justify-content:between ⇒ justify-content:space-between (#29734)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions show">
-                                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-yellow icon-2">
-                                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span class="status-dot d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 3</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                Update change-version.js (#29736)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions">
-                                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-muted icon-2">
-                                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 4</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                Regenerate package-lock.json (#29730)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions">
-                                                <!-- Download SVG icon from http://tabler.io/icons/icon/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-muted icon-2">
-                                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @auth
+            <!-- Additional mobile buttons or links can go here -->
+        </div><br>
+
+       @auth
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                     @php
-                        $avatarImg = Auth::user()->role->name == 'Super Admin'
-                            ? asset('static/avatars/Jatim.png')
-                            : asset('static/avatars/TWH.png');
+                        $avatarImg = Auth::user()->role_id == 1
+                            ? asset('static/avatars/Jatim.png') // Super Admin
+                            : asset('static/avatars/TWH.png'); // Instansi (Role ID 2)
                     @endphp
-                    <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}')"></span>
+                    <span class="avatar avatar-sm" style="background-image: url('{{ $avatarImg }}'); margin-left: 15px;"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ Auth::user()->fullname }}</div>
-                        <div class="mt-1 small text-secondary">{{ Auth::user()->role->name }}</div>
+                        <div class="small text-secondary">{{ Auth::user()->role->name }}</div>
+                        <div class="small text-success d-flex align-items-center" style="margin-top: 0px;">
+                            <span class="badge bg-success rounded-circle" style="width: 8px; height: 8px; margin-right: 5px;"></span>
+                            Online
+                        </div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -167,20 +47,132 @@
                     <button class="dropdown-item" onclick="logoutNow()">Keluar</button>
                 </div>
             </div>
-        </div>
         @endauth
+
+
+
+
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
-            @if(session('sidebar_sess') && is_array(session('sidebar_sess')))
-                @foreach(session('sidebar_sess') as $menuItem)
-                    @if($menuItem)
-                        @include('partials.menu-item', ['menuItem' => $menuItem])
-                    @endif
-                @endforeach
-            @else
-                <li>Tidak ada menu tersedia.</li> <!-- Menampilkan pesan jika session kosong -->
+                @if(Auth::user()->role_id == 1)
+                    <!-- Menu untuk Super Admin -->
+                    <li><a class="nav-link" href="{{ route('home') }}"><span class="mdi mdi-home" style="font-size: 24px; margin-right: 4px;"></span> Beranda</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('master_sklh') }}">
+                            <span class="mdi mdi-bank" style="font-size: 24px; margin-right: 4px;"></span>
+                            Lembaga Pendidikan
+                            <span class="pull-right-container">
+                                @if(\App\Models\MasterSklh::join('users','users.id','=','master_sklh.id_user')->where('akun_diverifikasi','belum')->count() > 0)
+                                    <small class="label pull-right bg-red" style="font-size: 12px; margin-left: 4px; padding: 4px 5px;">
+                                        {{ \App\Models\MasterSklh::join('users','users.id','=','master_sklh.id_user')->where('akun_diverifikasi','belum')->count() }}
+                                    </small>
+                                @endif
+                            </span>
+                        </a>
+                    </li>
+                   <li>
+    <a class="nav-link d-flex justify-content-between align-items-center" href="{{ route('proposal_masuk') }}">
+        <span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span>
+        Permohonan Magang
+        <span class="pull-right-container d-flex align-items-center">
+            <!-- Menampilkan jumlah permohonan magang yang terkirim dan belum dibaca -->
+            @if(\App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                ->where('status_baca_surat_permintaan', 'belum')
+                ->count() > 0)
+                <small class="label pull-right bg-green" style="font-size: 12px; margin-left: 4px; padding: 4px 5px;">
+                    {{ \App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                    ->where('status_baca_surat_permintaan', 'belum')
+                    ->count() }}
+                </small>
             @endif
+
+            @if(\App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                ->whereDoesntHave('balasan2', function($query) {
+                    $query->whereNotNull('nomor_surat_balasan');
+                })
+                ->count() > 0)
+                <small class="label pull-right bg-red" style="font-size: 12px; margin-left: 4px; padding: 4px 5px;">
+                    {{ \App\Models\PermintaanMgng::where('status_surat_permintaan', 'terkirim')
+                    ->whereDoesntHave('balasan2', function($query) {
+                        $query->whereNotNull('nomor_surat_balasan');
+                    })
+                    ->count() }}
+                </small>
+            @endif
+        </span>
+    </a>
+</li>
+
+
+                    <li><a class="nav-link" href="{{ route('proposal_keluar') }}"><span class="mdi mdi-send" style="font-size: 24px; margin-right: 4px;"></span>Balasan Magang</a></li>
+                    <li><a class="nav-link" href="{{ route('nota_dinas.daftar') }}"><span class="mdi mdi-note-text-outline" style="font-size: 24px; margin-right: 4px;"></span>Nota Dinas Magang</a></li>
+                    <li><a class="nav-link" href="{{ route('proposal_final.daftar') }}"><span class="mdi mdi-decagram" style="font-size: 24px; margin-right: 4px;"></span>Laporan & Sertifikat</a></li>
+                    <li><a class="nav-link" href="{{ route('master_petugas') }}"><span class="mdi mdi-account-group" style="font-size: 24px; margin-right: 4px;"></span>Kelola Penilai</a></li>
+                @elseif(Auth::user()->role_id == 2)
+                    <!-- Menu untuk User (Instansi) -->
+                    <!-- <li><a class="nav-link" href="{{ route('home') }}"><span class="mdi mdi-home" style="font-size: 24px; margin-right: 4px;"></span> Beranda</a></li> -->
+
+                    @if(session('isDataComplete') == false)
+                        <li><a class="nav-link" href="{{ route('lengkapi_data') }}"><span class="mdi mdi-plus" style="font-size: 24px; margin-right: 4px;"></span> Lengkapi Data</a></li>
+                    @else
+                        <li class="nav-item">
+                            <h5 class="text-muted text-uppercase" style="font-size: 14px; margin-top: 20px; margin-left: 15px;">Data Lembaga Pendidikan</h5>
+                        </li>
+                        <li><a class="nav-link" href="{{ route('detail_data') }}"><span class="mdi mdi-eye" style="font-size: 24px; margin-right: 4px;"></span> Detail Data</a></li>
+                        <li><a class="nav-link" href="{{ route('edit_data') }}"><span class="mdi mdi-pencil" style="font-size: 24px; margin-right: 4px;"></span> Edit Data</a></li>
+
+                        @if(Auth::user()->akun_diverifikasi === 'sudah')
+                            <li class="nav-item">
+                               <h5 class="text-muted text-uppercase" style="font-size: 14px; margin-top: 20px; margin-left: 15px;">Data Permohonan</h5>
+                            </li>
+                            <li><a class="nav-link" href="{{ route('buat_permohonan') }}"><span class="mdi mdi-plus" style="font-size: 24px; margin-right: 4px;"></span> Buat Permohonan</a></li>
+                            <li><a class="nav-link" href="{{ route('user.daftar_permohonan') }}"><span class="mdi mdi-email" style="font-size: 24px; margin-right: 4px;"></span> Daftar Permohonan</a></li>
+                            <li><a class="nav-link" href="{{ route('user.daftar_permohonanmasuk') }}"><span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span> Daftar Diterima
+                                <span class="pull-right-container">
+                                    @if(\App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                            ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                            ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                            ->where('users.id', Auth::user()->id)
+                                            ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                            ->where('balasan_mgng.status_baca_surat_balasan', 'belum')
+                                            ->count() > 0)
+                                        <small class="label pull-right bg-green">
+                                            {{ \App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                                ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                                ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                                ->where('users.id', Auth::user()->id)
+                                                ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                                ->where('balasan_mgng.status_baca_surat_balasan', 'belum')
+                                                ->count() }}
+                                        </small>
+                                    @endif
+
+                                    @if(\App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                            ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                            ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                            ->where('users.id', Auth::user()->id)
+                                            ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                            ->where('balasan_mgng.status_baca_surat_balasan', 'belumbacaupdate')
+                                            ->count() > 0)
+                                        <small class="label pull-right bg-red">
+                                            {{ \App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
+                                                ->join('users', 'users.id', '=', 'master_sklh.id_user')
+                                                ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
+                                                ->where('users.id', Auth::user()->id)
+                                                ->where('balasan_mgng.status_surat_balasan', 'terkirim')
+                                                ->where('balasan_mgng.status_baca_surat_balasan', 'belumbacaupdate')
+                                                ->count() }}
+                                        </small>
+                                    @endif
+                                </span>
+                            </a></li>
+                            <li><a class="nav-link" href="{{ route('user.daftar_laporanmagang') }}"><span class="mdi mdi-file" style="font-size: 24px; margin-right: 4px;"></span> Daftar Laporan</a></li>
+                        @endif
+                    @endif
+                @endif
             </ul>
         </div>
     </div>
 </aside>
+
+

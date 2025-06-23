@@ -13,12 +13,15 @@ use App\Models\PermintaanMgng;
 use App\Models\BalasanMgng;
 use App\Models\MasterBdngMember;
 use App\Models\MasterBdng;
+use Carbon\Carbon;
 
 
 class NotaDinasController extends Controller
 {
     public function daftar(Request $req)
 {
+    Carbon::setLocale('id');
+
     $data = PermintaanMgng::with(['masterMgng.masterSklh.user', 'balasan', 'notaDinas.masterBdng'])
         ->whereHas('notaDinas') // **Hanya permohonan yang punya nota dinas**
         ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
@@ -239,7 +242,9 @@ public function storeItem(Request $request, $id)
         ->with('success', 'Peserta berhasil ditambahkan.');
 }
 public function cetakPdf($id)
-{
+{   
+    Carbon::setLocale('id');
+    
     $notaDinas = NotaDinas::findOrFail($id);
     
     // Ambil permohonan terkait berdasarkan master_mgng_id
@@ -261,4 +266,15 @@ public function cetakPdf($id)
     // Stream PDF (buka di tab baru)
     return $pdf->stream('nota_dinas_' . $notaDinas->nomor_nota_dinas . '.pdf');
 }
+public function viewPeserta($id)
+    {
+        // Get participant data by ID
+        $data = MasterPsrt::findOrFail($id);
+
+        // Get the related request (permohonan) associated with the participant
+        $rc = PermintaanMgng::where('id', $data->permintaan_mgng_id)->first();
+
+        // Pass the data to the view
+        return view('pages.nota_dinas.viewpeserta', compact('data', 'rc'));
+    }
 }

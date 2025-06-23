@@ -61,4 +61,5 @@ public function notaDinas()
 {
     return $this->hasOne(NotaDinas::class, 'permintaan_mgng_id', 'permintaan_mgng_id');
 }
+
 }

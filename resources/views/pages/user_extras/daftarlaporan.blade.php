@@ -2,13 +2,16 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Daftar Laporan Magang" />
+                <x-breadcrumb pageTitle="Daftar Laporan" />
             </div>
         </div>
     </x-page-header>
 
     <div class="page-body">
         <div class="container-xl">
+            <div class="card-header mb-3">
+                <h1 class="card-title h1">DAFTAR LAPORAN</h1>
+            </div>
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <form method="GET" action="{{ route('user.daftar_laporanmagang') }}" class="d-flex">
@@ -43,7 +46,8 @@
                                         <td>
                                             <b>Permohonan</b><br>
                                             <span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}<br>
-                                            <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}<br>
+                                            <span class="mdi mdi-calendar-month"></span> 
+                                            {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}<br>
                                             <span class="mdi mdi-email" style="margin-right: 5px;"></span> 
                                             <a href="{{ asset('storage/scan_surat_permintaan/'.$dt->scan_surat_permintaan) }}" target="_blank">Surat Permohonan</a><br>
                                             <span class="mdi mdi-file" style="margin-right: 5px;"></span>  
@@ -134,7 +138,7 @@
                                 @endif
                             @empty
                                 <tr>
-                                    <td colspan="10" class="text-center text-muted">Data permohonan magang tidak ditemukan.</td>
+                                    <td colspan="10" class="text-center text-muted">Data laporan magang tidak ditemukan.</td>
                                 </tr>
                             @endforelse
                         </tbody>

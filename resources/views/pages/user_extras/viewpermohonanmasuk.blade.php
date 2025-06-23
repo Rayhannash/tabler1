@@ -110,7 +110,7 @@
                                                     <td>{{ $dt->nis_peserta }}</td>
                                                     <td>{{ $dt->program_studi }}</td>
                                                     <td>
-                                                        <a href="{{ route('user.editpesertamagang', ['id' => $dt->id]) }}" class="btn btn-primary">
+                                                        <a href="{{ route('user_extras.viewpesertamasuk', ['id' => $dt->id]) }}" class="btn btn-primary">
                                                             <span class="mdi mdi-eye"></span> 
                                                         </a>
 

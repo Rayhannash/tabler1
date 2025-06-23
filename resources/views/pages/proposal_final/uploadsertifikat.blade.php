@@ -2,7 +2,22 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-               
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.daftar') }}">Laporan & Sertifikat</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.tanggapi', ['id' => $permohonan->id]) }}">Detail Laporan & Sertifikat</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('proposal_final.uploadsertifikat', ['id' => $rc->id]) }}">Upload Sertifikat</a>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>
@@ -28,9 +43,6 @@
                                     <button type="submit" class="btn btn-primary">
                                         <span class="mdi mdi-content-save"> Simpan</span>
                                     </button>
-                                    <a href="{{ route('proposal_final.tanggapi', ['id' => $rc->permintaan_mgng_id]) }}" class="btn btn-secondary">
-                                        <i class="fa fa-arrow-left"></i> Kembali
-                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -60,16 +72,10 @@
             <button type="submit" class="btn btn-primary">
                 <i class="fa fa-save"></i> Simpan
             </button>
-            <a href="{{ route('proposal_final.tanggapi', ['id' => $rc->permintaan_mgng_id]) }}" class="btn btn-secondary">
-                <i class="fa fa-arrow-left"></i> Kembali
-            </a>
         </div>
     </div>
 </form>
 @endif
-
-
-
                 @else
                     <div class="alert alert-warning">
                         Peserta ini belum dinilai.<br>

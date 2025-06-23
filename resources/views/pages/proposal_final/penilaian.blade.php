@@ -14,7 +14,7 @@
                             <a href="{{ route('proposal_final.tanggapi', ['id' => $permohonan->id]) }}">Detail Laporan & Sertifikat</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('proposal_final.penilaian', ['id' => $rc->id]) }}">Upload Penilaian</a>
+                            <a href="{{ route('proposal_final.penilaian', ['id' => $rc->id]) }}">Penilaian</a>
                         </li>
                     </ol>
                 </nav>

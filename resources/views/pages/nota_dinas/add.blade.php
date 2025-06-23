@@ -13,7 +13,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('nota_dinas.proposalselector') }}">Pilih Permohonan</a>
                         </li>
-                         <li class="breadcrumb-item">
+                        <li class="breadcrumb-item">
                             <a href="{{ route('nota_dinas.add', $rc->id) }}">Buat Nota Dinas</a>
                         </li>
                     </ol>
@@ -70,7 +70,7 @@
                                                 <td>{{ $peserta->nis_peserta }}</td>
                                                 <td>{{ $peserta->program_studi }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('masterpsrt.view', ['id' => $peserta->id]) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ route('nota_dinas.viewpeserta', ['id' => $peserta->id]) }}" class="btn btn-primary btn-sm">
                                                         <span class="mdi mdi-eye"></span> 
                                                     </a>
                                                 </td>
@@ -141,7 +141,7 @@
             <!-- Tombol Simpan -->
             <button type="submit" class="btn btn-primary text-white">
                 <span class="mdi mdi-content-save"> Simpan</span> 
-            </button><br><br>
+            </button>
 
         </div>
     </div>

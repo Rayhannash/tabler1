@@ -11,10 +11,10 @@
                             <a href="{{ route('proposal_final.daftar') }}">Laporan & Sertifikat</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('proposal_final.tanggapi', $rc) }}">Detail Laporan & Sertifikat</a>
+                            <a href="{{ route('proposal_final.tanggapi', ['id' => $permohonan->id]) }}">Detail Laporan & Sertifikat</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('proposal_final.uploadpenilaian', $rc) }}">Upload File Penilaian</a>
+                            <a href="{{ route('proposal_final.uploadpenilaian', ['id' => $rc->id]) }}">Upload Penilaian</a>
                         </li>
                     </ol>
                 </nav>

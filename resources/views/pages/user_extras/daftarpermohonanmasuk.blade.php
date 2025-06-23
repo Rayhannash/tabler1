@@ -9,6 +9,9 @@
 
      <div class="page-body">
         <div class="container-xl">
+            <div class="card-header mb-3">
+                <h1 class="card-title h1">DAFTAR DITERIMA</h1>
+            </div>
             <div class="card">
                 <div class="card-body table-responsive">
                     <table class="table table-hover table-bordered">
@@ -71,7 +74,7 @@
                                     <td class="text-center">
                                         @foreach($data2 as $de)
                                             @if($de->permintaan_mgng_id == $dt->id)
-                                                <a href="{{ route('masterpsrt.view', ['id' => $de->id]) }}">Lihat Data Peserta</a><br>
+                                                <a href="{{ route('user_extras.viewpesertamasuk', ['id' => $de->id]) }}">Lihat Data Peserta</a><br>
                                             @endif
                                         @endforeach
                                     </td>

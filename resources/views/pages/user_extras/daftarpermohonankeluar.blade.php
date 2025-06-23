@@ -45,7 +45,7 @@
                                         <td>
                                             <ul class="list-unstyled">
                                                 <li><span class="mdi mdi-sort-numeric-ascending"></span> {{ $dt->nomor_surat_permintaan }}</li>
-                                                <li><span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->translatedFormat('d F Y') }}</li>
+                                                <li><span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse($dt->tanggal_surat_permintaan)->locale('id')->translatedFormat('d F Y') }}</li>
                                                 <li><span class="mdi mdi-information-variant"></span> {{ $dt->perihal_surat_permintaan }}</li>
                                                 <li><span class="mdi mdi-email"></span> <a href="{{ asset('storage/' . $dt->scan_surat_permintaan) }}" target="_blank">Surat Permohonan</a></li>
                                                 <li><span class="mdi mdi-file"></span>  <a href="{{ asset('storage/' . $dt->scan_proposal_magang) }}" target="_blank">Proposal Magang</a></li>
@@ -113,13 +113,10 @@
                                                 </a>
                                             @endif
 
-                                            <form action="{{ route('user.hapus_permohonan', ['id' => $dt->id]) }}" method="POST" class="d-inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal_{{ $dt->id }}">
-                                                    <span class="mdi mdi-delete"></span>
-                                                </button>
-                                            </form>
+                                            <!-- Tombol hapus permohonan, akan memunculkan modal -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal_{{ $dt->id }}">
+                                                <span class="mdi mdi-delete"></span>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endif
@@ -134,5 +131,30 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- Modal Konfirmasi Hapus -->
+    @foreach($permintaan as $dt)
+        <div class="modal fade" id="deleteModal_{{ $dt->id }}" tabindex="-1" aria-labelledby="deleteLabel_{{ $dt->id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteLabel_{{ $dt->id }}">Hapus Permohonan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Yakin ingin menghapus permohonan dengan nomor <strong>{{ $dt->nomor_surat_permintaan }}</strong>?
+                        <form action="{{ route('user.hapus_permohonan', ['id' => $dt->id]) }}" method="POST" class="d-inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="id" value="{{ $dt->id }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 </x-app-layout>

@@ -22,18 +22,33 @@
     <div class="page-body">
         <div class="container-xl mb-2">
 
-            {{-- Notifikasi jika ada --}}
-            @if (session('result') == 'update')
+            {{-- Notifikasi jika peserta berhasil ditambahkan --}}
+            @if (session('result_psrt'))
                 <div class="alert alert-success">
-                    Data berhasil diperbaharui.
+                    {{ session('result_psrt') }}
                 </div>
             @endif
 
-            @if (session('result') == 'fail-delete')
-                <div class="alert alert-danger">
-                    Data gagal dihapus.
+            {{-- Notifikasi jika status permohonan tidak bisa diubah --}}
+            @if (session('result_mohon'))
+                <div class="alert alert-success">
+                    {{ session('result_mohon') }}
                 </div>
             @endif
+
+            {{-- Notifikasi jika gagal menghapus --}}
+            @if (session('result'))
+                <div class="alert alert-danger">
+                    {{ session('result') }}
+                </div>
+            @endif
+
+             @if (session('result_edit'))
+                <div class="alert alert-success">
+                    {{ session('result_edit') }}
+                </div>
+            @endif
+
 
             @if(Auth::user()->akun_diverifikasi == 'sudah')
             <form action="{{ route('user.updatestatuspermohonan', ['id' => $permohonan->id]) }}" method="POST">

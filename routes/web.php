@@ -92,6 +92,10 @@ Route::post('/proposal/{id}/tanggapiproposal', [App\Http\Controllers\ProposalMas
 Route::get('/proposal-masuk/cetak-pdf/{id}', [App\Http\Controllers\ProposalMasukController::class, 'cetakpdfpermohonanmasuk'])->name('proposal_masuk.cetakpdfpermohonanmasuk');
 Route::delete('/proposal-masuk/{id}', [App\Http\Controllers\ProposalMasukController::class, 'destroy'])->name('proposal_masuk.hapus');
 
+Route::get('/proposal-keluar', [App\Http\Controllers\ProposalKeluarController::class, 'index'])->name('proposal_keluar');
+Route::get('/proposal_keluar/{id}/balas', [App\Http\Controllers\ProposalKeluarController::class, 'balasPermohonanKeluar'])->name('proposal_keluar.balaspermohonan');
+Route::post('/proposal_keluar/{id}/tanggapiproposal', [App\Http\Controllers\ProposalKeluarController::class, 'tanggapiPermohonanKeluar'])->name('proposal_keluar.tanggapiproposal');
+Route::get('/proposal_keluar/{id}/cetakpdf', [App\Http\Controllers\ProposalKeluarController::class, 'cetakpdfpermohonankeluar'])->name('proposal_keluar.cetakpdfpermohonankeluar');
 
 //Daftar Diterima
 Route::get('/permohonan-masuk', [App\Http\Controllers\UserExtrasController::class, 'daftarPermohonanMasuk'])->name('user.daftar_permohonanmasuk');
@@ -183,6 +187,5 @@ Route::post('password/reset', function (Illuminate\Http\Request $request) {
 
     return $status == Password::PASSWORD_RESET
                 ? redirect()->route('login')->with('status', __($status))
-                : back()->withErrors(['email' => [__($status)]]);
+                : back()->withErrors(['email' => [($status)]]);
 })->name('password.update');
-

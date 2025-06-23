@@ -45,25 +45,34 @@ public function verification($id, Request $req)
     $data = MasterSklh::with('user')->findOrFail($id);
     $user = $data->user;
 
-    $newStatus = in_array($user->akun_diverifikasi, ['belum', 'suspended']) ? 'sudah' : 'suspended';
+    $statusSebelumnya = $user->akun_diverifikasi;
+
+    $newStatus = in_array($statusSebelumnya, ['belum', 'suspended']) ? 'sudah' : 'suspended';
 
     $user->akun_diverifikasi = $newStatus;
     $result = $user->save();
 
     if ($result) {
-        return redirect()->route('master_sklh')->with('result', 'update');
+        if ($statusSebelumnya === 'belum') {
+            return redirect()->route('master_sklh')->with('result_verif', 'Lembaga telah diverifikasi!');
+        } elseif ($statusSebelumnya === 'suspended' && $newStatus === 'sudah') {
+            return redirect()->route('master_sklh')->with('result_unblock', 'Lembaga diaktifkan kembali!');
+        } elseif ($newStatus === 'suspended') {
+            return redirect()->route('master_sklh')->with('result_block', 'Lembaga telah diblokir!');
+        }
     } else {
         return back()->with('result', 'fail');
     }
 }
 
+
 public function delete(Request $req)
   {
     $result = MasterSklh::find($req->id);
     if ($result->delete()) {
-      return redirect()->route('master_sklh')->with('result', 'delete');
+      return redirect()->route('master_sklh')->with('result_dlt', 'Lembaga telah dihapus!');
     } else {
-      return back()->with('result', 'fail-delete');
+      return back()->with('result_dlt', 'Gagal menghapus lembaga');
     }
   }
 
@@ -109,7 +118,7 @@ public function delete(Request $req)
     $data->update($validated);
 
     // Redirect dengan pesan sukses
-    return redirect()->route('master_sklh')->with('result', 'success');
+    return redirect()->route('master_sklh')->with('result', 'Data lembaga telah diperbarui');
 }
 
 public function resetPassword(Request $request)
@@ -127,7 +136,7 @@ public function resetPassword(Request $request)
     $user->password = bcrypt('instansi'); 
     $user->save();
 
-    return redirect()->route('master_sklh')->with('result', 'Password user berhasil direset ke "instansi"');
+    return redirect()->route('master_sklh')->with('result', 'Password user berhasil direset ke "Instansi"');
 }
 
 }

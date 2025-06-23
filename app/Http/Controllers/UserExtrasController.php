@@ -74,7 +74,7 @@ class UserExtrasController extends Controller
     User::where('id', Auth::id())->update(['is_data_completed' => true]);
 
     return redirect()->route('user_extras.viewsklh', $data->id)
-                     ->with('result', 'success');
+                     ->with('result', 'Data berhasil disimpan! Menunggu verifikasi admin.');
 }
 
 
@@ -239,12 +239,12 @@ public function updatestatuspermohonan(Request $request, $id)
 
         // Redirect ke halaman yang sama (viewpermohonankeluar) setelah mengubah status
         return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
-                         ->with('result', 'success'); // Notifikasi berhasil
+                         ->with('result_mohon', 'Menungggu balasan permohonan'); // Notifikasi berhasil
     }
 
     // Jika status tidak sesuai
     return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
-                     ->with('result', 'fail-update'); // Notifikasi gagal
+                     ->with('result', 'Gagal'); // Notifikasi gagal
 }
 
 public function editpermohonan($id)
@@ -290,7 +290,7 @@ public function updatepermohonan(Request $request, $id)
 
     // Redirect ke halaman detail permohonan setelah berhasil diupdate
     return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
-                     ->with('result', 'success');
+                     ->with('result_edit', 'Informasi berhasil diperbarui!');
 }
 
 
@@ -350,7 +350,7 @@ public function simpanpesertamagang($id, Request $request)
 
     return redirect()
         ->route('user.viewpermohonankeluar', ['id' => $id])
-        ->with('result', 'success');
+        ->with('result_psrt', 'Peserta berhasil ditambahkan!');
 }
 
 public function hapusPesertaMagang(Request $request, $id)
@@ -362,7 +362,7 @@ public function hapusPesertaMagang(Request $request, $id)
     $peserta->delete();
 
     // Redirect kembali ke halaman detail permohonan tanpa mengubah status
-    return redirect()->route('user.viewpermohonankeluar', ['id' => $peserta->permintaan_mgng_id])->with('result', 'success');
+    return redirect()->route('user.viewpermohonankeluar', ['id' => $peserta->permintaan_mgng_id])->with('result', 'Peserta telah dihapus!');
 }
 
 public function editPesertaMagang($id)

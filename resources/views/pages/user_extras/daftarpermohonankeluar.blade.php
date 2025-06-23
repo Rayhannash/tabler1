@@ -13,7 +13,7 @@
             {{-- Notifikasi jika ada --}}
             @if (session('result') == 'success')
                 <div class="alert alert-success">
-                    Data berhasil disimpan. Silahkan Tambahkan Peserta
+                    Data berhasil disimpan! Silahkan tambahkan peserta
                 </div>
             @endif
 

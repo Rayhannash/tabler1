@@ -11,6 +11,12 @@
 
     <div class="page-body">
         <div class="container-xl">
+             @if (session('result'))
+                <div class="alert alert-success">
+                    {{ session('result') }}
+                </div>
+            @endif
+            
             @if(Auth::user()->role_id == 2 && $dt->id_user == Auth::user()->id)
                 <div class="space-y-4">
                     <div class="card">

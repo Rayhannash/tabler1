@@ -9,7 +9,7 @@
             <span class="navbar-brand-text text-white me-2" id="brand-text" style="margin-right: 8px;">
                 <span style="font-weight: bold; font-size: 1.5em;">SI</span> 
                 <span style="font-weight: normal; font-size: 1.5em;" id="magang-text">MAGANG</span> 
-                <span class="mdi mdi-reorder-horizontal"></span>
+                <!-- <span class="mdi mdi-reorder-horizontal"></span> -->
             </span>
         </div>
 

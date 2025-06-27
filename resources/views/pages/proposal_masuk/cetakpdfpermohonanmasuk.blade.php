@@ -114,7 +114,7 @@
 
     <!-- Isi Surat -->
     <p class="section text-justify">
-        Sehubungan dengan surat Saudara tanggal {{ \Carbon\Carbon::parse($rc->tanggal_surat_permintaan)->format('d F Y') }} nomor {{ $rc->nomor_surat_permintaan }}, perihal {{ $rc->perihal_surat_permintaan }}, bersama ini disampaikan bahwa Dinas Komunikasi dan Informatika Provinsi Jawa Timur menerima Permohonan Magang 
+        Sehubungan dengan surat Saudara tanggal {{ \Carbon\Carbon::parse($rc->tanggal_surat_permintaan)->locale('id')->translatedFormat('d F Y') }} nomor {{ $rc->nomor_surat_permintaan }}, perihal {{ $rc->perihal_surat_permintaan }}, bersama ini disampaikan bahwa Dinas Komunikasi dan Informatika Provinsi Jawa Timur menerima Permohonan Magang 
         @if($rc->jenis_sklh != 'ptg') Siswa/Siswi @else Mahasiswa/Mahasiswi @endif {{ $rc->name }}
         @if($rc->metode_magang == 'online') secara Daring/<i>Online</i> @endif atas nama:
     </p>

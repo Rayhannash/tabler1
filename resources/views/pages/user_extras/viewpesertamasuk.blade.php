@@ -14,7 +14,7 @@
                             <a href="{{ route('user.detail_permohonanmasuk', $rc) }}">Detail Daftar Diterima</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('user_extras.viewpesertamasuk', $data->id) }}">Detail Peserta</a>
+                            <a href="{{ route('user_extras.viewpesertamasuk', $data->id) }}">Detail Peserta</a>
                         </li>
                     </ol>
                 </nav>

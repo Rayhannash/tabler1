@@ -131,7 +131,7 @@
 
                                     <!-- Tombol Cetak PDF, tampil jika file scan_surat_balasan belum ada -->
                                     @if(isset($balasan) && !is_null($balasan->scan_surat_balasan))
-                                        <a href="{{ route('proposal_keluar.cetakpdfpermohonankeluar', ['id' => $rc->id]) }}" class="btn btn-success" target="_blank">Cetak PDF</a>
+                                        <a href="{{ route('proposal_keluar.cetakpdfpermohonankeluar', ['id' => $rc->id]) }}" class="btn btn-warning" target="_blank"><span class="mdi mdi-printer"> Cetak PDF</span></a>
                                     @endif
                                 </div>
                             </div>

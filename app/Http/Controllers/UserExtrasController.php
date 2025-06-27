@@ -131,7 +131,7 @@ public function updatesklh(Request $req)
     $result = MasterSklh::where('id_user', Auth::id())->update($validated);
 
     return $result
-        ? redirect()->route('user_extras.viewsklh')->with('result', 'success')
+        ? redirect()->route('user_extras.viewsklh')->with('result', 'Data berhasil diperbarui!')
         : back()->with('result', 'fail');
 }
 
@@ -246,7 +246,7 @@ public function updatestatuspermohonan(Request $request, $id)
         $permohonan->save();
 
         return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
-            ->with('result_mohon', 'Menungggu balasan permohonan');
+            ->with('result_mohon', 'Permohonan berhasil terkirim. Menunggu balasan');
     }
 
     return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
@@ -297,7 +297,7 @@ public function updatepermohonan(Request $request, $id)
 
     // Redirect ke halaman detail permohonan setelah berhasil diupdate
     return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
-                     ->with('result_edit', 'Informasi berhasil diperbarui!');
+                     ->with('result_edit', 'Data berhasil diperbarui!');
 }
 
 

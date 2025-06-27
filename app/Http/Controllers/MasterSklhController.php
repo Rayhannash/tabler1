@@ -170,7 +170,7 @@ public function unlock($id, Request $request)
     $data->update($validated);
 
     // Redirect dengan pesan sukses
-    return redirect()->route('master_sklh')->with('result', 'Data lembaga telah diperbarui');
+    return redirect()->route('master_sklh')->with('result', 'Data berhasil diperbarui!');
 }
 
 public function resetPassword(Request $request)

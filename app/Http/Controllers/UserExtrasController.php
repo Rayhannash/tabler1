@@ -221,6 +221,8 @@ public function daftarPermohonanKeluar()
 
 public function viewPermohonanKeluar($id)
 {
+    Carbon::setLocale('id');
+    
     // Ambil data permohonan berdasarkan ID yang diterima dari route
     $permohonan = PermintaanMgng::findOrFail($id);
 

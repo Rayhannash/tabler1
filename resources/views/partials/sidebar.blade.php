@@ -127,8 +127,9 @@
                             </li>
                             <li><a class="nav-link" href="{{ route('buat_permohonan') }}"><span class="mdi mdi-plus" style="font-size: 24px; margin-right: 4px;"></span> Buat Permohonan</a></li>
                             <li><a class="nav-link" href="{{ route('user.daftar_permohonan') }}"><span class="mdi mdi-email" style="font-size: 24px; margin-right: 4px;"></span> Daftar Permohonan</a></li>
-                            <li><a class="nav-link" href="{{ route('user.daftar_permohonanmasuk') }}"><span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span> Daftar Diterima
-                                <span class="pull-right-container">
+                            <li><a class="nav-link" href="{{ route('user.daftar_permohonanmasuk') }}">
+                                <span class="mdi mdi-inbox" style="font-size: 24px; margin-right: 4px;"></span> Daftar Diterima
+                                <span class="pull-right-container" style="margin-left: 10px;">
                                     @if(\App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
                                             ->join('users', 'users.id', '=', 'master_sklh.id_user')
                                             ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
@@ -136,7 +137,7 @@
                                             ->where('balasan_mgng.status_surat_balasan', 'terkirim')
                                             ->where('balasan_mgng.status_baca_surat_balasan', 'belum')
                                             ->count() > 0)
-                                        <small class="label pull-right bg-green">
+                                        <small class="label pull-right bg-green" style="padding: 5px 10px; font-size: 12px; border-radius: 12px;">
                                             {{ \App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
                                                 ->join('users', 'users.id', '=', 'master_sklh.id_user')
                                                 ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')
@@ -154,7 +155,7 @@
                                             ->where('balasan_mgng.status_surat_balasan', 'terkirim')
                                             ->where('balasan_mgng.status_baca_surat_balasan', 'belumbacaupdate')
                                             ->count() > 0)
-                                        <small class="label pull-right bg-red">
+                                        <small class="label pull-right bg-red" style="padding: 5px 10px; font-size: 12px; border-radius: 12px;">
                                             {{ \App\Models\MasterMgng::join('master_sklh', 'master_sklh.id', '=', 'master_mgng.master_sklh_id')
                                                 ->join('users', 'users.id', '=', 'master_sklh.id_user')
                                                 ->join('balasan_mgng', 'balasan_mgng.master_mgng_id', '=', 'master_mgng.id')

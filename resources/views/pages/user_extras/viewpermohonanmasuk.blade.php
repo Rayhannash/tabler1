@@ -2,7 +2,19 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <!-- Breadcrumb or other content here -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.daftar_permohonanmasuk') }}">Daftar Diterima</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.detail_permohonanmasuk', $rc) }}">Detail Daftar Diterima</a>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>

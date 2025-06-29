@@ -9,6 +9,11 @@
 
     <div class="page-body">
         <div class="container-xl">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="card-header mb-3">
                 <h1 class="card-title h1">DAFTAR NOTA DINAS</h1>
             </div>

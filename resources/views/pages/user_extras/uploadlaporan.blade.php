@@ -2,7 +2,19 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.daftar_laporanmagang') }}">Daftar Laporan Magang</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.showuploadlaporan', $permohonan) }}">Upload Laporan Magang</a>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>
@@ -29,7 +41,9 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div><br>
-                            <button type="submit" class="btn btn-primary">Upload</button>
+                             <button type="submit" class="btn btn-primary text-white">
+                                <span class="mdi mdi-send"> Kirim</span>
+                            </button>
                         </form>
                     @else
                         <p class="text-muted">Kegiatan magang belum selesai, laporan tidak bisa diupload.</p>

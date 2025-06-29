@@ -10,8 +10,10 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('user.daftar_permohonan') }}">Daftar Permohonan</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Detail Peserta
+                        <li class="breadcrumb-item"><a href="{{ route('user.viewpermohonankeluar', ['id' => $permohonan->id]) }}">Detail Permohonan</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.editpesertamagang', $peserta) }}">Detail Peserta</a>
                         </li>
                     </ol>
                 </nav>
@@ -77,7 +79,9 @@
                         </div>
 
                         @if($permohonan->status_surat_permintaan != 'terkirim')
-                            <button type="submit" class="btn btn-primary mt-1">Simpan Perubahan</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="mdi mdi-content-save"> Simpan Perubahan</span>
+                            </button>
                         @endif
                     </div>
                 </div>

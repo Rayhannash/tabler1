@@ -2,7 +2,7 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                <x-breadcrumb pageTitle="Pengaturan Akun" />
+                <x-breadcrumb pageTitle="Personalisasi Akun" />
             </div>
         </div>
     </x-page-header>
@@ -52,7 +52,9 @@
                     <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Ketik ulang apabila ingin dirubah">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Simpan perubahan</button>
+                <button type="submit" class="btn btn-primary">
+                    <span class="mdi mdi-content-save"> Simpan Perubahan</span>
+                </button>
                 @if(auth()->user()->role_id == 1)
                     <a href="{{ route('user.daftar') }}" class="btn btn-secondary ms-1">
                         Kelola akun lainnya

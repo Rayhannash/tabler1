@@ -13,8 +13,8 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('user.viewpermohonankeluar', ['id' => $permohonan->id]) }}">Detail Permohonan</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Edit Permohonan
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.editpermohonankeluar', ['id' => $permohonan->id]) }}">Edit Permohonan</a>
                         </li>
                     </ol>
                 </nav>
@@ -71,7 +71,9 @@
                                 </small>
                             @endif
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="mdi mdi-content-save"> Simpan Perubahan</span>
+                        </button>
                     </div>
                 </div>
             </form>

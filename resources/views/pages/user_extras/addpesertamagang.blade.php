@@ -3,21 +3,19 @@
         <div class="container-xl">
             <div class="row g-2 align-items-center">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                    <a href="{{ route('user.daftar_permohonan') }}">Daftar Permohonan</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                            <a href="{{ route('user.viewpermohonankeluar', ['id' => $permohonan->id]) }}">Detail Permohonan</a>
-                    </li>
-                    <li class="breadcrumb-item muted" aria-current="page">
-                    Tambah Peserta
-                    </li>
-                </ol>
-                </nav>
+  <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+    <li class="breadcrumb-item">
+        <a href="{{ route('home') }}">Beranda</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{{ route('user.daftar_permohonan') }}">Daftar Permohonan</a>
+    </li>
+    <li class="breadcrumb-item"><a href="{{ route('user.viewpermohonankeluar', ['id' => $permohonan->id]) }}">Detail Permohonan</a>
+    </li>
+    <li class="breadcrumb-item"><a href="{{ route('user.addpesertamagang', ['id' => $permohonan->id]) }}">Tambah Peserta</a>
+    </li>
+  </ol>
+</nav>
             </div>
         </div>
     </x-page-header>

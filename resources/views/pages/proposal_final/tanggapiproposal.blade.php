@@ -10,7 +10,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('proposal_final.daftar') }}">Laporan & Sertifikat</a>
                         </li>
-                         <li class="breadcrumb-item">
+                        <li class="breadcrumb-item">
                             <a href="{{ route('proposal_final.tanggapi', ['id' => $permohonan->id]) }}">Detail Laporan & Sertifikat</a>
                         </li>
                     </ol>
@@ -21,6 +21,11 @@
 
     <div class="page-body">
         <div class="container-xl">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             @if(Auth::user()->role_id == 1)
                 @if($peserta->count() > 0)
                     @if(\App\Models\NotaDinas::where('permintaan_mgng_id', $permohonan->id)->where('status_laporan', 'belum')->count() == 0)

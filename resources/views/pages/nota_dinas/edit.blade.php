@@ -90,7 +90,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         <span class="mdi mdi-content-save"> Simpan</span>
                                     </button>
-                                    <a href="{{ route('nota_dinas.cetak_pdf', ['id' => $notaDinas->id]) }}" target="_blank" class="btn btn-secondary">
+                                    <a href="{{ route('nota_dinas.cetak_pdf', ['id' => $notaDinas->id]) }}" target="_blank" class="btn btn-warning">
                                         <span class="mdi mdi-printer"> Cetak PDF</span> 
                                     </a>
                                 </div>

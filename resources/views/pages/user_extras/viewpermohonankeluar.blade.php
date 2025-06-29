@@ -10,8 +10,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('user.daftar_permohonan') }}">Daftar Permohonan</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                            Detail Permohonan
+                        <li class="breadcrumb-item"><a href="{{ route('user.viewpermohonankeluar', ['id' => $permohonan->id]) }}">Detail Permohonan</a>
                         </li>
                     </ol>
                 </nav>
@@ -104,7 +103,7 @@
                                 </tr>
                                 <tr>
                                     <td>Tanggal Surat Permintaan</td>
-                                    <td>{{ \Carbon\Carbon::parse($permohonan->tanggal_surat_permintaan)->format('d F Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($permohonan->tanggal_surat_permintaan)->locale('id')->translatedFormat('d F Y') }}</td>
                                 </tr>
                                 <tr>
                                     <td>Perihal Surat Permintaan</td>

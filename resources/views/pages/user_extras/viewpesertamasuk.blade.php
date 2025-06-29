@@ -3,7 +3,20 @@
         <div class="container-xl">
             <div class="row g-2 align-items-center">
                 <nav aria-label="breadcrumb">
-                    
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.daftar_permohonanmasuk') }}">Daftar Diterima</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.detail_permohonanmasuk', $rc) }}">Detail Daftar Diterima</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user_extras.viewpesertamasuk', $data->id) }}">Detail Peserta</a>
+                        </li>
+                    </ol>
                 </nav>
             </div>
         </div>

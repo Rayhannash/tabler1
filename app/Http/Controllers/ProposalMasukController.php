@@ -16,7 +16,7 @@ class ProposalMasukController extends Controller
 {
     Carbon::setLocale('id');
     
-    // Ambil data permohonan magang beserta relasi, hanya permohonan yang belum dibalas (status_surat_balasan != 'terkirim')
+    // Ambil data permohonan magang beserta relasi
     $data = PermintaanMgng::with(['masterMgng.masterSklh.user'])
         ->whereHas('masterMgng.masterSklh.user', function ($query) use ($req) {
             if ($req->has('keyword')) {
@@ -29,10 +29,7 @@ class ProposalMasukController extends Controller
                     ->orWhere('nama_narahubung', 'like', "%{$keyword}%");
             }
         })
-        // Pastikan hanya permohonan yang tidak memiliki balasan dengan status 'terkirim'
-        ->whereDoesntHave('balasan', function ($query) {
-            $query->where('status_surat_balasan', 'terkirim');
-        })
+        // Tampilkan semua permohonan, baik yang sudah dibalas atau belum
         ->orderBy('created_at', 'desc')
         ->paginate(10);
 
@@ -41,6 +38,7 @@ class ProposalMasukController extends Controller
 
     return view('pages.proposal_masuk.daftar', compact('data', 'data2'));
 }
+
 
     public function destroy($id)
 {

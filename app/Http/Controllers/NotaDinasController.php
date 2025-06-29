@@ -132,7 +132,7 @@ public function save(Request $request, $id)
     $notaDinas->save();
 
     // Redirect dengan pesan sukses
-    return redirect()->route('nota_dinas.daftar')->with('success', 'Nota Dinas berhasil dibuat!');
+    return redirect()->route('nota_dinas.daftar')->with('success', 'Nota Dinas berhasil dibuat!. Silahkan tambahkan peserta magang.');
 }
 
 
@@ -239,7 +239,7 @@ public function storeItem(Request $request, $id)
     }
 
     return redirect()->route('nota_dinas.edit', ['id' => $notaDinas->id])
-        ->with('success', 'Peserta berhasil ditambahkan.');
+        ->with('success', 'Peserta berhasil ditambahkan. Silahkan cetak nota dinas!');
 }
 public function cetakPdf($id)
 {   

@@ -41,7 +41,7 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> Simpan
+                                        <span class="mdi mdi-content-save"> Simpan</span>
                                     </button>
                                 </div>
                             </div>
@@ -68,10 +68,9 @@
                     {{ basename($rc->scan_sertifikat) }}
                 </a>
             </p>
-
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-save"></i> Simpan
-            </button>
+<button type="submit" class="btn btn-primary">
+                                        <span class="mdi mdi-content-save"> Simpan</span>
+                                    </button>
         </div>
     </div>
 </form>

@@ -41,10 +41,10 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> Simpan
+                                        <span class="mdi mdi-content-save"> Simpan</span>
                                     </button>
-                                    <a href="{{ route('proposal_final.cetakpenilaian', ['id' => $rc->id]) }}" target="_blank" class="btn btn-primary">
-                                        <i class="fa fa-print"></i> Cetak Penilaian
+                                    <a href="{{ route('proposal_final.cetakpenilaian', ['id' => $rc->id]) }}" target="_blank" class="btn btn-warning">
+                                        <i class="fa fa-print"></i><span class="mdi mdi-printer"> Cetak Penilaian</span>
                                     </a>
                                 </div>
                             </div>
@@ -52,8 +52,8 @@
                     @else
                         <div class="alert alert-info">
                             File penilaian sudah diupload.<br>
-                            <a href="{{ route('proposal_final.cetakpenilaian', ['id' => $rc->id]) }}" target="_blank" class="btn btn-secondary">
-                                <i class="fa fa-print"></i> Cetak Penilaian
+                            <a href="{{ route('proposal_final.cetakpenilaian', ['id' => $rc->id]) }}" target="_blank" class="btn btn-warning">
+                                <i class="fa fa-print"></i><span class="mdi mdi-printer"> Cetak Penilaian</span>
                             </a>
                         </div>
                     @endif

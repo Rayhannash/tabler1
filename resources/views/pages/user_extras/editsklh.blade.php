@@ -9,7 +9,7 @@
 
     <div class="page-body">
         <div class="container-xl">
-            @if (session('result') == 'success')
+            @if (session('result') == 'Data berhasil diperbarui!')
                 <div class="alert alert-success">
                     Data berhasil diperbarui!
                 </div>

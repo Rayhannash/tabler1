@@ -208,7 +208,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger">Suspend</button>
+                    <button type="submit" class="btn btn-danger">Tangguhkan</button>
                 </div>
             </div>
         </div>
@@ -238,7 +238,29 @@
         </div>
     </div>
 </form>
-
+<!-- MODAL RESET PASSWORD -->
+<form action="{{ route('master_sklh.reset_password') }}" method="POST">
+    @csrf
+    <input type="hidden" name="user_id" value="{{ $dt->user->id }}">
+    <div class="modal fade" id="reset_{{ $dt->id }}" tabindex="-1" aria-labelledby="resetLabel_{{ $dt->id }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetLabel_{{ $dt->id }}">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Yakin ingin reset password untuk <strong>{{ $dt->fullname }}</strong>?  
+                    <br><small>Password akan diubah menjadi <code>instansi</code></small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
                             @endforeach
                             @if($data->isEmpty())

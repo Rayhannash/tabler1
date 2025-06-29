@@ -131,7 +131,7 @@ public function updatesklh(Request $req)
     $result = MasterSklh::where('id_user', Auth::id())->update($validated);
 
     return $result
-        ? redirect()->route('user_extras.viewsklh')->with('result', 'success')
+        ? redirect()->route('user_extras.viewsklh')->with('result', 'Data berhasil diperbarui!')
         : back()->with('result', 'fail');
 }
 
@@ -233,29 +233,28 @@ public function viewPermohonanKeluar($id)
     return view('pages.user_extras.viewpermohonankeluar', compact('permohonan', 'peserta'));
 }
 
-
-
-
 public function updatestatuspermohonan(Request $request, $id)
 {
-    // Ambil permohonan berdasarkan ID
     $permohonan = PermintaanMgng::findOrFail($id);
 
-    // Pastikan status saat ini adalah 'belum'
-    if ($permohonan->status_surat_permintaan == 'belum') {
-        // Ubah status menjadi 'terkirim' (atau Menunggu Persetujuan)
-        $permohonan->status_surat_permintaan = 'terkirim'; // Atur status menjadi "terkirim"
-        $permohonan->save(); // Simpan perubahan
-
-        // Redirect ke halaman yang sama (viewpermohonankeluar) setelah mengubah status
-        return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
-                         ->with('result_mohon', 'Menungggu balasan permohonan'); // Notifikasi berhasil
+    // Cek jumlah peserta
+    $jumlahPeserta = MasterPsrt::where('permintaan_mgng_id', $id)->count();
+    if ($jumlahPeserta === 0) {
+        return redirect()->back()->with('result', 'Tambahkan peserta magang terlebih dahulu!');
     }
 
-    // Jika status tidak sesuai
+    if ($permohonan->status_surat_permintaan == 'belum') {
+        $permohonan->status_surat_permintaan = 'terkirim';
+        $permohonan->save();
+
+        return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
+            ->with('result_mohon', 'Permohonan berhasil terkirim. Menunggu balasan');
+    }
+
     return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
-                     ->with('result', 'fail-update'); 
+        ->with('result', 'fail-update');
 }
+
 
 public function editpermohonan($id)
 {
@@ -300,7 +299,7 @@ public function updatepermohonan(Request $request, $id)
 
     // Redirect ke halaman detail permohonan setelah berhasil diupdate
     return redirect()->route('user.viewpermohonankeluar', ['id' => $permohonan->id])
-                     ->with('result_edit', 'Informasi berhasil diperbarui!');
+                     ->with('result_edit', 'Data berhasil diperbarui!');
 }
 
 
@@ -406,7 +405,7 @@ public function updatePesertaMagang(Request $request, $id)
 
     // Redirect ke halaman detail permohonan setelah berhasil diupdate
     return redirect()->route('user.viewpermohonankeluar', ['id' => $peserta->permintaan_mgng_id])
-                     ->with('result', 'success');
+                     ->with('result', 'Data peserta magang berhasil diperbarui!');
 }
 
 
@@ -417,12 +416,12 @@ public function updatePesertaMagang(Request $request, $id)
 
 
     if (!$permohonan) {
-        return redirect()->route('user.daftar_permohonan')->with('error', 'Permohonan tidak ditemukan.');
+        return redirect()->route('user.daftar_permohonan')->with('error', 'Permohonan tidak ditemukan');
     }
 
     $permohonan->delete();
 
-    return redirect()->route('user.daftar_permohonan')->with('success', 'Permohonan berhasil dihapus.');
+    return redirect()->route('user.daftar_permohonan')->with('success', 'Permohonan berhasil dihapus');
 }
 
 public function daftarPermohonanMasuk(Request $req)

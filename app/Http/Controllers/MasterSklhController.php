@@ -50,27 +50,29 @@ public function verify($id)
 
 public function verification($id, Request $req)
 {
-    // Mengambil data lembaga dan user terkait
     $data = MasterSklh::with('user')->findOrFail($id);
     $user = $data->user;
 
-    // Toggle status verifikasi akun
-    $newStatus = in_array($user->akun_diverifikasi, ['belum', 'suspended']) ? 'sudah' : 'suspended';
+    $statusSebelumnya = $user->akun_diverifikasi;
 
-    // Mengubah status verifikasi akun
+    $newStatus = in_array($statusSebelumnya, ['belum', 'suspended']) ? 'sudah' : 'suspended';
+
     $user->akun_diverifikasi = $newStatus;
     $result = $user->save();
 
     if ($result) {
-        // Perbarui session 'isDataComplete' hanya jika akun berhasil diverifikasi
-        session(['isDataComplete' => $newStatus === 'sudah']);
-
-        // Redirect ke halaman master_sklh
-        return redirect()->route('master_sklh')->with('result', 'update');
+        if ($statusSebelumnya === 'belum') {
+            return redirect()->route('master_sklh')->with('result_verif', 'Lembaga telah diverifikasi!');
+        } elseif ($statusSebelumnya === 'suspended' && $newStatus === 'sudah') {
+            return redirect()->route('master_sklh')->with('result_unblock', 'Lembaga diaktifkan kembali!');
+        } elseif ($newStatus === 'suspended') {
+            return redirect()->route('master_sklh')->with('result_block', 'Lembaga telah diblokir!');
+        }
     } else {
         return back()->with('result', 'fail');
     }
 }
+
 
 public function suspend($id, Request $request)
 {
@@ -87,7 +89,7 @@ public function suspend($id, Request $request)
         session(['isDataComplete' => false]);
 
         // Redirect kembali ke halaman daftar lembaga
-        return redirect()->route('master_sklh')->with('result', 'Account suspended');
+        return redirect()->route('master_sklh')->with('result', 'Lembaga telah ditangguhkan!');
     } else {
         return back()->with('result', 'fail');
     }
@@ -119,7 +121,7 @@ public function unlock($id, Request $request)
         session(['isDataComplete' => true]);
 
         // Redirect kembali ke halaman daftar lembaga
-        return redirect()->route('master_sklh')->with('result', 'Account unlocked');
+        return redirect()->route('master_sklh')->with('result', 'Lembaga telah diaktifkan kembali');
     } else {
         return back()->with('result', 'fail');
     }
@@ -168,7 +170,7 @@ public function unlock($id, Request $request)
     $data->update($validated);
 
     // Redirect dengan pesan sukses
-    return redirect()->route('master_sklh')->with('result', 'Data lembaga telah diperbarui');
+    return redirect()->route('master_sklh')->with('result', 'Data berhasil diperbarui!');
 }
 
 public function resetPassword(Request $request)

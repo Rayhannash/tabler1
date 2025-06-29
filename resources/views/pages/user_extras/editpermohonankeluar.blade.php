@@ -71,9 +71,7 @@
                                 </small>
                             @endif
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span class="mdi mdi-content-save"> Simpan Perubahan</span>
-                        </button>
+                        <button type="submit" class="btn btn-primary text-white"><span class="mdi mdi-content-save"> Simpan</span></button>
                     </div>
                 </div>
             </form>

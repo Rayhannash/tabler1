@@ -15,24 +15,27 @@ class MasterMgng extends Model
         'master_sklh_id',
     ];
 
+    // Relasi ke MasterSklh
     public function masterSklh()
     {
         return $this->belongsTo(MasterSklh::class, 'master_sklh_id');
     }
 
+    // Relasi ke PermintaanMgng (diubah menjadi hasMany)
     public function permintaan()
     {
-        return $this->hasOne(PermintaanMgng::class, 'master_mgng_id');
+        return $this->hasMany(PermintaanMgng::class, 'master_mgng_id');
     }
 
+    // Relasi ke BalasanMgng (diubah menjadi hasMany jika ada lebih dari satu balasan)
     public function balasan()
     {
-        return $this->hasOne(BalasanMgng::class, 'master_mgng_id');
+        return $this->hasMany(BalasanMgng::class, 'master_mgng_id');
     }
 
+    // Relasi ke MasterPsrt (sudah benar)
     public function peserta()
-{
-    return $this->hasMany(MasterPsrt::class, 'master_mgng_id');
-}
-
+    {
+        return $this->hasMany(MasterPsrt::class, 'master_mgng_id');
+    }
 }

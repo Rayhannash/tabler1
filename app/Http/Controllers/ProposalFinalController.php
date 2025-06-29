@@ -130,7 +130,7 @@ public function simpanPenilaian(Request $request, $id)
     $rc->save();
 
     return redirect()->route('proposal_final.tanggapi', ['id' => $rc->permintaan_mgng_id])
-        ->with('success', 'Penilaian berhasil disimpan');
+        ->with('success', 'Penilaian berhasil disimpan. Silahkan upload penilaian!');
 }
 
  public function uploadPenilaianForm($id)
@@ -166,7 +166,7 @@ public function simpanPenilaian(Request $request, $id)
         $rc->save();
 
         return redirect()->route('proposal_final.tanggapi', ['id' => $rc->permintaan_mgng_id])
-            ->with('success', 'File penilaian berhasil diupload.');
+            ->with('success', 'File penilaian berhasil diupload. Silahkan upload sertifikat!');
     }
 
     return back()->withErrors(['scan_penilaian' => 'File gagal diupload.']);

@@ -42,7 +42,13 @@
                                             <b>Balasan</b><br>
                                             <span class="mdi mdi-sort-numeric-ascending"></span> {{ '400.14.5.4/' . optional($dt->balasan)->nomor_surat_balasan ?? 'Tidak Tersedia' }}/114.1/{{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan)->format('Y') ?? 'Tidak Tersedia' }}<br>
                                             <span class="mdi mdi-calendar-month"></span> {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_surat_balasan ?? now())->translatedFormat('d F Y') ?? 'Tidak Tersedia' }}<br>
-                                            <span class="mdi mdi-email"></span> <a href="{{ asset('storage/scan_surat_balasan/'.optional($dt->balasan)->scan_surat_balasan) }}" target="_blank"> Surat Balasan</a><br><br>
+                                            <span class="mdi mdi-email"></span> 
+                                            @if(optional($dt->balasan)->scan_surat_balasan)
+                                                <a href="{{ asset('storage/scan_surat_balasan/'.optional($dt->balasan)->scan_surat_balasan) }}" target="_blank"> Surat Balasan</a>
+                                            @else
+                                                <span style="color: gray;"> Surat Balasan</span>
+                                            @endif
+                                            <br><br>
                                             <b>Waktu Pelaksanaan</b><br>
                                             <span class="mdi mdi-calendar-check"></span> {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_awal_magang ?? now())->translatedFormat('d F Y') }} s.d. {{ \Carbon\Carbon::parse(optional($dt->balasan)->tanggal_akhir_magang ?? now())->translatedFormat('d F Y') }}<br>
                                         </table>
@@ -81,7 +87,7 @@
 
                                     <!-- Kolom OPSI dengan ikon mata -->
                                     <td class="text-center">
-                                        <a href="{{ route('user.detail_permohonanmasuk', ['id' => $dt->id]) }}" class="btn btn-info">
+                                        <a href="{{ route('user.detail_permohonanmasuk', ['id' => $dt->id]) }}" class="btn btn-primary">
                                             <span class="mdi mdi-eye"></span> 
                                         </a>
                                     </td>

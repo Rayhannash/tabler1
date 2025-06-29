@@ -41,7 +41,9 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div><br>
-                            <button type="submit" class="btn btn-primary">Upload</button>
+                             <button type="submit" class="btn btn-primary text-white">
+                                <span class="mdi mdi-send"> Kirim</span>
+                            </button>
                         </form>
                     @else
                         <p class="text-muted">Kegiatan magang belum selesai, laporan tidak bisa diupload.</p>

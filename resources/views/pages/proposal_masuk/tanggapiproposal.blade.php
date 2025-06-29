@@ -5,7 +5,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan Magang</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('proposal_masuk') }}">Daftar Permohonan</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('proposal_masuk.balaspermohonan', ['id' => $rc->id]) }}">Balas Permohonan</a>
                     </ol>
                 </nav>
@@ -144,7 +144,7 @@
 
             @if(isset($balasan) && is_null($balasan->scan_surat_balasan))
                 <div class="form-group mb-3">
-                    <label for="iScanSuratBalasan">Lampiran Surat Balasan</strong></label>
+                    <label for="iScanSuratBalasan"><strong>Lampiran Surat Balasan</strong></label>
                     <input type="file" name="scan_surat_balasan" id="iScanSuratBalasan" class="form-control" accept=".pdf,.jpg,.png">
                 </div>
             @endif

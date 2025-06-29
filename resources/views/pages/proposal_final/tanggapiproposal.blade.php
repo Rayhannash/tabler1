@@ -21,6 +21,11 @@
 
     <div class="page-body">
         <div class="container-xl">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             @if(Auth::user()->role_id == 1)
                 @if($peserta->count() > 0)
                     @if(\App\Models\NotaDinas::where('permintaan_mgng_id', $permohonan->id)->where('status_laporan', 'belum')->count() == 0)

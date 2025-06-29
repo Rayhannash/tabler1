@@ -35,6 +35,6 @@ class MasterSklh extends Model
 }
     public function masterMgng()
 {
-    return $this->hasOne(MasterMgng::class, 'master_sklh_id');
+    return $this->hasMany(MasterMgng::class, 'master_sklh_id');
 }
 }

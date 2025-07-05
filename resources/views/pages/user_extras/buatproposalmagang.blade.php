@@ -44,7 +44,7 @@
                                         <div class="card-body">
 
                                             <div class="mb-3">
-                                                <label for="iNomorSuratPermintaan">Nomor Surat</label>
+                                                <label for="iNomorSuratPermintaan"><strong>Nomor Surat</strong></label>
                                                 <input type="text" 
                                                     name="nomor_surat_permintaan" 
                                                     id="iNomorSuratPermintaan"
@@ -57,7 +57,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="iTanggalSuratPermintaan">Tanggal Surat</label>
+                                                <label for="iTanggalSuratPermintaan"><strong>Tanggal Surat</strong></label>
                                                 <input type="date"
                                                     name="tanggal_surat_permintaan"
                                                     id="iTanggalSuratPermintaan"
@@ -70,7 +70,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="iPerihalSuratPermintaan">Perihal</label>
+                                                <label for="iPerihalSuratPermintaan"><strong>Perihal</strong></label>
                                                 <input type="text" 
                                                     name="perihal_surat_permintaan" 
                                                     id="iPerihalSuratPermintaan"
@@ -83,7 +83,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="iDitandatanganiOleh">Ditandatangani Oleh</label>
+                                                <label for="iDitandatanganiOleh"><strong>Ditandatangani Oleh</strong></label>
                                                 <input type="text" 
                                                     name="ditandatangani_oleh" 
                                                     id="iDitandatanganiOleh"
@@ -96,7 +96,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="file_surat_permintaan">Scan Surat Permintaan (.jpg, .pdf, max 10MB)</label>
+                                                <label for="file_surat_permintaan"><strong>Scan Surat Permintaan (.jpg, .pdf, max 10MB)</strong></label>
                                                 <input 
                                                     type="file"
                                                     name="file_surat_permintaan"
@@ -109,7 +109,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="file_proposal_magang">Scan Proposal Magang (.jpg, .pdf, max 10MB)</label>
+                                                <label for="file_proposal_magang"><strong>Scan Proposal Magang (.jpg, .pdf, max 10MB)</strong></label>
                                                 <input 
                                                     type="file"
                                                     name="file_proposal_magang"

@@ -205,11 +205,9 @@ public function daftarPermohonanKeluar()
         abort(404, 'Data master magang belum tersedia.');
     }
 
-    // Ambil semua permintaan magang dengan relasi balasan yang status_surat_balasan-nya tidak "terkirim"
+    // Ambil semua permintaan magang yang terkait dengan master_mgng_id
     $permintaan = PermintaanMgng::where('master_mgng_id', $masterMgng->id)
-        ->whereDoesntHave('balasan', function($query) {
-            $query->where('status_surat_balasan', 'terkirim');
-        })
+        ->with('masterMgng.masterSklh') // Eager load masterSklh untuk memeriksa relasi
         ->get();
 
     // Ambil data peserta magang jika perlu
@@ -254,6 +252,7 @@ public function updatestatuspermohonan(Request $request, $id)
     return redirect()->route('user.viewpermohonankeluar', ['id' => $id])
         ->with('result', 'fail-update');
 }
+
 
 
 public function editpermohonan($id)

@@ -37,7 +37,7 @@
 
             {{-- Notifikasi jika gagal menghapus --}}
             @if (session('result'))
-                <div class="alert alert-danger">
+                <div class="alert alert-success">
                     {{ session('result') }}
                 </div>
             @endif

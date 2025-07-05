@@ -7,8 +7,8 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('home') }}">Beranda</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                           Daftar User
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.daftar') }}">Daftar User</a>
                         </li>
                     </ol>
                 </nav>

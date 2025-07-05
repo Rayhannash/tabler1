@@ -2,7 +2,22 @@
     <x-page-header>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
-                 
+                 <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-arrows breadcrumb-muted">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.daftar') }}">Daftar User</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                           <a href="{{ route('user.show', ['id' => $user->id]) }}">Lihat User</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('user.edit', ['id' => $user->id]) }}">Edit User</a>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </x-page-header>
@@ -22,11 +37,6 @@
                     </ul>
                 </div>
             @endif
-
-            <a href="{{ route('user.show', $user->id) }}" class="btn btn-secondary mb-3">
-                <span class="mdi mdi-arrow-left"> Kembali</span> 
-            </a>
-
             <form action="{{ route('user.update', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -86,7 +96,7 @@
                                     </select>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Perbarui</button>
+                                <button type="submit" class="btn btn-primary text-white"><span class="mdi mdi-content-save"> Simpan</span></button>
                             </div>
                         </div>
                     </div>

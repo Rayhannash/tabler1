@@ -19,8 +19,8 @@ class MasterSklhController extends Controller
 
     // Query untuk mengambil data lembaga pendidikan dengan pagination
     $query = MasterSklh::join('users', 'users.id', '=', 'master_sklh.id_user')
-        ->select('master_sklh.*', 'users.fullname', 'users.akun_diverifikasi')
-        ->orderBy('users.fullname', 'asc');
+        ->select('master_sklh.*', 'users.fullname', 'users.akun_diverifikasi', 'master_sklh.updated_at')  // Ambil kolom updated_at
+        ->orderBy('master_sklh.updated_at', 'desc');  // Urutkan berdasarkan waktu terakhir diperbarui (terbaru di atas)
 
     if ($keyword) {
         $query->where(function($q) use($keyword) {
@@ -39,7 +39,6 @@ class MasterSklhController extends Controller
 
     return view('pages.master_sklh.daftar', compact('data', 'unverifiedCount'));
 }
-
 
 
 public function verify($id)

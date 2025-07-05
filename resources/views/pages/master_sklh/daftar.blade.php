@@ -117,28 +117,28 @@
                                         @endphp
 
                                         @if ($status == 'belum')
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#verify_{{ $dt->id }}">
+                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#verify_{{ $dt->id }}">
                                                 <span class="mdi mdi-check-bold"></span>
                                             </button>
                                         @elseif ($status == 'sudah')
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#suspend_{{ $dt->id }}">
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#suspend_{{ $dt->id }}">
                                                 <span class="mdi mdi-close-thick"></span>
                                             </button>
                                         @elseif ($status == 'suspended')
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#unlock_{{ $dt->id }}">
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#unlock_{{ $dt->id }}">
                                                 <span class="mdi mdi-lock-open"></span>
                                             </button>
                                         @endif
 
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_{{ $dt->id }}">
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete_{{ $dt->id }}">
                                             <span class="mdi mdi-delete"></span>
                                         </button>
 
-                                        <a href="{{ route('master_sklh.edit', ['id' => $dt->id]) }}" class="btn btn-primary">
+                                        <a href="{{ route('master_sklh.edit', ['id' => $dt->id]) }}" class="btn btn-primary btn-sm">
                                             <span class="mdi mdi-eye"></span>
                                         </a>
 
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reset_{{ $dt->id }}">
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reset_{{ $dt->id }}">
                                             Reset Password
                                         </button>
                                     </td>

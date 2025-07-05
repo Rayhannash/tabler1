@@ -50,7 +50,7 @@
                                     <div class="col-md-6">
 
                                         <div class="mb-3">
-                                            <label for="iNamaPeserta">Nama Peserta</label>
+                                            <label for="iNamaPeserta"><strong>Nama Peserta</strong></label>
                                             <input type="text" name="nama_peserta" class="form-control {{ $errors->has('nama_peserta') ? 'is-invalid' : '' }}" value="{{ old('nama_peserta') }}" id="iNamaPeserta" placeholder="contoh : Hyuuga Uzuki" required>
                                             @error('nama_peserta')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -58,7 +58,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="iJenisKelamin" class="form-label">Jenis Kelamin</label>
+                                            <label for="iJenisKelamin"><strong>Jenis Kelamin</strong></label>
                                             <select name="jenis_kelamin"
                                                     id="iJenisKelamin"
                                                     class="form-select {{ $errors->has('jenis_kelamin') ? 'is-invalid' : '' }}"
@@ -71,7 +71,7 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="iNikPeserta">NIK Peserta</label>
+                                            <label for="iNikPeserta"><strong>NIK Peserta</strong></label>
                                             <input type="number" name="nik_peserta" class="form-control {{ $errors->has('nik_peserta') ? 'is-invalid' : '' }}" value="{{ old('nik_peserta') }}" id="iNikPeserta" placeholder="contoh : 0123456789123456" required>
                                             @error('nik_peserta')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -79,7 +79,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="iNisPeserta">NIS/NIM Peserta</label>
+                                            <label for="iNisPeserta"><strong>NIS/NIM Peserta</strong></label>
                                             <input type="text" name="nis_peserta" class="form-control {{ $errors->has('nis_peserta') ? 'is-invalid' : '' }}" value="{{ old('nis_peserta') }}" id="iNisPeserta" placeholder="contoh : 1234567891" required>
                                             @error('nis_peserta')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -87,7 +87,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="iProgramStudi">Program Studi</label>
+                                            <label for="iProgramStudi"><strong>Program Studi</strong></label>
                                             <input type="text" name="program_studi" class="form-control {{ $errors->has('program_studi') ? 'is-invalid' : '' }}" value="{{ old('program_studi') }}" id="iProgramStudi" placeholder="contoh : Teknik Mesin" required>
                                             @error('program_studi')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -95,7 +95,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="iNomorHandphone">Nomor Handphone</label>
+                                            <label for="iNomorHandphone"><strong>Nomor Handphone</strong></label>
                                             <input type="number" name="no_handphone_peserta" class="form-control {{ $errors->has('no_handphone_peserta') ? 'is-invalid' : '' }}" value="{{ old('no_handphone_peserta') }}" id="iNomorHandphone" placeholder="contoh : 0812345678910" required>
                                             @error('no_handphone_peserta')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -103,7 +103,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="iEmailPeserta">Email Peserta</label>
+                                            <label for="iEmailPeserta"><strong>Email Peserta</strong></label>
                                             <input type="email" name="email_peserta" class="form-control {{ $errors->has('email_peserta') ? 'is-invalid' : '' }}" value="{{ old('email_peserta') }}" id="iEmailPeserta" placeholder="contoh : peserta@email.com" required>
                                             @error('email_peserta')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>

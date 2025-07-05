@@ -34,23 +34,23 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
-                            <label for="nomor_surat_permintaan">Nomor Surat</label>
+                            <label for="nomor_surat_permintaan"><strong>Nomor Surat</strong></label>
                             <input type="text" name="nomor_surat_permintaan" class="form-control" value="{{ old('nomor_surat_permintaan', $permohonan->nomor_surat_permintaan) }}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="tanggal_surat_permintaan">Tanggal Surat</label>
+                            <label for="tanggal_surat_permintaan"><strong>Tanggal Surat</strong></label>
                             <input type="date" name="tanggal_surat_permintaan" class="form-control" value="{{ old('tanggal_surat_permintaan', $permohonan->tanggal_surat_permintaan) }}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="perihal_surat_permintaan">Perihal Surat</label>
+                            <label for="perihal_surat_permintaan"><strong>Perihal Surat</strong></label>
                             <input type="text" name="perihal_surat_permintaan" class="form-control" value="{{ old('perihal_surat_permintaan', $permohonan->perihal_surat_permintaan) }}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="ditandatangani_oleh">Ditandatangani Oleh</label>
+                            <label for="ditandatangani_oleh"><strong>Ditandatangani Oleh</strong></label>
                             <input type="text" name="ditandatangani_oleh" class="form-control" value="{{ old('ditandatangani_oleh', $permohonan->ditandatangani_oleh) }}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="scan_surat_permintaan">Scan Surat Permintaan</label>
+                            <label for="scan_surat_permintaan"><strong>Scan Surat Permintaan</strong></label>
                             <input type="file" name="scan_surat_permintaan" class="form-control">
                             @if($permohonan->scan_surat_permintaan)
                                 <small>File saat ini: 
@@ -61,7 +61,7 @@
                             @endif
                         </div>
                         <div class="form-group mb-4">
-                            <label for="scan_proposal_magang">Scan Proposal Magang</label>
+                            <label for="scan_proposal_magang"><strong>Scan Proposal Magang</strong></label>
                             <input type="file" name="scan_proposal_magang" class="form-control">
                             @if($permohonan->scan_proposal_magang)
                                 <small>File saat ini: 

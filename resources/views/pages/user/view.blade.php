@@ -10,8 +10,8 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('user.daftar') }}">Daftar User</a>
                         </li>
-                        <li class="breadcrumb-item muted" aria-current="page">
-                           Lihat User
+                        <li class="breadcrumb-item">
+                           <a href="{{ route('user.show', ['id' => $user->id]) }}">Lihat User</a>
                         </li>
                     </ol>
                 </nav>
